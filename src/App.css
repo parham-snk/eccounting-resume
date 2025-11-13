@@ -1,38 +1,37 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: iransens;
+  src: url('./assets/fonts/IRS.ttf');
+  background-color: rgb(16, 167, 255);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: iransens;
+  direction: rtl;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+* {
+  transition: .2s all;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.active {
+  background-color: oklch(70.7% 0.022 261.325);
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+*{
+  user-select: none;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+table{
+  tr{
+    th{
+      font-size: small !important;
+    }
+    td{
+      font-size: smaller;
+    }
+    border-bottom: 1px solid grey;
+    &:last-child,&:first-child{
+      border-bottom: 0;
+    }
   }
 }
