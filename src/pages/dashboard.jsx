@@ -3,13 +3,21 @@ import { IoTrendingDown, IoTrendingDownSharp, IoTrendingUpSharp } from "react-ic
 import { Chart as chartjs, LineElement, PointElement, SubTitle, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, scales } from "chart.js"
 import { Chart, Line } from "react-chartjs-2"
 import { Link } from "react-router";
-import Select from "../components/select";
+import Select from "../components/dashboard/select";
 import { Activity, useState } from "react";
+import Table from "../components/dashboard/table";
+
+
 
 chartjs.register(LineElement, PointElement, SubTitle, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, scales);
 
 const Dashboard = props => {
+
+    const fakeData = [, { id: 11, date: "2025/11/20", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }, { id: 11, date: "2025/11/20", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }, { id: 11, date: "2025/11/20", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }, { id: 11, date: "2025/11/20", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }, , , { id: 12, date: "2022/10/23", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }, { id: 13, date: "2022/10/23", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }]
+    const [data, setData] = useState(fakeData)
+
     const [load, setLoad] = useState(false)
+
     return (
         <div className="
         w-full h-full
@@ -86,7 +94,7 @@ const Dashboard = props => {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-between align-sub items-start w-full h-1/3 bg-white shadow rounded-md py-4 px-7 relative">
+            <div className="flex flex-col justify-between align-sub items-start w-full min-h-1/2 max-h-1/2 bg-white shadow rounded-md py-4 px-7 relative">
                 <div className="flex flex-col justify-start md:flex-row md:justify-between align-middle md:items-center w-full text-sm border-b pb-5 md:border-b-0 md:pb-0">
 
                     <p className="w-fit start-0 text-start text-nowrap order-1">فعالیت های اخیر</p>
@@ -94,61 +102,47 @@ const Dashboard = props => {
 
                     <div className=" flex flex-row align-middle items-center mx-10 order-4">
                         <p className="text-xs text-nowrap">هفته اخیر</p>
-                        <Select />
+                        <Select changeData={(sign) => {
+                            setLoad(true)
+                            if (sign) {
+                                setLoad(false)
+                                return setData(fakeData)
+                            }
+                            console.log(false)
+                            let date = Date.now()
+                            let now = new Date(date)
+                            let [ny, nm, nd] = [now.getFullYear(), now.getMonth(), now.getDate()]
+                            nm++
+                            let rows = data.filter(row => {
+                                let target = new Date(row.date).getTime()
+                                let dayValue = (60 * 60 * 60 * 24) * 7
+                                let avr = (now - dayValue)
+                                if (avr < Number(target)) {
+                                    return row
+                                }
+                            })
+                            setData(rows)
+                            setLoad(false)
+
+
+
+                        }} />
+                        <p className="text-xs text-gray-500">({data.length} مورد)</p>
                     </div>
                     <Link to={"/lasts"} className="decoration-1 text-nowrap text-xs md:text-sm  md:mx-10 py-1 md:bg-none order-2 md:order-4
                     absolute md:relative top-3 md:top-0 end-5 md:end-0
                     ">مشاهده همه</Link>
 
                 </div>
-                <div className="h-fit w-full mt-5 relative overflow-y-scroll">
+                <div className="h-full w-full mt-7 relative overflow-y-scroll pb-10">
                     <Activity mode={load ? "visible" : "hidden"} >
                         <div id="loading" className="w-full h-full backdrop-blur-2xl absolute top-0 left-0 flex justify-center items-center">
                             <h1>در حال جست و جو ...</h1>
                         </div>
                     </Activity>
-                    <table className="w-full h-fit text-center">
-                        <tr className="py-2 sticky top-0 bg-white shadow">
-                            <th className="py-2 w-1/10">شماره سند</th>
-                            <th className="py-2 w-1/10">تاریح</th>
-                            <th className="py-2">توضیحات</th>
-                            <th className="py-2">مبلغ</th>
-                            <th className="py-2">بد / بس</th>
-                            <th className="py-2">اپراتور</th>
-                        </tr>
-                        <tr className="py-2 hover:bg-gray-200">
-                            <td className="py-4">2</td>
-                            <td className="py-4">1404/08/22</td>
-                            <td className="py-4">فاکتور فروش  723</td>
-                            <td className="py-4">24.000.000</td>
-                            <td className="py-4">بد</td>
-                            <td className="py-4">نمایش</td>
-                        </tr>
-                         <tr className="py-2 hover:bg-gray-200">
-                            <td className="py-4">3</td>
-                            <td className="py-4">1404/08/22</td>
-                            <td className="py-4">فاکتور فروش  723</td>
-                            <td className="py-4">24.000.000</td>
-                            <td className="py-4">بد</td>
-                            <td className="py-4">نمایش</td>
-                        </tr>
-                         <tr className="py-2 hover:bg-gray-200">
-                            <td className="py-4">4</td>
-                            <td className="py-4">1404/08/22</td>
-                            <td className="py-4">فاکتور فروش  723</td>
-                            <td className="py-4">24.000.000</td>
-                            <td className="py-4">بد</td>
-                            <td className="py-4">نمایش</td>
-                        </tr>
-                         <tr className="py-2 hover:bg-gray-200">
-                            <td className="py-4">5</td>
-                            <td className="py-4">1404/08/22</td>
-                            <td className="py-4">فاکتور فروش  723</td>
-                            <td className="py-4">24.000.000</td>
-                            <td className="py-4">بد</td>
-                            <td className="py-4">نمایش</td>
-                        </tr>
-                    </table>
+                    <Table data={data} />
+
+
                 </div>
             </div>
         </div>

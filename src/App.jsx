@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Router, Routes } from 'react-router';
 import Sidebar from './components/sidebar';
 import Dashboard from './pages/dashboard';
 import P404 from './pages/404';
+import Proggress from './pages/proggres';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         w-10/11 md:w-4/6 h-9/10 mx-5 overflow-y-scroll md:overflow-hidden">
           <Routes>
             <Route path='/' Component={Dashboard} />
+            <Route path='/proggres' Component={Proggress}/>
             <Route path='*' Component={P404}/>
           </Routes>
         </div>

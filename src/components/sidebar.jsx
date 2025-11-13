@@ -2,6 +2,7 @@ import { NavLink } from "react-router"
 import { LuWalletMinimal } from "react-icons/lu";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai"
 import { IoLogoAppleAr } from "react-icons/io5";
+import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 const Sidebar = props => {
     return (
         <div className="
@@ -21,7 +22,7 @@ const Sidebar = props => {
             p-3
             hover:bg-gray-200 h-full md:h-auto
             ">
-                <IoLogoAppleAr  size={30} className="me-5" />
+                <IoLogoAppleAr size={30} className="me-5" />
                 <h4 className="hidden md:flex">داشبورد</h4>
             </NavLink>
 
@@ -32,9 +33,20 @@ const Sidebar = props => {
             p-3
             hover:bg-gray-200 h-full md:h-auto
             ">
-                
+
                 <LuWalletMinimal size={30} className="me-5" />
                 <h4 className="hidden md:flex">حسابها</h4>
+            </NavLink>
+             <NavLink to={"/proggres"} className="
+            active:bg-gray-400 active:text-white
+            flex flex-row justify-center md:justify-start align-middle items-center w-9/10
+            md:rounded-sm
+            p-3
+            hover:bg-gray-200 h-full md:h-auto
+            ">
+
+                <LiaFileInvoiceDollarSolid size={30} className="me-5" />
+                <h4 className="hidden md:flex">عملیات ها </h4>
             </NavLink>
         </div>
     )

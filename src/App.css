@@ -29,7 +29,7 @@ table{
     td{
       font-size: smaller;
     }
-    border-bottom: 1px solid grey;
+    /* border-bottom: 1px solid grey; */
     &:last-child,&:first-child{
       border-bottom: 0;
     }
