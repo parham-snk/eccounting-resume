@@ -35,3 +35,10 @@ table{
     }
   }
 }
+input{
+  outline: none;
+}
+
+.modal{
+  background-color: #3333334d;
+}

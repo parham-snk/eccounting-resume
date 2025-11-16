@@ -37,7 +37,7 @@ const Dashboard = props => {
                 p-2
                 order-2 md:order1
                 ">
-                    <p className="ps-4 text-gray-500 w-full  py-3 text-center">سود خالص</p>
+                    <p className="ps-4 text-gray-500 w-full  py-3 text-center">آمار فروش</p>
                     <Line
                         height={"100%"}
                         data={{
