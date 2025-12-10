@@ -6,7 +6,7 @@ import Dashboard from './pages/dashboard';
 import P404 from './pages/404';
 import Proggress from './pages/proggres';
 import InvoiceBuy from "./pages/buy-invoice.jsx";
-
+//test
 function App() {
   return (
     <div className="bg-gray-100
