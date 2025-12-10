@@ -23,6 +23,8 @@ jobs:
           key : npm-${{ hashFiles('package.lock.json') }}
       - name : install packages
         run : npm install 
+      - name : build 
+        run : CI=false npm run build 
       - name : set artifact
         uses : actions/upload-pages-artifact@v3
         with:
