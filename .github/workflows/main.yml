@@ -1,24 +1,33 @@
-name: "build"
-on: [push]
+name : CI
+on:
+  push:
+   branches : master
+
+permissions:
+  contents : read
+  pages : write
+  id-token : write
+
 jobs:
-  builder:
-    runs-on: ubuntu-lates
+  build:
+    runs-on : ubuntu-latest
     steps:
-      - name: build
-        uses: actions/checkout@v4
-      - name: setup nodejs
-        uses: actions/setup-node@v4
-      - name: cache
-        if: success()
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
-      - name: install packages
-        run: npm install --save
-      - name: build
-        if: success()
-        run: npm run  build
-      - name: add to gh branch
-        if: success()
-        run: git checkout -b gh ; git add  build;git config --global user.name parham-snk ; git config --global user.email psanjanaki@gmail.com;git commit -m "new build";git push https://github.com/parham-snk/eccounting-resume gh
+      - name : fetch data
+        uses : actions/checkout@v4
+      - name : setup nodejs
+        uses : actions/setup-node@v4
+      - name : cache
+        uses : actions/cache@v4
+        with: 
+          path : node_modules
+          key : npm-${{ hashFiles('package.lock.json') }}
+      - name : install packages
+        run : npm install 
+      - name : set artifact
+        uses : actions/upload-pages-artifact@v3
+  deploy:
+    needs : build
+    runs-on : ubuntu-latest
+    steps:
+      - name : deploy
+        uses: actions/deploy-pages@v4
