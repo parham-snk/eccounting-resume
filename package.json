@@ -1,7 +1,8 @@
 {
   "name": "my-tw-app",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "homepage": "https://parham-snk.github.io/eccounting-resume",
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "@testing-library/dom": "^10.4.1",

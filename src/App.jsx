@@ -13,7 +13,7 @@ function App() {
     w-full h-dvh
     flex flex-col md:flex-row justify-center align-middle items-center">
 
-      <BrowserRouter basename='/'>
+      <BrowserRouter basename='/eccounting-resume'>
         <Sidebar />
 
         <div className="order-1 md:order-2
