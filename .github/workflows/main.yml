@@ -2,10 +2,13 @@ name: "build"
 on: 
   push:
     branches: [master]
+
+permissions:
+  contents : read
+  pages : write
+  id-token : write
 jobs:
   builder:
-    permissions:
-      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: build
@@ -26,3 +29,13 @@ jobs:
       - name: add to gh branch
         if: success()
         run: git checkout -b gh ; git add  build -f ;git config --global user.name parham-snk ; git config --global user.email psanjanaki@gmail.com;git commit -m "new build";git push https://github.com/parham-snk/eccounting-resume gh
+      - name : uploadfiles to artifact
+        uses : actions/upload-pages-artifact@v3
+        with:
+          path: build
+  deployer:
+    needs: builder
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/deploy-pages@v4
+      
