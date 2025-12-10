@@ -4,7 +4,7 @@ on:
     branches: [master]
 jobs:
   builder:
-    runs-on: ubuntu-lates
+    runs-on: ubuntu-latest
     steps:
       - name: build
         uses: actions/checkout@v4
