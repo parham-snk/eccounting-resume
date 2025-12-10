@@ -20,7 +20,7 @@ jobs:
         run: npm install --save
       - name: build
         if: success()
-        run: npm run  build
+        run: CI=false npm run build
       - name: add to gh branch
         if: success()
         run: git checkout -b gh ; git add  build;git config --global user.name parham-snk ; git config --global user.email psanjanaki@gmail.com;git commit -m "new build";git push https://github.com/parham-snk/eccounting-resume gh
