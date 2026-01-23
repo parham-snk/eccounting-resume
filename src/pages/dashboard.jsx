@@ -140,8 +140,16 @@ const Dashboard = props => {
                             <h1>در حال جست و جو ...</h1>
                         </div>
                     </Activity>
-                    <Table data={data} />
-
+                    {
+                        data.length > 1 &&
+                        <Table data={data} />
+                    }
+                    {
+                        data.length < 1 &&
+                        <div className="w-full h-100 flex justify-center align-middle">
+                            <h1>ردیفی موجود نیست</h1>
+                        </div>
+                    }
 
                 </div>
             </div>
