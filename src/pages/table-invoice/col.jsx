@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-
+import splitNumber from "../../components/util/split-numbers"
 const TableCol = props => {
     const { r, name, type, update } = props
     const [value, setValue] = useState()
@@ -14,25 +14,22 @@ const TableCol = props => {
             case "price":
                 input.current.addEventListener("keydown", e => {
                     if (/\d/.test(e.key)) {
-                    } else if (e.key == "Backspace") {
+                    } else if (e.key == "Backspace"|| e.key=="Tab") {
                     } else {
                         e.preventDefault()
                     }
                 })
                 input.current.addEventListener("keyup", e => {
-                    let inputValue = String(e.target.value).split(",").join("")
-                    let x = inputValue + '.'
-                    let reg = /\d(?=(\d{3})+\.)/gm
-                    x = x.replace(reg, "$&,")
-                    x = x.slice(0, x.length - 1)
-                    e.target.value = x
+                    let val = String(e.target.value).split(",").join("")
+                    let inputValue = splitNumber(val)
+                    e.target.value = inputValue
                 })
                 break;
             case "qty":
                 input.current.addEventListener("keydown", e => {
                     if (/\d/.test(e.key)) {
 
-                    } else if (e.key == "Backspace") {
+                    } else if (e.key == "Backspace"|| e.key=="Tab") {
 
                     } else {
                         e.preventDefault()
@@ -43,7 +40,7 @@ const TableCol = props => {
             case "percent":
                 input.current.addEventListener("keydown", e => {
                     if (/\d/.test(e.key)) {
-                    } else if (e.key == "Backspace") {
+                    } else if (e.key == "Backspace" || e.key=="Tab") {
 
                     } else {
                         e.preventDefault()
@@ -70,7 +67,7 @@ const TableCol = props => {
     return (
         <td className="table-cell w-full">
             <input className={"border w-fit text-center h-7" + (name == "name" ? " w-full" : "")}
-                placeholder={name} id={`${name}-${r}`} ref={input} type="text" />
+                placeholder={name} id={`${name}-${r}`} autoComplete="false" aria-autocomplete="false" autoCorrect="false" ref={input} type="text" />
         </td>
     )
 }

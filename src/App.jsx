@@ -6,6 +6,7 @@ import Dashboard from './pages/dashboard';
 import P404 from './pages/404';
 import Proggress from './pages/proggres';
 import InvoiceBuy from "./pages/buy-invoice.jsx";
+import SellInvoice from "./pages/sell-invoice.jsx";
 //test
 function App() {
   return (
@@ -21,8 +22,12 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/proggres" element={<Proggress />} />
-            <Route path="/proggres/buyInvoice" element={<InvoiceBuy />} />
+            <Route path="/proggres"  >
+              <Route index element={<Proggress />} />
+              <Route path="buyInvoice" element={<InvoiceBuy />} />
+              <Route path="sellInvoice" element={<SellInvoice />} />
+            </Route>
+
 
             <Route path="*" element={<P404 />} />
           </Routes>

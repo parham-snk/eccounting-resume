@@ -3,13 +3,13 @@ import Modal from "../components/modal"
 import SearchUserModal from "../components/modals/searchUser"
 import Table from "./table-invoice/table"
 
-const InvoiceBuy = props => {
+const SellInvoice = props => {
     const [date, setDate] = useState("----/--/--")
     const [modal, showModal] = useState(false)
     return (
         <div className="bg-white w-full h-full shadow rounded flex flex-col  md:justify-start align-middle items-start p-3 md:p-0 ">
             <div className="w-full justify-center flex py-2 pt-3 "><p className="bg-gray-500 rounded p-2 text-white text-sm ">
-                فاکتور خرید</p></div>
+                فاکتور فروش</p></div>
             <table className="flex flex-row  justify- align-middle items-center w-1/4 right-0 md:w-full py-2 ">
                 <thead className="flex flex-col items-center mx-2">
                     <th className="my-1 p-1 text-xs bg-gray-500 w-full rounded text-white text-nowrap">شماره فاکتور</th>
@@ -80,4 +80,4 @@ const InvoiceBuy = props => {
     )
 }
 
-export default InvoiceBuy
+export default SellInvoice

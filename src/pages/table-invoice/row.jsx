@@ -21,8 +21,8 @@ const TableRow = props => {
             document.getElementById(`totalPrice-${counter -= 1}`).value = number
             document.getElementById(`totalPrice-${counter}`)?.focus()
             document.getElementById(`totalPrice-${counter}`)?.blur()
-
-
+        } else {
+            document.getElementById(`totalPrice-${counter -= 1}`).value =""
         }
         update({ counter, values })
 

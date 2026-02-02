@@ -13,7 +13,7 @@ export default function Proggress() {
                     <p className="my-5">فاکتور خرید</p>
                 </div>
             </Link>
-            <Link>
+            <Link to={"/proggres/sellInvoice"}>
                 <div className="my-1 md:my-0 w-40 md:w-50 h-40 md:h-50 shadow rounded flex flex-col justify-center items-center hover:bg-gray-600 hover:text-white bg-white">
                     <FaFileInvoice size={60} />
                     <p className="my-5">فاکتور فروش</p>
