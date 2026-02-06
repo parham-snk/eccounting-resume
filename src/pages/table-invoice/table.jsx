@@ -6,10 +6,12 @@ const Table = props => {
     const [form, setForm] = useState([])
     const [arr, setArr] = useState([1, 2, 3, 4])
     const [total, setTotal] = useState(0)
-    let elements = arr.map((i, index) => <TableRow update={({ counter, values }) => {
+    const [emptyList,setEmptyList]=useState([])
+    let elements = arr.map((i, index) => <TableRow  update={({ counter, values }) => {
         setForm({ ...form, [counter]: values })
     }} key={index} counter={index} />)
     useEffect(() => {
+        console.log(form)
         let numbers = []
         //گرفتن مقدار هر totalPrice در آرایه فرم و push کردن اون به آرایه numbers جهت به دست آوردن مبلغ کل فاکتور 
         for (let value in form) {
@@ -56,7 +58,9 @@ const Table = props => {
                     {
                         elements
                     }
-                    //add row BTN
+                    {
+                        //add row BTN
+                    }
                     <button 
                     className="absolute -left-10 bottom-0 bg-black text-white py-1 px-2  transition rounded-full cursor-pointer" 
                     onClick={addRow}>+</button>

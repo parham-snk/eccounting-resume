@@ -14,7 +14,7 @@ const TableCol = props => {
             case "price":
                 input.current.addEventListener("keydown", e => {
                     if (/\d/.test(e.key)) {
-                    } else if (e.key == "Backspace"|| e.key=="Tab") {
+                    } else if (e.key == "Backspace" || e.key == "Tab") {
                     } else {
                         e.preventDefault()
                     }
@@ -29,7 +29,7 @@ const TableCol = props => {
                 input.current.addEventListener("keydown", e => {
                     if (/\d/.test(e.key)) {
 
-                    } else if (e.key == "Backspace"|| e.key=="Tab") {
+                    } else if (e.key == "Backspace" || e.key == "Tab") {
 
                     } else {
                         e.preventDefault()
@@ -40,7 +40,7 @@ const TableCol = props => {
             case "percent":
                 input.current.addEventListener("keydown", e => {
                     if (/\d/.test(e.key)) {
-                    } else if (e.key == "Backspace" || e.key=="Tab") {
+                    } else if (e.key == "Backspace" || e.key == "Tab") {
 
                     } else {
                         e.preventDefault()
@@ -55,7 +55,15 @@ const TableCol = props => {
                 break;
         }
         input.current.addEventListener("blur", e => {
+
+
             setValue(e.target.value)
+            if (e.target.value == "") {
+                if(name == "name" || name=="price" || name=="qty")  input.current.style.backgroundColor = "rgba(255,0,0,.2)" 
+            } else {
+                input.current.style.backgroundColor = "white"
+
+            }
         })
 
     }, [])

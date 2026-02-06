@@ -1,6 +1,7 @@
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { FaFileInvoice } from "react-icons/fa6";
- import { TbInvoice } from "react-icons/tb";
+import { FaThList } from "react-icons/fa";
+import { TbInvoice } from "react-icons/tb";
 import { Link } from "react-router";
 
 
@@ -23,6 +24,12 @@ export default function Proggress() {
                 <div className="my-1 md:my-0 w-40 md:w-50 h-40 md:h-50 shadow rounded flex flex-col justify-center items-center hover:bg-gray-600 hover:text-white bg-white">
                     <TbInvoice size={60} />
                     <p className="my-5">سند</p>
+                </div>
+            </Link>
+            <Link to={"/proggres/cats"}>
+                <div className="my-1 md:my-0 w-40 md:w-50 h-40 md:h-50 shadow rounded flex flex-col justify-center items-center hover:bg-gray-600 hover:text-white bg-white">
+                    <FaThList size={60} />
+                    <p className="my-5">دسته بندی ها </p>
                 </div>
             </Link>
         </div>

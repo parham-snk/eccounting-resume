@@ -18,27 +18,57 @@ body {
   background-color: oklch(70.7% 0.022 261.325);
   color: white;
 }
-*{
+
+* {
   user-select: none;
 }
-table{
-  tr{
-    th{
+
+table {
+  tr {
+    th {
       font-size: small !important;
     }
-    td{
+
+    td {
       font-size: smaller;
     }
+
     /* border-bottom: 1px solid grey; */
-    &:last-child,&:first-child{
+    &:last-child,
+    &:first-child {
       border-bottom: 0;
     }
   }
 }
-input{
+
+input {
   outline: none;
 }
 
-.modal{
+.modal {
   background-color: #3333334d;
+}
+
+.cats {
+
+  >ul {
+    max-height: 250px;
+    overflow-y: scroll;
+    width: 45% !important;
+
+    ul {
+      width: 99% !important;
+    }
+
+    &>li {
+      position: sticky;
+      top: 0;
+    }
+
+    &>::-webkit-scrollbar {
+      width: 5px;
+      background-color: red;
+      display: none;
+    }
+  }
 }
