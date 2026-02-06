@@ -57,9 +57,12 @@ const ContextProvider = ({ children }) => {
         }
     }, [uploadCat])
 
-    const value = useMemo(() => ({ cats, orgcats, setUploadCat }), [cats])
+    function removeCat(cat) {
+        const { cat_id, childstoo } = cat
+        axios.delete(`http://localhost:8080/cat/${cat_id}`).then(console.log).then(fetchList)
+    }
     return (
-        <Context.Provider value={value}>
+        <Context.Provider value={{ cats, orgcats, setUploadCat, removeCat }}>
             {children}
         </Context.Provider>
     )
