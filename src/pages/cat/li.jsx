@@ -24,7 +24,7 @@ const Li = props => {
     }, [])
     return (
         <li id={`li-${cat.cat_id}`} className={`${hover ? "bg-blue-200" : "bg-white"} p-2 `}>
-            <p className={`flex flex-row justify-between items-center`}
+            <p className={`flex flex-row justify-between items-center cursor-move`}
                 draggable="true"
                 onDragOver={e => {
                     e.preventDefault()

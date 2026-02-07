@@ -419,6 +419,9 @@
     --tw-scale-z: 99%;
     scale: var(--tw-scale-x) var(--tw-scale-y);
   }
+  .cursor-move {
+    cursor: move;
+  }
   .cursor-pointer {
     cursor: pointer;
   }
