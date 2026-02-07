@@ -7,6 +7,7 @@ const Li = props => {
     const { cat, children } = props?.item
     const { removeCat, changeParent } = useContext(Context)
     const [ul, setUl] = useState()
+    const [hover, setHover] = useState(false)
     useEffect(() => {
         $(document).ready(function () {
             // setTimeout(() => {
@@ -22,17 +23,27 @@ const Li = props => {
         setUl(elements)
     }, [])
     return (
-        <li id={`li-${cat.cat_id}`} onDragOver={ev => console.log(ev)}>
-            <p className={`flex flex-row justify-between items-center`} draggable="true" onDragOver={e => e.preventDefault()} onDragStart={(ev) => {
-                ev.dataTransfer.setData("li", `li-${cat.cat_id}`)
-            }} onDrop={ev => {
-                ev.preventDefault()
-                let id = ev.dataTransfer.getData("li").split("-")[1]
-                if (id != cat.cat_id) {
-                    changeParent({ cat_id: id, parent_id: cat.cat_id })
-                }
-                // ev.target.appendChild(document.getElementById(id).parentElement)
-            }}>
+        <li id={`li-${cat.cat_id}`} className={`${hover ? "bg-blue-200" : "bg-white"} p-2 `}>
+            <p className={`flex flex-row justify-between items-center`}
+                draggable="true"
+                onDragOver={e => {
+                    e.preventDefault()
+                    setHover(true)
+                }}
+                onDragLeave={() => {
+                    setHover(false)
+                }}
+                onDragStart={(ev) => {
+                    ev.dataTransfer.setData("li", `li-${cat.cat_id}`)
+                }} onDrop={ev => {
+                    ev.preventDefault()
+                    let id = ev.dataTransfer.getData("li").split("-")[1]
+                    if (id != cat.cat_id) {
+                        changeParent({ cat_id: id, parent_id: cat.cat_id })
+                    }
+                    setHover(false)
+                    // ev.target.appendChild(document.getElementById(id).parentElement)
+                }}>
                 <p id={cat.cat_id} className={`${[...children].length > 0 ? "cursor-pointer" : null}`}>
                     {[...children].length > 0 ? <span className="text-xs">+</span> : null}
                     {cat?.cat_name}

@@ -43,7 +43,6 @@ const AddCat = props => {
                 setName(val)
             }} />
             <CatParentInput setCatParent={val => {
-
                 return setCatParent(val ? val : 100)
 
             }} />

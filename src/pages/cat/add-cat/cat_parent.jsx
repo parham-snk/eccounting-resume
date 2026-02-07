@@ -20,7 +20,6 @@ const CatParentInput = props => {
             setshow(false)
             props.setCatParent(item.cat_id)
         }
-        console.log(nameInput)
         let filter = [...orgcats].filter(item => String(item.cat_name).includes(nameInput))
         if (filter.length > 0 && nameInput) {
             setshow(true)
@@ -55,15 +54,22 @@ const CatParentInput = props => {
                     }} />).slice(0, 7))
                     setshow(true)
                 }}
-                onBlur={() => {
+                onBlur={(e) => {
                     setTimeout(() => {
                         setshow(false)
                     }, 100);
+                    if (e.target.value) {
+                        let value = String(e.target.value).trim()
+                        orgcats.forEach(item => item.cat_name == value ? props.setCatParent(item.cat_id) : null)
+
+                    } else {
+                        props.setCatParent()
+                    }
                 }}
                 onChange={e => {
                     if (e.target.value) {
                         setNameInput(e.target.value)
-                    }else{
+                    } else {
                         props.setCatParent()
                     }
                 }}
