@@ -519,6 +519,9 @@
   .bg-blue-200 {
     background-color: var(--color-blue-200);
   }
+  .bg-blue-300 {
+    background-color: var(--color-blue-300);
+  }
   .bg-blue-400 {
     background-color: var(--color-blue-400);
   }
@@ -527,6 +530,9 @@
   }
   .bg-gray-200 {
     background-color: var(--color-gray-200);
+  }
+  .bg-gray-400 {
+    background-color: var(--color-gray-400);
   }
   .bg-gray-500 {
     background-color: var(--color-gray-500);
