@@ -5,7 +5,7 @@ import { FaWindowClose } from "react-icons/fa";
 import { Context } from "../../context/Context";
 const Li = props => {
     const { cat, children } = props?.item
-    const { removeCat } = useContext(Context)
+    const { removeCat,changeParent } = useContext(Context)
     const [ul, setUl] = useState()
     useEffect(() => {
         $(document).ready(function () {
@@ -22,8 +22,15 @@ const Li = props => {
         setUl(elements)
     }, [])
     return (
-        <li   >
-            <p className={`flex flex-row justify-between items-center`}>
+        <li id={`li-${cat.cat_id}`} >
+            <p className={`flex flex-row justify-between items-center`} draggable="true" onDragOver={e => e.preventDefault()} onDragStart={(ev) => {
+                ev.dataTransfer.setData("li", `li-${cat.cat_id}`)
+            }} onDrop={ev => {
+                ev.preventDefault()
+                let id = ev.dataTransfer.getData("li").split("-")[1]
+                changeParent({cat_id:id,parent_id:cat.cat_id})
+                // ev.target.appendChild(document.getElementById(id).parentElement)
+            }}>
                 <p id={cat.cat_id} className={`${[...children].length > 0 ? "cursor-pointer" : null}`}>
                     {[...children].length > 0 ? <span className="text-xs">+</span> : null}
                     {cat?.cat_name}

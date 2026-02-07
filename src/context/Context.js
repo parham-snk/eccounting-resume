@@ -61,8 +61,12 @@ const ContextProvider = ({ children }) => {
         const { cat_id, childstoo } = cat
         axios.delete(`http://localhost:8080/cat/${cat_id}`).then(console.log).then(fetchList)
     }
+
+    function changeParent({cat_id,parent_id}){
+    axios.post("http://localhost:8080/cat/update",{cat_id,parent_id}).then(fetchList)
+    }
     return (
-        <Context.Provider value={{ cats, orgcats, setUploadCat, removeCat }}>
+        <Context.Provider value={{ cats, orgcats,changeParent, setUploadCat, removeCat }}>
             {children}
         </Context.Provider>
     )

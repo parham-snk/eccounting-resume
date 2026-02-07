@@ -1,0 +1,53 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #static {
+            width: 200px;
+            height: 200px;
+            background-color: yellow;
+        }
+
+        #static2 {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="static" dropzone="true"></div>
+    <div id="dynamic" draggable="true">parham
+        <p>ok</p>
+        <p>not ok!</p>
+    </div>
+    <div id="static2" dropzone="true"></div>
+</body>
+<script>
+    const static = document.getElementById("static"), static2 = document.getElementById("static2"), dynamic = document.getElementById("dynamic")
+
+    dynamic.addEventListener("dragstart", ev => {
+        ev.dataTransfer.setData("child", dynamic.getAttribute("id"))
+    })
+    static.addEventListener("dragover", ev => {
+        ev.preventDefault()
+    })
+    static.addEventListener("drop", ev => {
+        ev.preventDefault()
+        let data = ev.dataTransfer.getData("child")
+        console.log(ev.dataTransfer.getData("child"))
+        let node = document.getElementById(data)
+        static.appendChild(node)
+    })
+    static2.addEventListener("drop", ev => {
+        ev.preventDefault()
+        let data = ev.dataTransfer.getData("text")
+        ev.target.appendChild(document.getElementById(data))
+    })
+</script>
+
+</html>
