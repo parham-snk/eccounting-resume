@@ -123,6 +123,10 @@ const ProductModifier = props => {
                 type="text" value={price} id={"price"} name={"price"} placeholder=""
                 onKeyDown={e => {
                     let reg = /\d/
+                    
+                    if(e.key=="Backspace"){
+                        return
+                    }
                     if (reg.test(e.key) == false) return e.preventDefault()
                 }}
                 onChange={e => {

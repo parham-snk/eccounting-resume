@@ -98,3 +98,12 @@ input {
     font-size: 13px !important;
   }
 }
+
+.list {
+  font-size: 14px !important;
+
+  tr {
+    text-wrap: no-wrap !important;
+
+  }
+}

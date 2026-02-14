@@ -22,7 +22,7 @@ const Chart_product_prices = props => {
             let filter = [...listPrices].filter(item => item.parent_id == id)
             let dates = filter.map(item => {
                 let d = String(item.createAt).split("T")[0]
-                d =new Date(d).toLocaleDateString("fa-IR")
+                d = new Date(d).toLocaleDateString("fa-IR")
                 return d
             })
             setTimeout(() => {
@@ -34,11 +34,15 @@ const Chart_product_prices = props => {
     return (
         <div className="">
             {
-                dates && dates.length <1 &&
+                dates && dates.length <= 1 &&
                 <h1>لیست قیمتی وجود ندارد</h1>
             }
             {
-                dates && dates.length > 0 && prices &&
+                dates && dates.length > 1 && prices &&
+                <h1 className="text-center py-2">لیست قیمت ها</h1>
+            }
+            {
+                dates && dates.length > 1 && prices &&
                 <Line
                     height={"200px"}
                     data={{

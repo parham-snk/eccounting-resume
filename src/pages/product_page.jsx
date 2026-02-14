@@ -5,13 +5,13 @@ import ListProducts from "./product/products_list"
 const ProductPage = props => {
 
     const [changeItem, setChangeItem] = useState()
-    useEffect(()=>{
- 
-    },[])
+    useEffect(() => {
+        console.log(changeItem)
+    }, [changeItem])
     return (
         <div className="flex flex-row justify-between align-middle w-full h-full">
-            <ListProducts />
-            
+            <ListProducts changeItem={val => setChangeItem(val)} />
+
             <ProductModifier item={changeItem} />
         </div>
     )

@@ -48,7 +48,22 @@ const Qty_Unit = props => {
                     setName(e.target.value)
                 }
                 }
-                onFocus={() => setShow(true)}
+                onFocus={() => {
+                    setShow(true)
+                    let results = units.map((item, index) =>
+                        <p className="w-full p-2 hover:bg-gray-200" key={index}
+                            onClick={() => {
+                                setUnit(item.id)
+                                setName(item.name)
+                                node.current.value = item.name
+                                setShow(false)
+                            }}
+                        >
+                            {item.name}
+                        </p>)
+
+                    setSuggestion(results.slice(0, 6))
+                }}
                 onBlur={(e) => {
                     setTimeout(() => {
                         setShow(false)

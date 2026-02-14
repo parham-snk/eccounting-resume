@@ -34,8 +34,11 @@
     --text-sm--line-height: calc(1.25 / 0.875);
     --text-lg: 1.125rem;
     --text-lg--line-height: calc(1.75 / 1.125);
+    --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
+    --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-bold: 700;
     --font-weight-black: 900;
@@ -397,11 +400,17 @@
   .w-2\/3 {
     width: calc(2/3 * 100%);
   }
+  .w-2\/12 {
+    width: calc(2/12 * 100%);
+  }
   .w-3 {
     width: calc(var(--spacing) * 3);
   }
   .w-4\/5 {
     width: calc(4/5 * 100%);
+  }
+  .w-4\/12 {
+    width: calc(4/12 * 100%);
   }
   .w-7 {
     width: calc(var(--spacing) * 7);
@@ -492,12 +501,6 @@
   }
   .overflow-hidden {
     overflow: hidden;
-  }
-  .overflow-x-scroll {
-    overflow-x: scroll;
-  }
-  .overflow-y-hidden {
-    overflow-y: hidden;
   }
   .overflow-y-scroll {
     overflow-y: scroll;
@@ -677,6 +680,9 @@
   .align-top {
     vertical-align: top;
   }
+  .font-sans {
+    font-family: var(--font-sans);
+  }
   .text-2xl {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
@@ -769,6 +775,11 @@
   .select-none {
     -webkit-user-select: none;
     user-select: none;
+  }
+  .odd\:bg-blue-100 {
+    &:nth-child(odd) {
+      background-color: var(--color-blue-100);
+    }
   }
   .hover\:bg-gray-200 {
     &:hover {

@@ -3,50 +3,66 @@ import splitNumber from "../../../../components/util/split-numbers"
 import { Context } from "../../../../context/Context"
 
 const ProductRow = props => {
-    const { item } = props
-    const { units } = useContext(Context)
+    const { item ,changeItem} = props
+    const { units, orgcats } = useContext(Context)
 
-    const getCat = (val) => {
+
+    const getUnit = (val) => {
         let list = [...units].filter(unit => unit.id == Number(val))
         return list[0]?.name
     }
+    const getCat = (val) => {
+        let list = [...orgcats].filter(cat => cat.cat_id == Number(val))
+        return list[0]?.cat_name
+    }
     return (
-        <div className="flex flex-row justify-between items-center align-middle w-full hover:bg-gray-200"
+        <tr className="flex flex-row py-1 justify-between items-center align-middle w-full hover:bg-gray-200 odd:bg-blue-100 border-b border-b-gray-400"
 
             draggable={true}
             onDragStart={(ev) => {
                 ev.dataTransfer.setData("product", JSON.stringify(item))
             }}
+
+            onClick={() => {
+                if (props.changeItem) {
+
+                    props?.changeItem(item)
+                }
+            }}
         >
             {
                 //r
             }
-            <div className="w-1/12">
+            <td className="w-1/12 text-center">
                 {item?.r + 1}
-            </div>
+            </td>
             {
                 //id
             }
-            <div className="w-1/12">
+            <td className="w-1/12 text-center">
                 {item?.product_id}
-            </div>
+            </td>
             {
                 //name
             }
-            <div className="">{item?.product_name}</div>
+            <td className="text-start w-4/12 ">{item?.product_name}</td>
             {
                 //category
             }
-            <div className="">{item ? getCat(item?.qty_unit) : null}</div>
+            <td className="text-center w-2/12 text-xs">{item ? getCat(item?.category_id) : null}</td>
+            {
+                //unit
+            }
+            <td className="text-center w-1/12 ">{item ? getUnit(item?.qty_unit) : null}</td>
             {
                 //qty
             }
-            <div className="">{item?.qty}</div>
+            <td className="text-center w-1/12 ">{item?.qty}</td>
             {
                 //price
             }
-            <div className="">{splitNumber(item.product_price)}</div>
-        </div>
+            <td className="text-center w-2/12 ">{splitNumber(item.product_price)}</td>
+        </tr>
     )
 }
 export default ProductRow

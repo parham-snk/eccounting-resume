@@ -34,11 +34,11 @@ const CatParentInput = props => {
         }
     }, [nameInput])
 
-    useEffect(()=>{
-        if(props?.value){
-            [...orgcats].forEach(item=>item.cat_id==props.value?input.current.value=item.cat_name:null)
+    useEffect(() => {
+        if (props?.value) {
+            [...orgcats].forEach(item => item.cat_id == props.value ? input.current.value = item.cat_name : null)
         }
-    },[props])
+    }, [props])
 
 
     window.onkeydown = e => {
@@ -61,6 +61,8 @@ const CatParentInput = props => {
                     setshow(true)
                 }}
                 onBlur={(e) => {
+
+
                     setTimeout(() => {
                         setshow(false)
                     }, 100);
@@ -73,13 +75,17 @@ const CatParentInput = props => {
                     }
                 }}
                 onChange={e => {
+                    if (e.target.value == "") {
+                        setshow(false)
+                        return props.setCatParent(false)
+                    }
                     if (e.target.value) {
                         setNameInput(e.target.value)
                     } else {
                         props.setCatParent()
                     }
                 }}
-                placeholder={props.placeholder?props.placeholder:"زیر مجموعه"} />
+                placeholder={props.placeholder ? props.placeholder : "زیر مجموعه"} />
             {
                 suggested && show &&
                 <div className="w-full h-fit p-2 bg-white shadow-xl rounded absolute mt-2 z-10">
