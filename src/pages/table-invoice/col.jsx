@@ -74,7 +74,7 @@ const TableCol = props => {
     }, [value])
     return (
         <td className="table-cell w-full">
-            <input className={"border w-fit text-center h-7" + (name == "name" ? " w-full" : "")}
+            <input disabled={name=="totalPrice"?true:false} className={"border w-fit text-center h-7" + (name == "name" ? " w-full" : "")}
                 placeholder={name} id={`${name}-${r}`} autoComplete="false" aria-autocomplete="false" autoCorrect="false" ref={input} type="text" />
         </td>
     )

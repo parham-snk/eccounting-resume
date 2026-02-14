@@ -50,6 +50,7 @@ input {
 }
 
 .cats {
+  min-height: 400px;
 
   >ul {
     max-height: 250px;
@@ -70,5 +71,30 @@ input {
       background-color: red;
       display: none;
     }
+  }
+}
+
+@keyframes init {
+  from {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+}
+
+.productModifier {
+  animation: init .2s linear;
+
+  button {
+    font-family: initial;
+  }
+
+  label {
+    font-size: 13px !important;
   }
 }

@@ -5,7 +5,7 @@ import { FaWindowClose } from "react-icons/fa";
 import { Context } from "../../context/Context";
 const Li = props => {
     const { cat, children } = props?.item
-    const { removeCat, changeParent } = useContext(Context)
+    const { removeCat, changeParent,orgcats } = useContext(Context)
     const [ul, setUl] = useState()
     const [hover, setHover] = useState(false)
     useEffect(() => {
@@ -16,12 +16,12 @@ const Li = props => {
             document.getElementById(`${cat.cat_id}`).addEventListener("click", function (e) {
                 $(`#${cat.cat_id}`).parent("p").nextAll("ul").slideToggle(0)
             }, false)
-
-
         })
         let elements = children.map((item, index) => <Ul key={item.cat_name} childs={item} />)
         setUl(elements)
+
     }, [])
+
     return (
         <li id={`li-${cat.cat_id}`} className={`${hover ? "bg-blue-200" : "bg-white"} p-2 `}>
             <p className={`flex flex-row justify-between items-center cursor-move`}
@@ -38,7 +38,7 @@ const Li = props => {
                 }} onDrop={ev => {
                     ev.preventDefault()
                     let id = ev.dataTransfer.getData("li").split("-")[1]
-                    if (id != cat.cat_id) {
+                    if (id != cat.cat_id && id!=cat.parent_id) {
                         changeParent({ cat_id: id, parent_id: cat.cat_id })
                     }
                     setHover(false)
@@ -54,6 +54,9 @@ const Li = props => {
                     <FaWindowClose />
                 </div>
             </p>
+            {
+                //list
+            }
             {ul && ul}
         </li>
     )

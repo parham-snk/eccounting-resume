@@ -3,11 +3,11 @@ import { FaFileInvoice } from "react-icons/fa6";
 import { FaThList } from "react-icons/fa";
 import { TbInvoice } from "react-icons/tb";
 import { Link } from "react-router";
-
+import { AiFillProduct } from "react-icons/ai";
 
 export default function Proggress() {
     return (
-        <div className="bg-white w-full h-full shadow rounded flex flex-col md:flex-row justify-around align-middle items-center p-10 md:p-0 ">
+        <div className="bg-white w-full h-full shadow rounded flex flex-col flex-wrap md:flex-row justify-around align-middle items-center p-10 md:p-0 ">
             <Link to={"/proggres/buyInvoice"}>
                 <div className="my-1 md:my-0 w-40 md:w-50 h-40 md:h-50 shadow rounded flex flex-col justify-center items-center hover:bg-gray-600 hover:text-white bg-white">
                     <FaFileInvoiceDollar size={60} />
@@ -30,6 +30,12 @@ export default function Proggress() {
                 <div className="my-1 md:my-0 w-40 md:w-50 h-40 md:h-50 shadow rounded flex flex-col justify-center items-center hover:bg-gray-600 hover:text-white bg-white">
                     <FaThList size={60} />
                     <p className="my-5">دسته بندی ها </p>
+                </div>
+            </Link>
+            <Link to={"/proggres/products"}>
+                <div className="my-1 md:my-0 w-40 md:w-50 h-40 md:h-50 shadow rounded flex flex-col justify-center items-center hover:bg-gray-600 hover:text-white bg-white">
+                    <AiFillProduct size={60} />
+                    <p className="my-5">کالاها</p>
                 </div>
             </Link>
         </div>

@@ -9,8 +9,10 @@ const Context = createContext({ cats: [] })
 const ContextProvider = ({ children }) => {
     const [orgcats, setorgcats] = useState([])
     const [cats, setCats] = useState([])
-
+    const [products, setProducts] = useState([])
+    const [units, setUnits] = useState([])
     const [uploadCat, setUploadCat] = useState()
+    const [prices, setPrices] = useState()
     //fetch categories list
     function fetchList() {
         fetch("http://localhost:8080/cat").then(data => data.json()).then(data => {
@@ -42,8 +44,35 @@ const ContextProvider = ({ children }) => {
             console.log(err)
         })
     }
-    useEffect(fetchList, [])
+    //fetch products list
+    async function fetchProducts() {
+        axios.get("http://localhost:8080/products").then(data => data.data).then(data => {
+            setProducts([...data])
+        }).catch(console.log)
+    }
+    function fetchUnits() {
+        fetch("http://localhost:8080/unit")
+            .then(data => data.json()).then(data => data.ok ? setUnits(data.data) : alert("err"))
+            .catch(err => alert(err))
+    }
+    async function fetchPrices() {
+        fetch("http://localhost:8080/prices")
+            .then(data => data.json()).then(data => {
+                if (data.ok) {
+                    setPrices(data.data)
+                }
+            })
+            .catch(err => alert(err))
 
+    }
+    //fetch lists
+    useEffect(() => {
+        fetchList();
+        fetchProducts()
+        fetchUnits()
+        fetchPrices()
+    }, [])
+    //add cat
     useEffect(() => {
         if (uploadCat) {
             const { cat_name, parent_id } = uploadCat
@@ -61,12 +90,33 @@ const ContextProvider = ({ children }) => {
         const { cat_id, childstoo } = cat
         axios.delete(`http://localhost:8080/cat/${cat_id}`).then(console.log).then(fetchList)
     }
+    //change cat parent
+    function changeParent({ cat_id, parent_id }) {
+        axios.post("http://localhost:8080/cat/update", { cat_id, parent_id }).then(fetchList)
+    }
 
-    function changeParent({cat_id,parent_id}){
-    axios.post("http://localhost:8080/cat/update",{cat_id,parent_id}).then(fetchList)
+    function addProduct(product) {
+        let { name, qty, price, cat, unit } = product
+        price = String(price).split(",").join("")
+        if (name && qty && price && cat && unit) {
+            axios.post("http://localhost:8080/products", { name, qty: Number(qty), price: Number(price), cat: Number(cat), unit: Number(unit) })
+                .then(data => data.data).then(data => data.ok ? alert("ok") : null).then(fetchProducts)
+                .catch(err => console.log(err))
+        }
+    }
+    function updateProduct(product) {
+        let { id, name, qty, price, cat, unit } = product
+        price = String(price).split(",").join("")
+        console.log(id)
+        axios.post("http://localhost:8080/products/modify", { id, name, qty, price, cat, unit })
+            .then(data => data.data).then(data => data.ok ? alert("product updated") : alert("err")).then(async () => {
+                await fetchProducts()
+                await fetchPrices()
+            })
+            .catch(err => console.log(err))
     }
     return (
-        <Context.Provider value={{ cats, orgcats,changeParent, setUploadCat, removeCat }}>
+        <Context.Provider value={{ cats, orgcats, products, units, prices, changeParent, setUploadCat, removeCat, addProduct, updateProduct }}>
             {children}
         </Context.Provider>
     )

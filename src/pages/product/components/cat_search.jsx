@@ -1,12 +1,5 @@
-import { useContext, useEffect, useRef, useState } from "react"
-import { Context } from "../../../context/Context"
+const CatSearch = props => {
 
-import ElementI from "./element"
-
-const Div = props => {
-    return
-}
-const CatParentInput = props => {
     const input = useRef()
     const [nameInput, setNameInput] = useState()
     const { orgcats } = useContext(Context)
@@ -34,12 +27,6 @@ const CatParentInput = props => {
         }
     }, [nameInput])
 
-    useEffect(()=>{
-        if(props?.value){
-            [...orgcats].forEach(item=>item.cat_id==props.value?input.current.value=item.cat_name:null)
-        }
-    },[props])
-
 
     window.onkeydown = e => {
 
@@ -49,8 +36,8 @@ const CatParentInput = props => {
     }
 
     return (
-        <div div className="relative w-full" >
-            <input ref={input} id="cat" className={` w-full p-2 rounded shadow bg-white`} type="text"
+        <div div className="w-1/4 relative" >
+            <input ref={input} className={` w-full p-2 rounded shadow bg-white`} type="text"
                 onFocus={() => {
                     setsuggested([...orgcats].map((item, index) => <ElementI item={item} key={index} ClickEvent={(item) => {
                         input.current.value = String(item.cat_name)
@@ -79,16 +66,17 @@ const CatParentInput = props => {
                         props.setCatParent()
                     }
                 }}
-                placeholder={props.placeholder?props.placeholder:"زیر مجموعه"} />
+                placeholder="زیر مجموعه" />
             {
                 suggested && show &&
-                <div className="w-full h-fit p-2 bg-white shadow-xl rounded absolute mt-2 z-10">
+                <div className="w-full h-fit p-2 bg-white shadow rounded absolute mt-2 z-10">
                     <p className="text-xs py-1 border-b">پیشنهادها</p>
                     {suggested}
                 </div>
             }
         </div >
     )
+
 }
 
-export default CatParentInput
+export default CatSearch

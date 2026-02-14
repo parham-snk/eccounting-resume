@@ -10,6 +10,7 @@ import InvoiceBuy from "./pages/buy-invoice.jsx";
 import SellInvoice from "./pages/sell-invoice.jsx";
 import { ContextProvider } from "./context/Context.js";
 import CAT_PAGE from "./pages/cat_page.jsx";
+import ProductPage from "./pages/product_page.jsx";
 //test
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path="/proggres"  >
                 <Route index element={<Proggress />} />
                 <Route path="buyInvoice" element={<InvoiceBuy />} />
+                <Route path="products" element={<ProductPage />} />
                 <Route path="sellInvoice" element={<SellInvoice />} />
                 <Route path="cats" element={<CAT_PAGE />} />
               </Route>
