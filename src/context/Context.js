@@ -162,7 +162,9 @@ const ContextProvider = ({ children }) => {
 
 
     return (
-        <Context.Provider value={{update, cats, orgcats, products, units, prices, changeParent, setUploadCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit }}>
+        <Context.Provider 
+        value={{update, cats, orgcats, products, units, prices, 
+        changeParent, setUploadCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit }}>
             {children}
         </Context.Provider>
     )

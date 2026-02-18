@@ -1,4 +1,4 @@
-import { Activity, useRef, useState } from "react"
+import { Activity, useEffect, useRef, useState } from "react"
 import Modal from "../components/modal"
 import SearchUserModal from "../components/modals/searchUser"
 import Table from "./table-invoice/table"
@@ -6,6 +6,9 @@ import Table from "./table-invoice/table"
 const SellInvoice = props => {
     const [date, setDate] = useState("----/--/--")
     const [modal, showModal] = useState(false)
+    useEffect(()=>{
+        document.title="فاکتور فروش"
+    },[])
     return (
         <div className="bg-white w-full h-full shadow rounded flex flex-col  md:justify-start align-middle items-start p-3 md:p-0 ">
             <div className="w-full justify-center flex py-2 pt-3 "><p className="bg-gray-500 rounded p-2 text-white text-sm ">

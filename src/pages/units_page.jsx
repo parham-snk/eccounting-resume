@@ -4,10 +4,12 @@ import UnitModifier from "./unit/Unit_modifier"
 import UnitList from "./unit/unit_list"
 
 const UnitsPage = props => {
-
+    useEffect(() => {
+        document.title = "اصلاح واحد ها "
+    }, [])
     return <div className="">
         <UnitModifier />
-        <UnitList/>
+        <UnitList />
     </div>
 }
 

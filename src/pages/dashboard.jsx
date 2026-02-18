@@ -4,7 +4,7 @@ import { Chart as chartjs, LineElement, PointElement, SubTitle, CategoryScale, L
 import { Chart, Line } from "react-chartjs-2"
 import { Link } from "react-router";
 import Select from "../components/dashboard/select";
-import { Activity, useState } from "react";
+import { Activity, useEffect, useState } from "react";
 import Table from "../components/dashboard/table";
 
 
@@ -17,7 +17,9 @@ const Dashboard = props => {
     const [data, setData] = useState(fakeData)
 
     const [load, setLoad] = useState(false)
-
+    useEffect(() => {
+        document.title = "داشبورد"
+    }, [])
     return (
         <div className="
         w-full h-full

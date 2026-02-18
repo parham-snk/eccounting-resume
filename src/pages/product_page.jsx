@@ -6,6 +6,7 @@ const ProductPage = props => {
 
     const [changeItem, setChangeItem] = useState()
     useEffect(() => {
+        document.title="مدیریت  انبار"
     }, [changeItem])
     return (
         <div className="flex flex-row justify-between align-middle w-full h-full">

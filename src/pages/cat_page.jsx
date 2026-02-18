@@ -21,6 +21,7 @@ const CAT_PAGE = (props) => {
         setCatList(cats)
 
     }, [cats])
+
     return (
         <div className="flex flex-col relative w-full h-full">
             <div className="shadow z-10">
