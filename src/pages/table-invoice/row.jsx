@@ -1,36 +1,80 @@
 import { useEffect, useState } from "react"
 import TableCol from "./col"
+import Name_Invoice_Input from "./cells/name_invoice"
+import QTY_INVOICE_INPUT from "./cells/qty_invoice"
+import PRICE_INVOICE_INPUT from "./cells/price_invoice"
+import DISCOUNT_INVOICE_INPUT from "./cells/discount_invoice"
+import splitNumber from "../../components/util/split-numbers"
 
 const TableRow = props => {
-    let { counter, update } = props
+    let { counter, update, remove } = props
     const [values, setValues] = useState()
-    const list = [{ name: "name", type: "name" }, { name: "qty", type: "qty" }, { name: "price", type: "price" }, { name: "discount", type: "percent" }, { name: "totalPrice", type: "price" }]
-    const elements = list.map((item) => <TableCol update={({ name, value }) => {
-        setValues({ ...values, [name]: value })
-    }} name={item.name} r={counter} type={item.type} />)
-    useEffect(() => {
-        if (values != "") {
-            update({ counter, values })
-        }
-        if (values?.qty && values?.price) {
-            let number = values.discount ? values.qty * Number(String(values.price).split(",").join("")) - ((values.discount / 100) * values.qty * Number(String(values.price).split(",").join(""))) : values.qty * Number(String(values.price).split(",").join(""))
-            number += "."
-            let reg = /\d(?=(\d{3})+\.)/gm
-            number = number.replace(reg, "$&,")
-            number = number.slice(0, number.length - 1)
-            document.getElementById(`totalPrice-${counter -= 1}`).value = number
-            document.getElementById(`totalPrice-${counter}`)?.focus()
-            document.getElementById(`totalPrice-${counter}`)?.blur()
-        } else {
-            document.getElementById(`totalPrice-${counter -= 1}`).value =""
-        }
-        update({ counter, values })
+    const [price, setPrice] = useState()
+    const [qty, setQTY] = useState()
+    const [off, setOff] = useState()
+    const [totalPrice, setTotalPrice] = useState(0)
 
+    useEffect(() => {
+        console.log("changed!")
+        if (values) {
+            if (price && qty && price > 0 && qty > 0) {
+                let total = price * qty
+
+                if (off) {
+                    total = total - total * (off / 100)
+                }
+                setTotalPrice(splitNumber(total))
+            } else {
+                setTotalPrice(0)
+            }
+        } else {
+            setOff(false)
+            setPrice(false)
+            setQTY(false)
+            setTotalPrice("")
+        }
+    }, [price, qty, off])
+    useEffect(() => {
+        if (!values) {
+            setOff(false)
+            setPrice(false)
+            setQTY(false)
+            setTotalPrice("")
+        }
     }, [values])
+
+    useEffect(() => {
+        if (totalPrice) {
+            update({
+                r: counter, product_id: values?.product.product_id, qty: Number(qty), price, off: Number(off), totalPrice: Number(String(totalPrice).split(",").join(""))
+            })
+        }
+    }, [totalPrice])
     return (
         <tr className="h-fit">
             <td className="px-3 border">{counter += 1}</td>
-            {elements}
+            {/* {elements} */}
+            <Name_Invoice_Input update={val => {
+                if (!val) {
+                    remove(counter)
+                    return setValues(false)
+                }
+                setValues({ ...values, product: val })
+            }} />
+            <QTY_INVOICE_INPUT update={val => {
+                setQTY(val)
+            }} enable={values?.product ? true : false} product={values?.product ? values.product : null} />
+            <PRICE_INVOICE_INPUT update={val => {
+                setPrice(val)
+            }} enable={values?.product ? true : false} product={values?.product} />
+
+            <DISCOUNT_INVOICE_INPUT update={val => {
+                setOff(val)
+            }} enable={values?.product ? true : false} />
+
+            <td className="table-cell w-full select-none" style={{ userSelect: "none !important" }}>
+                <input disabled value={totalPrice} className={"border w-fit text-center h-7 "} />
+            </td>
         </tr>
     )
 }

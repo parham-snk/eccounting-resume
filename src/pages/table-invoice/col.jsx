@@ -1,14 +1,34 @@
 import { useEffect, useRef, useState } from "react"
 import splitNumber from "../../components/util/split-numbers"
+import Modal from "../../components/modal"
+import SearchProducts from "../../components/modals/search-products"
 const TableCol = props => {
-    const { r, name, type, update } = props
+    const { r, name, type, update, initValue } = props
     const [value, setValue] = useState()
     const input = useRef()
+    const [Ivalue, setIValue] = useState()
+
+    const [showModal, setShowModal] = useState(false)
+    useEffect(() => {
+        if (initValue) {
+            setIValue(initValue)
+            input.current.value=initValue[name]
+        }
+
+    }, [initValue])
+
     useEffect(() => {
         switch (type) {
             case "name":
-                input.current.addEventListener("keydown", e => {
+                input.current.addEventListener("change", e => {
 
+                })
+                input.current.addEventListener("keyDown", e => {
+                    e.preventDefault()
+                })
+
+                input.current.addEventListener("click", e => {
+                    setShowModal(true)
                 })
                 break;
             case "price":
@@ -59,7 +79,7 @@ const TableCol = props => {
 
             setValue(e.target.value)
             if (e.target.value == "") {
-                if(name == "name" || name=="price" || name=="qty")  input.current.style.backgroundColor = "rgba(255,0,0,.2)" 
+                if (name == "name" || name == "price" || name == "qty") input.current.style.backgroundColor = "rgba(255,0,0,.2)"
             } else {
                 input.current.style.backgroundColor = "white"
 
@@ -72,10 +92,28 @@ const TableCol = props => {
     useEffect(() => {
         update({ name, value })
     }, [value])
+    useEffect(() => {
+        if (Ivalue) {
+
+            input.current.value = Ivalue[name] ? Ivalue[name] : ""
+        }
+    }, [Ivalue])
     return (
         <td className="table-cell w-full">
-            <input disabled={name=="totalPrice"?true:false} className={"border w-fit text-center h-7" + (name == "name" ? " w-full" : "")}
+            <input disabled={name == "totalPrice" ? true : false} className={"border w-fit text-center h-7" + (name == "name" ? " w-full" : "")}
                 placeholder={name} id={`${name}-${r}`} autoComplete="false" aria-autocomplete="false" autoCorrect="false" ref={input} type="text" />
+            {
+                showModal &&
+                <Modal close={() => setShowModal(false)} >
+                    <SearchProducts close={() => {
+                        setShowModal(false)
+                    }} update={(name, val) => {
+                        update( name, val )
+                    }} />
+                </Modal>
+
+
+            }
         </td>
     )
 }

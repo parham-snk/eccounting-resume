@@ -17,7 +17,13 @@ const InvoiceBuy = props => {
                     <th className="my-1 p-1 text-xs bg-gray-500 w-full rounded text-white">خریدار</th>
                 </thead>
                 <tbody className="flex flex-col">
+                    {
+                        //شماره فاکتور
+                    }
                     <td><input type="text" className="border border-gray-400 rounded p-1 my-1 text text-center" /></td>
+                    {
+                        //تاریخ
+                    }
                     <td><input dir="ltr" placeholder={date} type="text" value={date} onKeyDown={(e) => {
                         let key = e.key
                         // console.log(key)
@@ -58,6 +64,9 @@ const InvoiceBuy = props => {
                             setDate(D)
                         }}>📅</button> */}
                     </td>
+                    {
+                        //خریدار
+                    }
                     <td className="relative">
                         <input type="text" className="border border-gray-400 rounded p-1 my-1 text text-center select-none" onFocus={() => {
                             if (!modal) {
@@ -66,9 +75,11 @@ const InvoiceBuy = props => {
                         }} />
                         {
                             modal &&
-                            <Modal component={SearchUserModal} close={() => {
+                            <Modal close={() => {
                                 showModal(false)
-                            }} />
+                            }} >
+                                <SearchUserModal />
+                            </Modal>
                         }
 
                     </td>

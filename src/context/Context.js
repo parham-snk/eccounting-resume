@@ -65,13 +65,15 @@ const ContextProvider = ({ children }) => {
             .catch(err => alert(err))
 
     }
-    //fetch lists
-    useEffect(() => {
+
+    function update() {
         fetchList();
         fetchProducts()
         fetchUnits()
         fetchPrices()
-    }, [])
+    }
+    //fetch lists
+    useEffect(update, [])
     //add cat
     useEffect(() => {
         if (uploadCat) {
@@ -94,7 +96,6 @@ const ContextProvider = ({ children }) => {
     function changeParent({ cat_id, parent_id }) {
         axios.post("http://localhost:8080/cat/update", { cat_id, parent_id }).then(fetchList)
     }
-
     function addProduct(product) {
         let { name, qty, price, cat, unit } = product
         price = String(price).split(",").join("")
@@ -115,8 +116,53 @@ const ContextProvider = ({ children }) => {
             })
             .catch(err => console.log(err))
     }
+    async function removeProduct(product_id) {
+        axios.delete(`http://localhost:8080/products/${product_id}`).then(data => data.data).then(data => {
+            if (data.ok) {
+                fetchList()
+                fetchPrices()
+                fetchProducts()
+                return true
+            } else {
+                return false
+            }
+        }).catch(err => {
+            return err
+        })
+    }
+    async function addUnit(unitName) {
+        axios.post("http://localhost:8080/unit", { name: unitName }).then(data => data.data).then(data => {
+            if (data.ok) {
+                fetchUnits()
+                alert("unit added!")
+            } else {
+                alert("failed add unit action!")
+            }
+        })
+    }
+    async function removeUnit(unitID) {
+        axios.delete("http://localhost:8080/unit", { data: { id: unitID } })
+            .then(data => data.data).then(data => {
+                if (data.ok) {
+                    fetchUnits()
+                    alert("unit removed!")
+                    return true
+
+                }
+                alert("unit dosnt removed!")
+                return false
+
+            })
+            .catch(err => {
+                alert(err)
+                return err
+            })
+
+    }
+
+
     return (
-        <Context.Provider value={{ cats, orgcats, products, units, prices, changeParent, setUploadCat, removeCat, addProduct, updateProduct }}>
+        <Context.Provider value={{update, cats, orgcats, products, units, prices, changeParent, setUploadCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit }}>
             {children}
         </Context.Provider>
     )

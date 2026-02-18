@@ -8,11 +8,16 @@ import P404 from './pages/404';
 import Proggress from './pages/proggres';
 import InvoiceBuy from "./pages/buy-invoice.jsx";
 import SellInvoice from "./pages/sell-invoice.jsx";
-import { ContextProvider } from "./context/Context.js";
+import { Context, ContextProvider } from "./context/Context.js";
 import CAT_PAGE from "./pages/cat_page.jsx";
 import ProductPage from "./pages/product_page.jsx";
+import UnitsPage from "./pages/units_page.jsx";
+import { useContext, useEffect } from "react";
+import { MdOutlineRefresh } from "react-icons/md";
+import RefreshBTN from "./components/toolbar/refreshBTN.jsx";
 //test
 function App() {
+  const { update } = useContext(Context)
   return (
     <div className="bg-gray-100
     w-full h-dvh
@@ -21,6 +26,10 @@ function App() {
         <BrowserRouter>
           <Sidebar />
 
+          {
+            //btns
+          }
+          <RefreshBTN />
           <div className="order-1 md:order-2
         w-10/11 md:w-4/6 h-9/10 mx-5 overflow-y-scroll md:overflow-hidden">
 
@@ -32,6 +41,7 @@ function App() {
                 <Route path="products" element={<ProductPage />} />
                 <Route path="sellInvoice" element={<SellInvoice />} />
                 <Route path="cats" element={<CAT_PAGE />} />
+                <Route path="units" element={<UnitsPage />} />
               </Route>
 
 

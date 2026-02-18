@@ -43,7 +43,7 @@ const Qty_Unit = props => {
         <div className="w-full relative">
             <input className="bg-white shadow px-2 focus:bg-blue-200 p-1 my-1"
                 ref={node}
-                type="text" id="unit" name={"unit"} placeholder=""
+                type="text" id="unit" placeholder=""
                 onChange={e => {
                     setName(e.target.value)
                 }

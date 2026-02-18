@@ -1,11 +1,12 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import splitNumber from "../../../../components/util/split-numbers"
 import { Context } from "../../../../context/Context"
 
+import { jQuery as $ } from "jquery"
 const ProductRow = props => {
-    const { item ,changeItem} = props
+    const { item, changeItem } = props
     const { units, orgcats } = useContext(Context)
-
+    const { selected, setSelected } = useState(false)
 
     const getUnit = (val) => {
         let list = [...units].filter(unit => unit.id == Number(val))
@@ -16,7 +17,7 @@ const ProductRow = props => {
         return list[0]?.cat_name
     }
     return (
-        <tr className="flex flex-row py-1 justify-between items-center align-middle w-full hover:bg-gray-200 odd:bg-blue-100 border-b border-b-gray-400"
+        <tr className={`cursor-pointer flex flex-row py-1 justify-between items-center align-middle w-full hover:bg-gray-200 odd:bg-blue-100 border-b border-b-gray-400 `}
 
             draggable={true}
             onDragStart={(ev) => {

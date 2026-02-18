@@ -7,7 +7,7 @@ import Chart_product_prices from "./components/elements/chart-product-prices"
 
 const ProductModifier = props => {
     const { item } = props
-    let { addProduct, updateProduct, prices } = useContext(Context)
+    let { addProduct, updateProduct, prices, removeProduct } = useContext(Context)
 
     const [id, setId] = useState()
     const [name, setName] = useState(item?.product_name || "")
@@ -48,7 +48,7 @@ const ProductModifier = props => {
             setId(product_id)
             setName(product_name)
             setQTY(qty)
-            setPrice(product_price)
+            setPrice(splitNumber(product_price))
             setCat(category_id)
             setUnit(qty_unit)
         }
@@ -56,7 +56,7 @@ const ProductModifier = props => {
     }, [props])
 
     function resetFields() {
-        document.querySelectorAll("input").forEach(item=>item.value="")
+        document.querySelectorAll("input").forEach(item => item.value = "")
         setId()
         setName("")
         setQTY(0)
@@ -73,7 +73,7 @@ const ProductModifier = props => {
         }
     }, [id])
     return <div id="modifier"
-        className="flex flex-col w-1/3 h-full pb-5  bg-white productModifier rounded shadow overflow-hidden overflow-y-scroll"
+        className="flex flex-col w-1/3 h-full pb-5  bg-white productModifier rounded shadow overflow-hidden overflow-y-scroll z-10"
         onDragOver={e => {
             e.preventDefault()
             document.getElementById("modifier").style.background = "rgba(81, 150, 255,.5)"
@@ -95,23 +95,31 @@ const ProductModifier = props => {
             setQTY(qty)
             setUnit(qty_unit)
             document.getElementById("cat").value = ""
-
-
         }}
 
     >
-        <button className="bg-blue-100 text-sm font-medium cursor-pointer w-1/3 sticky top-0 mt-2 p-2  mb-2" onClick={resetFields}>ریست کردن فرم</button>
+        <div className="w-full flex flex-row justify-between items-center align-middle sticky top-0 mt-2 bg-white shadow">
+            <button className="bg-blue-100 text-sm font-medium cursor-pointer w-1/3 mt-2 p-2  mb-2" onClick={resetFields}>ریست کردن فرم</button>
+            {
+                id &&
+                <button className="bg-red-100 text-sm font-medium cursor-pointer w-1/3  mt-2 p-2  mb-2 " onClick={() => {
+                    removeProduct(id).then(resetFields)
+                }
+                }>حذف محصول</button>
+
+            }
+        </div>
         {
             //id
             id &&
-            <h1 className="flex flex-row-reverse justify-end px-3 mb-2 items-center"> <span className="text-2xl">{id}</span> id : </h1>
+            <h1 className="flex flex-row-reverse justify-end px-3 mb-2 items-center"> <span className="text-2xl" id="p_id">{id}</span> id : </h1>
         }
         {
             //name
         }
         <div className="flex flex-col justify-start mx-2 px-2 mt-5 my-2">
             <label htmlFor={"name"}>نام کالا: </label>
-            <input className="bg-white shadow px-2 focus:bg-blue-200 p-1 my-1" type="text" value={name} id="name" name={"name"} placeholder="نام کالا" onChange={e => setName(e.target.value)} />
+            <input className="bg-white shadow px-2 focus:bg-blue-200 p-1 my-1" type="text" value={name} id="name"  placeholder="نام کالا" onChange={e => setName(e.target.value)} />
         </div>
 
         {
@@ -120,11 +128,11 @@ const ProductModifier = props => {
         <div className="flex flex-col justify-start mx-2 px-2 my-2">
             <label htmlFor={"price"}>{"قیمت واحد :"}</label>
             <input className="bg-white shadow px-2 focus:bg-blue-200 p-1 my-1"
-                type="text" value={price} id={"price"} name={"price"} placeholder=""
+                type="text" value={price} id={"price"}  placeholder=""
                 onKeyDown={e => {
                     let reg = /\d/
-                    
-                    if(e.key=="Backspace"){
+
+                    if (e.key == "Backspace") {
                         return
                     }
                     if (reg.test(e.key) == false) return e.preventDefault()
@@ -148,7 +156,7 @@ const ProductModifier = props => {
         <div className="flex flex-col justify-start mx-2 px-2 my-2">
             <label htmlFor={"qty"}>{qty ? "موجودی کالا :" : "موجودی اولیه انبار :"}</label>
             <input className="bg-white shadow px-2 focus:bg-blue-200 p-1 my-1"
-                type="text" value={qty} id="qty" name={"qty"}
+                type="text" value={qty} id="qty" 
                 onKeyDown={e => {
                     let reg = /\d/
                     if (e.key == "Backspace") { return }
@@ -163,7 +171,8 @@ const ProductModifier = props => {
             <label htmlFor={"unit"}>{"واحد شمارش کالا : "}</label>
             <Qty_Unit unit={unit} setUnit={val => setUnit(val)} />
         </div>
-        {id &&
+        {
+            id &&
             <button className="cursor-pointer bg-blue-400 py-2 rounded m-4 text-white"
                 onClick={() => { updateProduct({ id, name, qty, price, cat, unit }) }}
             >به روز رسانی محصول
@@ -173,6 +182,7 @@ const ProductModifier = props => {
             !id &&
             <button className="cursor-pointer bg-blue-400 py-2 rounded m-4 text-white" onClick={() => {
                 addProduct({ name, qty, price, cat, unit })
+                // resetFields()
             }}>افزودن محصول</button>
         }
 
@@ -181,7 +191,7 @@ const ProductModifier = props => {
             productPrices && chart && id &&
             chart
         }
-    </div>
+    </div >
 }
 
 export default ProductModifier

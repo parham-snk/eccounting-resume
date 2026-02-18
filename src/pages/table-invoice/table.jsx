@@ -6,24 +6,25 @@ const Table = props => {
     const [form, setForm] = useState([])
     const [arr, setArr] = useState([1, 2, 3, 4])
     const [total, setTotal] = useState(0)
-    const [emptyList,setEmptyList]=useState([])
-    let elements = arr.map((i, index) => <TableRow  update={({ counter, values }) => {
-        setForm({ ...form, [counter]: values })
-    }} key={index} counter={index} />)
-    useEffect(() => {
-        console.log(form)
+    const [emptyList, setEmptyList] = useState([])
+
+
+    function getTotalPrice() {
         let numbers = []
         //گرفتن مقدار هر totalPrice در آرایه فرم و push کردن اون به آرایه numbers جهت به دست آوردن مبلغ کل فاکتور 
         for (let value in form) {
             if (form[value]?.totalPrice) {
-                numbers.push(form[value].totalPrice.split(",").join(""))
+                numbers.push(form[value].totalPrice)
             }
         }
+
         // به دست آوردن مبلغ کل فاکتور با استفاده از آرایه numbers
         if (numbers.length > 0) {
             let t = numbers.reduce((t, c) => Number(c) + Number(t))
             t = splitNumber(t)
             setTotal(t)
+        } else {
+            setTotal(0)
         }
         //اضافه کردن ردیف جدید بعد از تکمیل فیلدهای ردیف آخر
         if (form[arr.length - 1]?.totalPrice) {
@@ -34,10 +35,23 @@ const Table = props => {
 
             })
         }
+    }
 
+    let elements = arr.map((i, index) => <TableRow update={(row) => {
+        setForm({ ...form, [index + 1]: row })
 
+    }} remove={index => {
+        let f = form
+        delete f[index]
+        getTotalPrice()
+        setForm(f)
+    }} key={index} counter={index} />)
+    useEffect(() => {
+        if (form)
+            getTotalPrice()
     }, [form])
-    //فانکشن افزودن ردیف در جدول
+    // فانکشن افزودن ردیف در جدول
+
     async function addRow() {
         setArr([...arr, arr.length + 1])
         document.getElementById("box").scrollTo(0, (document.getElementById("box").scrollHeight))
@@ -61,9 +75,9 @@ const Table = props => {
                     {
                         //add row BTN
                     }
-                    <button 
-                    className="absolute -left-10 bottom-0 bg-black text-white py-1 px-2  transition rounded-full cursor-pointer" 
-                    onClick={addRow}>+</button>
+                    <button
+                        className="absolute -left-10 bottom-0 bg-black text-white py-1 px-2  transition rounded-full cursor-pointer"
+                        onClick={addRow}>+</button>
                 </tbody>
                 <tfoot className="relative border">
                     <td className="text-center">مجموع</td>

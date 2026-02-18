@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import SearchUserModal from "./modals/searchUser"
+// import SearchUserModal from "./modals/searchUser"
 const Modal = props => {
     const [show, setshow] = useState(true)
     useEffect(() => {
@@ -18,8 +18,9 @@ const Modal = props => {
                 setshow(false)
             }}></div>
 
-            <props.component />
-
+            {
+                props.children
+            }
         </div>
     )
 }
