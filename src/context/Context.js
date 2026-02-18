@@ -13,6 +13,7 @@ const ContextProvider = ({ children }) => {
     const [units, setUnits] = useState([])
     const [uploadCat, setUploadCat] = useState()
     const [prices, setPrices] = useState()
+    const [eccounts, setEccounts] = useState()
     //fetch categories list
     function fetchList() {
         fetch("http://localhost:8080/cat").then(data => data.json()).then(data => {
@@ -65,12 +66,21 @@ const ContextProvider = ({ children }) => {
             .catch(err => alert(err))
 
     }
-
+    function fetchEccounts() {
+        fetch("http://localhost:8080/eccounts").then(data => data.json()).then(data => {
+            if (data.ok) {
+                setEccounts(data.data)
+            }
+        }).catch((err) => {
+            alert(err)
+        })
+    }
     function update() {
         fetchList();
         fetchProducts()
         fetchUnits()
         fetchPrices()
+        fetchEccounts()
     }
     //fetch lists
     useEffect(update, [])
@@ -160,11 +170,44 @@ const ContextProvider = ({ children }) => {
 
     }
 
-
+    async function addEccount(eccount_name, eccount_total, eccount_last_status_total) {
+        axios.post("http://localhost:8080/eccounts", { eccount_name, eccount_total, eccount_last_status_total }).then(data => data.data).then(data => {
+            if (data.ok) {
+                return update()
+            }
+            alert("err")
+        }).catch(err => alert(err))
+    }
+    function deleteEccount(eccount_id) {
+        if (eccount_id)
+            axios.delete("http://localhost:8080/eccounts", { eccount_id }).then(data => data.data).then(data => {
+                if (data.ok) {
+                    update()
+                } else {
+                    alert("err")
+                }
+            }).catch(err => {
+                alert(err)
+            })
+    }
+    function updateEccount(eccount) {
+        if (eccount)
+            axios.put("http://localhost:8080/eccounts", { eccount }).then(data => data.data).then(data => {
+                if (data.ok) {
+                    update()
+                } else {
+                    alert("err")
+                }
+            }).catch(err => {
+                alert(err)
+            })
+    }
     return (
-        <Context.Provider 
-        value={{update, cats, orgcats, products, units, prices, 
-        changeParent, setUploadCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit }}>
+        <Context.Provider
+            value={{
+                update, cats, orgcats, products, units, prices, eccounts,
+                changeParent, setUploadCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount,updateEccount
+            }}>
             {children}
         </Context.Provider>
     )
