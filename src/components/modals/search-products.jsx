@@ -16,7 +16,7 @@ const SearchProducts = props => {
         if (products) {
             function P(item, index) {
                 return <p
-                    className="w-full cursor-pointer hover:bg-gray-300 p-3 flex flex-row justify-between items-center align-middle border-b last:border-b-0"
+                    className="w-full cursor-pointer hover:bg-gray-300 dark:hover:text-black dark:bg-zinc-700 p-3 flex flex-row justify-between items-center align-middle border-b last:border-b-0"
                     key={index}
                     onClick={() => {
                         update(item)
@@ -38,11 +38,11 @@ const SearchProducts = props => {
 
     }, [products, name])
     return (
-        <div className="flex flex-col justify-sub items-center z-10 bg-white w-4/5 md:w-1/4 h-4/5 shadow p-4 rounded">
+        <div className="flex flex-col justify-sub items-center z-10 bg-white dark:bg-zinc-700 w-4/5 md:w-1/4 h-4/5 shadow p-4 rounded">
             <div className="flex flex-row justify-center align-middle items-center">
-                <input onChange={e => setName(e.target.value)} autoFocus ref={field} type="text"
+                <input autoComplete="off" onChange={e => setName(e.target.value)} autoFocus ref={field} type="text"
                     className="border border-gray-400 rounded px-2 py-1" placeholder="یافتن محصول" />
-                <div className="w-7 h-7 mx-5 flex justify-center align-middle items-center cursor-pointer bg-gray-100 border border-gray-200"
+                <div className="w-7 h-7 mx-5 flex justify-center align-middle items-center cursor-pointer bg-gray-100 dark:text-white dark:bg-zinc-700 border border-gray-200"
                     onClick={() => {
                         showModal(true)
                     }}>

@@ -20,7 +20,7 @@ import Eccounts_page from "./pages/eccounts_page.jsx";
 function App() {
   const { update } = useContext(Context)
   return (
-    <div className="bg-gray-100
+    <div className="bg-gray-100 dark:bg-zinc-900 dark
     w-full h-dvh
     flex flex-col md:flex-row justify-center align-middle items-center">
       <ContextProvider>

@@ -3,6 +3,7 @@ import TableRow from "./row"
 import splitNumber from "../../components/util/split-numbers"
 
 const Table = props => {
+    const { limit } = props
     const [form, setForm] = useState([])
     const [arr, setArr] = useState([1, 2, 3, 4])
     const [total, setTotal] = useState(0)
@@ -37,7 +38,7 @@ const Table = props => {
         }
     }
 
-    let elements = arr.map((i, index) => <TableRow update={(row) => {
+    let elements = arr.map((i, index) => <TableRow limit={limit} update={(row) => {
         setForm({ ...form, [index + 1]: row })
 
     }} remove={index => {
@@ -60,7 +61,7 @@ const Table = props => {
     return (
         <div className="w-full flex justify-center align-sub  overflow-y-scroll" id="box">
             <table className="w-fit   mx-2  table  ">
-                <thead className="sticky z-10  top-0 bg-gray-500 rounded-md text-white w-full h-full">
+                <thead className="sticky z-10  top-0 bg-gray-500 rounded-md text-white w-full h-full ">
                     <th className=" w-auto relative">r</th>
                     <th className=" relative">نام کالا</th>
                     <th className=" relative">تعداد کالا</th>
@@ -68,7 +69,7 @@ const Table = props => {
                     <th className=" relative">درصد تخفیف</th>
                     <th className=" relative">قیمت کل</th>
                 </thead>
-                <tbody className="relative">
+                <tbody className="relative dark:text-white">
                     {
                         elements
                     }

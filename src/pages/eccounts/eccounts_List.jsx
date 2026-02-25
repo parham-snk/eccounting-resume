@@ -45,7 +45,7 @@ const Eccount_List = props => {
     useEffect(() => {
 
     }, [suggestion])
-    return <div className="flex flex-col w-2/3 h-full rounded bg-white shadow-xl">
+    return <div className="flex flex-col w-2/3 h-full rounded bg-white shadow-xl dark:bg-zinc-700 dark:text-white">
         <SearchBar_eccount setName={val => setName(val)} />
         <div className="flex flex-col min-h-full w-full justify-start align-top">
             {

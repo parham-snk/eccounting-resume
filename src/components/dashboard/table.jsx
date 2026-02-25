@@ -5,7 +5,7 @@ const Table = ({ data }) => {
     const rows = data.map((row, index) => <Tr data={row} />)
     return (
         <table className="w-full h-full max-h-full  text-center overflow-y-scroll scale-99 md:scale-100 text-xs ">
-            <tr className="py-2 sticky -top-1 md:top-0 bg-white shadow">
+            <tr className="py-2 sticky -top-1 md:top-0 bg-white dark:bg-zinc-800 shadow">
                 <th className="py-2 w-1/10">شماره سند</th>
                 <th className="py-2 w-1/10">تاریخ</th>
                 <th className="py-2">توضیحات</th>

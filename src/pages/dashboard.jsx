@@ -62,12 +62,17 @@ const Dashboard = props => {
                         }}
                     />
                 </div>
+
+                {
+                    //left section
+                }
                 <div className="
                 w-full md:w-2/5 h-fit md:h-full bg-white
                 flex flex-col align-sub items-start
                 p-5
                 rounded-sm shadow
                 order-1 md:order-2
+                dark:bg-zinc-700 dark:text-white
                 ">
                     <p className="border-b w-full  pb-5 font-black">موجودی</p>
                     <div className="w-full h-1/3 flex flex-row justify-center align-middle items-center
@@ -78,15 +83,15 @@ const Dashboard = props => {
                     </div>
 
                     <div className="flex flex-row justify-center align-middle w-full gap-2">
-                        <div className="py-2 w-1/2 flex flex-col justify-center items-center  align-middle bg-blue-50">
-                            <IoTrendingUpSharp size={30} className="text-blue-500" />
-                            <p className="bg-blue-200 text-blue-400 px-10 py-3 my-2 rounded">400</p>
-                            <p className="text-blue-500">طلب ها</p>
+                        <div className="py-2 w-1/2 flex flex-col justify-center items-center  align-middle bg-blue-50 dark:bg-blue-900 dark:rounded">
+                            <IoTrendingUpSharp size={30} className="text-blue-500 dark:text-blue-300" />
+                            <p className="bg-blue-200  text-blue-400 dark:bg-blue-600 dark:text-blue-200 dark:rounded px-10 py-3 my-2 rounded">400</p>
+                            <p className="text-blue-500 dark:text-blue-300">طلب ها</p>
                         </div>
-                        <div className="py-2 w-1/2 flex flex-col justify-center align-middle items-center bg-red-50">
-                            <IoTrendingDownSharp size={30} className="text-red-500" />
-                            <p className="bg-red-200 text-red-400 px-10 py-3 my-2 rounded">400</p>
-                            <p className="text-red-500">بدهی ها</p>
+                        <div className="py-2 w-1/2 flex flex-col justify-center align-middle items-center bg-red-50 dark:bg-red-900 dark:rounded ">
+                            <IoTrendingDownSharp size={30} className="text-red-500 dark:text-red-300" />
+                            <p className="bg-red-200 text-red-400 px-10 py-3 my-2 rounded dark:bg-red-600 dark:text-red-200">400</p>
+                            <p className="text-red-500 dark:text-red-300">بدهی ها</p>
                         </div>
 
                     </div>
@@ -95,12 +100,14 @@ const Dashboard = props => {
                 " to={"/bill"}>مشاهده حساب</Link>
                 </div>
             </div>
-
-            <div className="flex flex-col justify-between align-sub items-start w-full min-h-1/2 max-h-1/2 bg-white shadow rounded-md py-4 px-7 relative">
+            {
+                //buttom section
+            }
+            <div className="flex flex-col justify-between align-sub items-start w-full min-h-1/2 max-h-1/2 bg-white dark:bg-zinc-700 dark:text-white shadow rounded-md py-4 px-7 relative">
                 <div className="flex flex-col justify-start md:flex-row md:justify-between align-middle md:items-center w-full text-sm border-b pb-5 md:border-b-0 md:pb-0">
 
                     <p className="w-fit start-0 text-start text-nowrap order-1">فعالیت های اخیر</p>
-                    <input type="text" className="bg-gray-200 my-4 md:my-0 mx-10 py-2 ps-5 md:w-100 text-right outline-0 rounded order-4" placeholder="جستجو" />
+                    <input type="text" className="bg-gray-200 my-4 md:my-0 mx-10 py-2 ps-5 md:w-100 text-right outline-0 rounded order-4 dark:text-black" placeholder="جستجو" />
 
                     <div className=" flex flex-row align-middle items-center mx-10 order-4">
                         <p className="text-xs text-nowrap">هفته اخیر</p>
@@ -129,7 +136,7 @@ const Dashboard = props => {
 
 
                         }} />
-                        <p className="text-xs text-gray-500">({data.length} مورد)</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-300">({data.length} مورد)</p>
                     </div>
                     <Link to={"/lasts"} className="decoration-1 text-nowrap text-xs md:text-sm  md:mx-10 py-1 md:bg-none order-2 md:order-4
                     absolute md:relative top-3 md:top-0 end-5 md:end-0

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 
 const QTY_INVOICE_INPUT = props => {
-    const { value, product, enable } = props
+    const { value, product, enable ,limit} = props
     const [item, setItem] = useState()
     const [qtyInput, setqtyInput] = useState()
     const [err, setErr] = useState(false)
@@ -16,7 +16,7 @@ const QTY_INVOICE_INPUT = props => {
     }, [props])
     
     return <td className="table-cell w-full">
-        <input className={`border w-fit text-center h-7 ${err ? "bg-red-200" : "bg-white"}`}
+        <input className={`border w-fit text-center h-7 ${err ? "bg-red-200 dark:bg-red-300" : "bg-white dark:bg-zinc-700"} dark:placeholder:text-gray-500`}
             disabled={enable ? false : true}
             ref={input}
 
@@ -30,7 +30,7 @@ const QTY_INVOICE_INPUT = props => {
 
             }}
             onChange={(e) => {
-                if (Number(e.target.value) > item?.qty) {
+                if (Number(e.target.value) > item?.qty && limit) {
                     e.target.value = ""
                     alert("مقدار غیر مجاز (از موجودی انبار بیشتر است)")
                 }
@@ -44,7 +44,7 @@ const QTY_INVOICE_INPUT = props => {
                     props.update(e.target.value)
                 }
             }}
-            placeholder={product ? `حداکثر تعداد مجاز : ${item?.qty}` : ""}
+            placeholder={product &&limit ? `حداکثر تعداد مجاز : ${item?.qty}` : ""}
         />
     </td>
 }

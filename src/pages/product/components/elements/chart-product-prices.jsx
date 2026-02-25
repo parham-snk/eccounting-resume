@@ -10,6 +10,7 @@ const Chart_product_prices = props => {
     const [dates, setdates] = useState()
     const [prices, setPrices] = useState()
     useEffect(() => {
+        console.log(window)
         if (data) {
             setdates([...data].map(item => item.createAt))
             setPrices([...data].map(item => item.price))
@@ -32,7 +33,7 @@ const Chart_product_prices = props => {
         }
     }, [listPrices])
     return (
-        <div className="">
+        <div className="text-white bg-white m-4 rounded">
             {
                 dates && dates.length <= 1 &&
                 <h1>لیست قیمتی وجود ندارد</h1>
@@ -55,7 +56,7 @@ const Chart_product_prices = props => {
                             label: "تومان",
                             borderWidth: 1.5,
                             fill: true,
-                            backgroundColor: "black",
+                            backgroundColor: "white",
                             tension: 0.3,
                             pointHoverBorderColor: "gold",
                             pointHoverBorderWidth: 2,

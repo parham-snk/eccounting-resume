@@ -48,7 +48,7 @@ const Name_Invoice_Input = props => {
             }
             {
                 context &&
-                <div className="w-full min-h-20 bg-white rounded shadow absolute top-0 ">
+                <div className="w-full min-h-20 bg-white dark:bg-zinc-700 rounded shadow absolute top-0 ">
                     <p className="cursor-pointer w-full p-2 text-start text-red-400"
                         onClick={() => {
                             update(false)

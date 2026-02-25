@@ -77,7 +77,7 @@ const ListProducts = props => {
     }, [searchCat])
 
     return (
-        <div className="flex flex-col justify-start items-start w-2/3 mx-2 h-full bg-white p-2 rounded shadow">
+        <div className="flex flex-col justify-start items-start w-2/3 mx-2 h-full bg-white dark:bg-zinc-700 dark:text-gray-300 p-2 rounded shadow">
             <SearchComponent SetSearchName={val => SetSearchName(val)} SetSearchCat={id => SetSearchCat(id)} />
             <table className="font-sans list flex flex-col justify-start align-sub w-full h-full overflow-y-scroll">
                 <tr className="flex flex-row justify-between items-center align-middle w-full">

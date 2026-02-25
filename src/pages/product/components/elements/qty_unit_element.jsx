@@ -41,7 +41,7 @@ const Qty_Unit = props => {
     }, [name])
     return (
         <div className="w-full relative">
-            <input className="bg-white shadow px-2 focus:bg-blue-200 p-1 my-1"
+            <input autoComplete="off" className="bg-white dark:text-black shadow px-2 focus:bg-blue-200 p-1 my-1"
                 ref={node}
                 type="text" id="unit" placeholder=""
                 onChange={e => {

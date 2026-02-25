@@ -9,7 +9,7 @@ const Ul = props => {
     }, [])
     return (
         <ul
-            className="m-2 shadow border  rounded    bg-white">
+            className="m-2 shadow border  rounded    bg-white dark:bg-zinc-700 dark:text-white">
             {
                 elements &&
                 <Li item={elements} />

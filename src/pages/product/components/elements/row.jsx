@@ -17,7 +17,11 @@ const ProductRow = props => {
         return list[0]?.cat_name
     }
     return (
-        <tr className={`cursor-pointer flex flex-row py-1 justify-between items-center align-middle w-full hover:bg-gray-200 odd:bg-blue-100 border-b border-b-gray-400 `}
+        <tr className={`cursor-pointer flex flex-row py-1 justify-between items-center align-middle w-full
+             hover:bg-gray-200 odd:bg-blue-100 border-b border-b-gray-400 odd:dark:bg-zinc-500 odd:dark:text-black
+             dark:hover:bg-zinc-900 dark:hover:text-white 
+             `
+        }
 
             draggable={true}
             onDragStart={(ev) => {

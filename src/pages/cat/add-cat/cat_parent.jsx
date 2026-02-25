@@ -50,7 +50,7 @@ const CatParentInput = props => {
 
     return (
         <div div className="relative w-full" >
-            <input ref={input} id="cat" className={` w-full p-2 rounded shadow bg-white`} type="text"
+            <input autoComplete="off" ref={input} id="cat" className={` w-full p-2 rounded shadow bg-white dark:text-black`} type="text"
                 onFocus={() => {
                     setsuggested([...orgcats].map((item, index) => <ElementI item={item} key={index} ClickEvent={(item) => {
                         input.current.value = String(item.cat_name)
@@ -88,7 +88,7 @@ const CatParentInput = props => {
                 placeholder={props.placeholder ? props.placeholder : "زیر مجموعه"} />
             {
                 suggested && show &&
-                <div className="w-full h-fit p-2 bg-white shadow-xl rounded absolute mt-2 z-10">
+                <div className="w-full h-fit p-2 bg-white dark:bg-zinc-700 shadow-xl rounded absolute mt-2 z-10 dark:text-white">
                     <p className="text-xs py-1 border-b">پیشنهادها</p>
                     {suggested}
                 </div>

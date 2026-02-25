@@ -35,12 +35,12 @@ const Eccount_Modifier = props => {
             setName(eccount.eccount_name)
         }
     }, [props])
-    return <div className="w-1/3 mx-4 h-full bg-white rounded shadow-xl p-2 flex flex-col justify-start align-middle">
+    return <div className="w-1/3 mx-4 h-full bg-white dark:text-white dark:bg-zinc-700 rounded shadow-xl p-2 flex flex-col justify-start align-middle z-10">
         <div className="flex flex-col my-3">
             <label htmlFor="">نام حساب :</label>
             <input type="text"
                 ref={name_input}
-                className="bg-white rounded p-2 shadow w-full"
+                className="bg-white rounded p-2 shadow w-full dark:text-black"
                 onChange={e => {
                     let reg = /^\d+/
                     if (reg.test(e.target.value) == false) {
@@ -61,11 +61,12 @@ const Eccount_Modifier = props => {
             />
         </div>
         {
+            //سند افتتاحیه
             !props.eccount &&
             <div className="flex flex-col my-3">
                 <label htmlFor="">سند افتتاحیه :</label>
                 <input type="text"
-                    className="bg-white rounded p-2 shadow w-full"
+                    className="bg-white rounded p-2 shadow w-full dark:text-black"
                     onKeyDown={e => {
                         if (e.key == "Backspace" || /\d/.test(e.key)) {
 
@@ -112,7 +113,7 @@ const Eccount_Modifier = props => {
 
         {
             eccount &&
-            <div className="flex flex-col justify-start align-middle w-full">
+            <div className="flex flex-col justify-start align-middle w-full ">
                 <p>وضعیت حساب : <p>{eccount.eccount_total ? eccount.eccount_total : "بدون تراکنش"}</p></p>
                 <input type="button" className={`${eccount.eccount_name != name ? "bg-blue-400 text-white cursor-pointer" : "border border-blue-400 text-blue-400 cursor-default"}  rounded w-full p-2  my-10`} disabled={eccount.eccount_name == name ? true : false}
                     onClick={() => {

@@ -17,14 +17,14 @@ const SearchComponent = props => {
                 //name_field
             }
             <label >نام :</label>
-            <input className="border border-gray-300 rounded mx-2 p-1"
+            <input className="border border-gray-300 rounded mx-2 p-1 bg-white "
                 placeholder="نام دسته بندی " type="text" value={name}
                 onChange={e => setName((e.target.value).trim())} />
             {
                 //cat_field
             }
             {/* <ProductCatSearchField setCat={val=>setCat(val)}/> */}
-            <div className="w-1/3">
+            <div className="w-1/3 dark:text-black">
                 <CatParentInput placeholder={"دسته بندی"} setCatParent={e => setCat(e)} />
             </div>
         </div>

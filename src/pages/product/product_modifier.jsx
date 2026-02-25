@@ -73,7 +73,9 @@ const ProductModifier = props => {
         }
     }, [id])
     return <div id="modifier"
-        className="flex flex-col w-1/3 h-full pb-5  bg-white productModifier rounded shadow overflow-hidden overflow-y-scroll z-10"
+        className="flex flex-col w-1/3 h-full pb-5   productModifier rounded shadow overflow-hidden overflow-y-scroll z-10
+        bg-white dark:bg-zinc-700 
+        "
         onDragOver={e => {
             e.preventDefault()
             document.getElementById("modifier").style.background = "rgba(81, 150, 255,.5)"
@@ -98,11 +100,13 @@ const ProductModifier = props => {
         }}
 
     >
-        <div className="w-full flex flex-row justify-between items-center align-middle sticky top-0 mt-2 bg-white shadow">
-            <button className="bg-blue-100 text-sm font-medium cursor-pointer w-1/3 mt-2 p-2  mb-2" onClick={resetFields}>ریست کردن فرم</button>
+        <div className="w-full flex flex-row justify-between items-center align-middle sticky top-0 mt-2
+         bg-white dark:bg-zinc-700 
+         shadow">
+            <button className="bg-blue-100 dark:bg-blue-400 rounded dark:text-white text-sm font-medium cursor-pointer w-1/3 mt-2 p-2  mb-2" onClick={resetFields}>ریست کردن فرم</button>
             {
                 id &&
-                <button className="bg-red-100 text-sm font-medium cursor-pointer w-1/3  mt-2 p-2  mb-2 " onClick={() => {
+                <button className="bg-red-100 dark:bg-red-400 dark:text-white rounded mx-2 text-sm font-medium cursor-pointer w-1/3  mt-2 p-2  mb-2 " onClick={() => {
                     removeProduct(id).then(resetFields)
                 }
                 }>حذف محصول</button>
@@ -112,23 +116,23 @@ const ProductModifier = props => {
         {
             //id
             id &&
-            <h1 className="flex flex-row-reverse justify-end px-3 mb-2 items-center"> <span className="text-2xl" id="p_id">{id}</span> id : </h1>
+            <h1 className="flex flex-row-reverse justify-end px-3 mb-2 items-center"> <span className="text-2xl dark:text-white" id="p_id">{id}</span> id : </h1>
         }
         {
             //name
         }
         <div className="flex flex-col justify-start mx-2 px-2 mt-5 my-2">
-            <label htmlFor={"name"}>نام کالا: </label>
-            <input className="bg-white shadow px-2 focus:bg-blue-200 p-1 my-1" type="text" value={name} id="name"  placeholder="نام کالا" onChange={e => setName(e.target.value)} />
+            <label className="dark:text-white" htmlFor={"name"}>نام کالا: </label>
+            <input autoComplete="off" className="bg-white dark:text-black shadow px-2 focus:bg-blue-200 p-1 my-1" type="text" value={name} id="name" placeholder="نام کالا" onChange={e => setName(e.target.value)} />
         </div>
 
         {
             //price
         }
         <div className="flex flex-col justify-start mx-2 px-2 my-2">
-            <label htmlFor={"price"}>{"قیمت واحد :"}</label>
-            <input className="bg-white shadow px-2 focus:bg-blue-200 p-1 my-1"
-                type="text" value={price} id={"price"}  placeholder=""
+            <label className="dark:text-white" htmlFor={"price"}>{"قیمت واحد :"}</label>
+            <input autoComplete="off" className="bg-white dark:text-black shadow px-2 focus:bg-blue-200 p-1 my-1"
+                type="text" value={price} id={"price"} placeholder=""
                 onKeyDown={e => {
                     let reg = /\d/
 
@@ -145,8 +149,8 @@ const ProductModifier = props => {
         {
             //cat
         }
-        <div className="flex flex-col justify-start mx-2 px-2 w-full my-2">
-            <label htmlFor={"cat"}>{"دسته بندی :"}</label>
+        <div className="flex flex-col justify-start mx-2 pl-6 px-2 w-full my-2 ">
+            <label className="my-2 dark:text-white" htmlFor={"cat"}>{"دسته بندی :"}</label>
             {/* <input className="bg-white shadow px-2 focus:bg-blue-200 p-1 my-1" type="text" value={cat} id="cat" name={"cat"} placeholder="" onChange={e => setCat(e.target.value)} /> */}
             <CatParentInput value={cat} placeholder={"دسته بندی"} setCatParent={e => setCat(e)} />
         </div>
@@ -154,9 +158,9 @@ const ProductModifier = props => {
             //qty
         }
         <div className="flex flex-col justify-start mx-2 px-2 my-2">
-            <label htmlFor={"qty"}>{qty ? "موجودی کالا :" : "موجودی اولیه انبار :"}</label>
-            <input className="bg-white shadow px-2 focus:bg-blue-200 p-1 my-1"
-                type="text" value={qty} id="qty" 
+            <label className="dark:text-white" htmlFor={"qty"}>{qty ? "موجودی کالا :" : "موجودی اولیه انبار :"}</label>
+            <input autoComplete="off" className="bg-white dark:text-black shadow px-2 focus:bg-blue-200 p-1 my-1"
+                type="text" value={qty} id="qty"
                 onKeyDown={e => {
                     let reg = /\d/
                     if (e.key == "Backspace") { return }
@@ -168,7 +172,7 @@ const ProductModifier = props => {
             //qty-unit
         }
         <div className="flex flex-col justify-start mx-2 px-2 my-2">
-            <label htmlFor={"unit"}>{"واحد شمارش کالا : "}</label>
+            <label className="dark:text-white" htmlFor={"unit"}>{"واحد شمارش کالا : "}</label>
             <Qty_Unit unit={unit} setUnit={val => setUnit(val)} />
         </div>
         {

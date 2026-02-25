@@ -23,13 +23,13 @@ const CAT_PAGE = (props) => {
     }, [cats])
 
     return (
-        <div className="flex flex-col relative w-full h-full">
+        <div className="flex flex-col relative w-full h-full dark:bg-zinc-700">
             <div className="shadow z-10">
                 <AddCat />
             </div>
             <div className="w-full overflow-y-scroll z-0 py-9">
 
-                <div className={`${hover ? "bg-blue-300" : "bg-gray-100"} flex flex-row flex-wrap w-full h-fit cats relative`}
+                <div className={`${hover ? "bg-blue-300" : "bg-gray-100 dark:bg-zinc-700"} flex flex-row flex-wrap w-full h-fit cats relative`}
 
                 >
                     <div className="absolute w-full h-full top-0 left-0"

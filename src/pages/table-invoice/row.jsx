@@ -7,7 +7,7 @@ import DISCOUNT_INVOICE_INPUT from "./cells/discount_invoice"
 import splitNumber from "../../components/util/split-numbers"
 
 const TableRow = props => {
-    let { counter, update, remove } = props
+    let { counter, update, remove,limit } = props
     const [values, setValues] = useState()
     const [price, setPrice] = useState()
     const [qty, setQTY] = useState()
@@ -51,7 +51,7 @@ const TableRow = props => {
         }
     }, [totalPrice])
     return (
-        <tr className="h-fit">
+        <tr className="h-fit dark:text-white">
             <td className="px-3 border">{counter += 1}</td>
             {/* {elements} */}
             <Name_Invoice_Input update={val => {
@@ -61,7 +61,7 @@ const TableRow = props => {
                 }
                 setValues({ ...values, product: val })
             }} />
-            <QTY_INVOICE_INPUT update={val => {
+            <QTY_INVOICE_INPUT limit={limit} update={val => {
                 setQTY(val)
             }} enable={values?.product ? true : false} product={values?.product ? values.product : null} />
             <PRICE_INVOICE_INPUT update={val => {

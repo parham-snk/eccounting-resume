@@ -34,7 +34,7 @@ const CatNameInput = props => {
 
 
     return (
-        <div div className="w-1/4 relative" >
+        <div div className="w-full relative" >
             <input ref={input} value={nameInput} className={` w-full p-2 rounded shadow ${!currect ? "bg-red-300" : "bg-white"}`  } type="text"
             onBlur={() => {
                 setsuggested()

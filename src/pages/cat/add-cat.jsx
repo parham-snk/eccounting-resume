@@ -39,14 +39,14 @@ const AddCat = props => {
     // }, [catParent])
     return (
         <div className="flex flex-row justify-between align-middle items-center w-2/3 pb-4 ">
-            <CatNameInput setname={(val) => {
+            <div className="mx-2 w-1/2"><CatNameInput setname={(val) => {
                 setName(val)
-            }} />
+            }} /></div>
             <CatParentInput setCatParent={val => {
                 return setCatParent(val ? val : 100)
 
             }} />
-            <button className="bg-blue-400 rounded w-25 p-2 text-white cursor-pointer" onClick={addcat}>اضافه کردن</button>
+            <button className="bg-blue-400 rounded w-fit text-nowrap my-4 mx-2 p-2 text-white cursor-pointer" onClick={addcat}>اضافه کردن</button>
         </div>
     )
 }

@@ -6,22 +6,38 @@ import Table from "./table-invoice/table"
 const SellInvoice = props => {
     const [date, setDate] = useState("----/--/--")
     const [modal, showModal] = useState(false)
-    useEffect(()=>{
-        document.title="فاکتور فروش"
-    },[])
+    const eccountRef = useRef()
+    const [eccount, setEccount] = useState()
+    useEffect(() => {
+        document.title = "فاکتور خرید"
+    }, [])
+    useEffect(() => {
+        if (eccount) {
+            eccountRef.current.value = eccount.eccount_name
+        } else {
+            eccountRef.current.value = ""
+        }
+
+    }, [eccount])
     return (
-        <div className="bg-white w-full h-full shadow rounded flex flex-col  md:justify-start align-middle items-start p-3 md:p-0 ">
+        <div className="bg-white dark:bg-zinc-700 w-full h-full shadow rounded flex flex-col  md:justify-start align-middle items-start p-3 md:p-0 ">
             <div className="w-full justify-center flex py-2 pt-3 "><p className="bg-gray-500 rounded p-2 text-white text-sm ">
-                فاکتور فروش</p></div>
-            <table className="flex flex-row  justify- align-middle items-center w-1/4 right-0 md:w-full py-2 ">
+                فاکتور خرید</p></div>
+            <table className="flex flex-row  justify- align-middle items-center w-1/4 right-0 md:w-full py-2 dark:text-white">
                 <thead className="flex flex-col items-center mx-2">
                     <th className="my-1 p-1 text-xs bg-gray-500 w-full rounded text-white text-nowrap">شماره فاکتور</th>
                     <th className="my-1 p-1 text-xs bg-gray-500 w-full rounded text-white">تاریخ</th>
                     <th className="my-1 p-1 text-xs bg-gray-500 w-full rounded text-white">خریدار</th>
                 </thead>
                 <tbody className="flex flex-col">
-                    <td><input type="text" className="border border-gray-400 rounded p-1 my-1 text text-center" /></td>
-                    <td><input dir="ltr" placeholder={date} type="text" value={date} onKeyDown={(e) => {
+                    {
+                        //شماره فاکتور
+                    }
+                    <td><input type="text" className="border border-gray-400 rounded p-1 my-1 text text-center" autoComplete="off"/></td>
+                    {
+                        //تاریخ
+                    }
+                    <td><input dir="ltr" autoComplete="off" placeholder={date} type="text" value={date} onKeyDown={(e) => {
                         let key = e.key
                         // console.log(key)
                         if (/\d/.test(key)) {
@@ -61,24 +77,31 @@ const SellInvoice = props => {
                             setDate(D)
                         }}>📅</button> */}
                     </td>
+                    {
+                        //خریدار
+                    }
                     <td className="relative">
-                        <input type="text" className="border border-gray-400 rounded p-1 my-1 text text-center select-none" onFocus={() => {
+                        <input ref={eccountRef} autoComplete="off" type="text" className="border cursor-pointer border-gray-400 rounded p-1 my-1 text text-center select-none" onFocus={() => {
                             if (!modal) {
                                 showModal(true)
                             }
                         }} />
                         {
                             modal &&
-                            <Modal component={SearchUserModal} close={() => {
+                            <Modal close={() => {
                                 showModal(false)
-                            }} />
+                            }} >
+                                <SearchUserModal close={() => showModal(false)} setEccount={eccount => {
+                                    setEccount(eccount)
+                                }} />
+                            </Modal>
                         }
 
                     </td>
 
                 </tbody>
             </table>
-            <Table></Table>
+            <Table limit={true}></Table>
         </div >
     )
 }
