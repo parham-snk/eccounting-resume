@@ -1,13 +1,17 @@
-import { Activity, useEffect, useRef, useState } from "react"
+import { Activity, useContext, useEffect, useRef, useState } from "react"
 import Modal from "../components/modal"
 import SearchUserModal from "../components/modals/searchUser"
 import Table from "./table-invoice/table"
+import { Context } from "../context/Context"
 
 const SellInvoice = props => {
+    const eccountRef = useRef()
+    const {addSellInvoice}=useContext(Context)
     const [date, setDate] = useState("----/--/--")
     const [modal, showModal] = useState(false)
-    const eccountRef = useRef()
     const [eccount, setEccount] = useState()
+    const [form, setForm] = useState()
+    const [index, setIndex] = useState()
     useEffect(() => {
         document.title = "فاکتور خرید"
     }, [])
@@ -19,6 +23,8 @@ const SellInvoice = props => {
         }
 
     }, [eccount])
+
+
     return (
         <div className="bg-white dark:bg-zinc-700 w-full h-full shadow rounded flex flex-col  md:justify-start align-middle items-start p-3 md:p-0 ">
             <div className="w-full justify-center flex py-2 pt-3 "><p className="bg-gray-500 rounded p-2 text-white text-sm ">
@@ -33,13 +39,12 @@ const SellInvoice = props => {
                     {
                         //شماره فاکتور
                     }
-                    <td><input type="text" className="border border-gray-400 rounded p-1 my-1 text text-center" autoComplete="off"/></td>
+                    <td><input type="text" className="border border-gray-400 rounded p-1 my-1 text text-center" onChange={e => setIndex(e.target.value)} autoComplete="off" /></td>
                     {
                         //تاریخ
                     }
                     <td><input dir="ltr" autoComplete="off" placeholder={date} type="text" value={date} onKeyDown={(e) => {
                         let key = e.key
-                        // console.log(key)
                         if (/\d/.test(key)) {
                             setDate(date.replace("-", key))
                         } else if (key == "Backspace") {
@@ -101,7 +106,13 @@ const SellInvoice = props => {
 
                 </tbody>
             </table>
-            <Table limit={true}></Table>
+            <Table limit={true} onchange={val => setForm(val)}></Table>
+
+            <button onClick={() => {
+                if (form && date && String(date).includes("-") == false && eccount && eccount.eccount_id) {
+                    addSellInvoice(index,eccount.eccount_id,date,form)
+                }
+            }}>ثبت</button>
         </div >
     )
 }

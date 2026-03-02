@@ -3,7 +3,7 @@ import TableRow from "./row"
 import splitNumber from "../../components/util/split-numbers"
 
 const Table = props => {
-    const { limit } = props
+    const { limit, onchange } = props
     const [form, setForm] = useState([])
     const [arr, setArr] = useState([1, 2, 3, 4])
     const [total, setTotal] = useState(0)
@@ -38,18 +38,24 @@ const Table = props => {
         }
     }
 
-    let elements = arr.map((i, index) => <TableRow limit={limit} update={(row) => {
-        setForm({ ...form, [index + 1]: row })
+    let elements = arr.map((i, index) =>
+        <TableRow limit={limit} update={(row) => {
+            setForm({ ...form, [index + 1]: row })
 
-    }} remove={index => {
-        let f = form
-        delete f[index]
-        getTotalPrice()
-        setForm(f)
-    }} key={index} counter={index} />)
-    useEffect(() => {
-        if (form)
+        }} remove={index => {
+            let f = form
+            delete f[index]
             getTotalPrice()
+            setForm(f)
+        }} key={index} counter={index} />
+    )
+
+    useEffect(() => {
+        if (form) {
+            getTotalPrice();
+            if (props && props.onchange)
+                onchange(form)
+        }
     }, [form])
     // فانکشن افزودن ردیف در جدول
 

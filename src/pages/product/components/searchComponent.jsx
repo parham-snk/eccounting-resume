@@ -17,7 +17,7 @@ const SearchComponent = props => {
                 //name_field
             }
             <label >نام :</label>
-            <input className="border border-gray-300 rounded mx-2 p-1 bg-white "
+            <input className="border border-gray-300 rounded mx-2 p-1 bg-white dark:text-black"
                 placeholder="نام دسته بندی " type="text" value={name}
                 onChange={e => setName((e.target.value).trim())} />
             {

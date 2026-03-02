@@ -1,13 +1,17 @@
-import { Activity, useEffect, useRef, useState } from "react"
+import { Activity, useContext, useEffect, useRef, useState } from "react"
 import Modal from "../components/modal"
 import SearchUserModal from "../components/modals/searchUser"
 import Table from "./table-invoice/table"
+import { Context } from "../context/Context"
 
 const InvoiceBuy = props => {
+    const eccountRef = useRef()
+    const [index, setIndex] = useState()
+    const { addBuyInvoice } = useContext(Context)
     const [date, setDate] = useState("----/--/--")
     const [modal, showModal] = useState(false)
-    const eccountRef = useRef()
     const [eccount, setEccount] = useState()
+    const [invoice, setInvoice] = useState()
     useEffect(() => {
         document.title = "فاکتور خرید"
     }, [])
@@ -33,7 +37,7 @@ const InvoiceBuy = props => {
                     {
                         //شماره فاکتور
                     }
-                    <td><input type="text" className="border border-gray-400 rounded p-1 my-1 text text-center" autoComplete="off"/></td>
+                    <td><input type="text" className="border border-gray-400 rounded p-1 my-1 text text-center" onChange={e => setIndex(e.target.value)} autoComplete="off" /></td>
                     {
                         //تاریخ
                     }
@@ -92,6 +96,7 @@ const InvoiceBuy = props => {
                                 showModal(false)
                             }} >
                                 <SearchUserModal close={() => showModal(false)} setEccount={eccount => {
+                                    
                                     setEccount(eccount)
                                 }} />
                             </Modal>
@@ -101,7 +106,15 @@ const InvoiceBuy = props => {
 
                 </tbody>
             </table>
-            <Table limit={false}></Table>
+            <Table limit={false} onchange={val => {
+                setInvoice(val)
+            }} />
+            <div className="flex flex-row w-full">
+                <button onClick={() => {
+                    if (eccount && eccount?.eccount_id && date && String(date).includes("-") == false)
+                        addBuyInvoice(index, eccount.eccount_id, date, invoice,)
+                }}>ثبت</button>
+            </div>
         </div >
     )
 }

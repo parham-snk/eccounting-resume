@@ -37,7 +37,7 @@ const CatSearch = props => {
 
     return (
         <div div className="w-1/4 relative" >
-            <input ref={input} className={` w-full p-2 rounded shadow bg-white`} type="text"
+            <input ref={input} className={` w-full p-2 rounded shadow bg-white dark:text-black`} type="text"
                 onFocus={() => {
                     setsuggested([...orgcats].map((item, index) => <ElementI item={item} key={index} ClickEvent={(item) => {
                         input.current.value = String(item.cat_name)

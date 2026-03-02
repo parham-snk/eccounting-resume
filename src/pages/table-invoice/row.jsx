@@ -15,7 +15,6 @@ const TableRow = props => {
     const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
-        console.log("changed!")
         if (values) {
             if (price && qty && price > 0 && qty > 0) {
                 let total = price * qty

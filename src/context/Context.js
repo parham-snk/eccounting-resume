@@ -202,11 +202,41 @@ const ContextProvider = ({ children }) => {
                 alert(err)
             })
     }
+    function addBuyInvoice(index, custommer_id, custome_date, form) {
+        let custom_date = new Date(Date(custome_date))
+
+        let items = Object.values(form)
+        index = Number(index)
+        axios.post("http://localhost:8080/invoice/buy-invoice", { index, custommer_id, custom_date, items }).then(data => data.data).then(update)
+    }
+    function addSellInvoice(index, custommer_id, custome_date, form) {
+        let custom_date = new Date(Date(custome_date))
+
+        let items = Object.values(form)
+        index = Number(index)
+
+        axios.post("http://localhost:8080/invoice/sell-invoice", { index, custommer_id, custom_date, items })
+            .then(data => data.data).then(data => {
+                if (data.ok) {
+                    alert("added!")
+                }
+                if (data.err) {
+                    switch (data.err.code) {
+                        case "ER_DUP_ENTRY":
+                            return alert("شماره فاکتور تکراری است!")
+                    }
+                }
+            }).catch(err => {
+                alert(JSON.stringify(err))
+
+            })
+    }
     return (
         <Context.Provider
             value={{
                 update, cats, orgcats, products, units, prices, eccounts,
-                changeParent, setUploadCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount,updateEccount
+                changeParent, setUploadCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount, updateEccount,
+                addBuyInvoice, addSellInvoice
             }}>
             {children}
         </Context.Provider>
