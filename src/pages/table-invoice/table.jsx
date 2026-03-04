@@ -51,11 +51,11 @@ const Table = props => {
     )
 
     useEffect(() => {
-        if (form) {
-            getTotalPrice();
-            if (props && props.onchange)
-                onchange(form)
-        }
+        // if (form) {
+        getTotalPrice();
+        // if (props && props.onchange)
+        onchange(form)
+        // }
     }, [form])
     // فانکشن افزودن ردیف در جدول
 

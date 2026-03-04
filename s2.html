@@ -1,0 +1,29 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form id="form">
+        <input type="text" required>
+        <input type="text" required>
+        <input type="submit">
+    </form>
+
+</body>
+<script>
+    document.getElementById("form").onsubmit=e=>{
+        e.preventDefault()
+    }
+    window.onkeydown = e => {
+
+        if (e.key == "Enter")
+            document.getElementById("form").submit()
+    }
+</script>
+
+</html>

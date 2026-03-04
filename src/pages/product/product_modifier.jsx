@@ -116,7 +116,9 @@ const ProductModifier = props => {
         {
             //id
             id &&
-            <h1 className="flex flex-row-reverse justify-end px-3 mb-2 items-center"> <span className="text-2xl dark:text-white" id="p_id">{id}</span> id : </h1>
+            <h1 className="flex flex-row-reverse justify-end px-3 mb-2 items-center text-white">
+                <span className="text-2xl dark:text-white px-2" id="p_id">{id}</span>
+                کد کالا : </h1>
         }
         {
             //name

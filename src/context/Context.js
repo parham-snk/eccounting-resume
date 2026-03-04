@@ -14,6 +14,7 @@ const ContextProvider = ({ children }) => {
     const [uploadCat, setUploadCat] = useState()
     const [prices, setPrices] = useState()
     const [eccounts, setEccounts] = useState()
+    const [allowSubmitForm, setAllowSubmitForm] = useState(false)
     //fetch categories list
     function fetchList() {
         fetch("http://localhost:8080/cat").then(data => data.json()).then(data => {
@@ -207,7 +208,11 @@ const ContextProvider = ({ children }) => {
 
         let items = Object.values(form)
         index = Number(index)
-        axios.post("http://localhost:8080/invoice/buy-invoice", { index, custommer_id, custom_date, items }).then(data => data.data).then(update)
+        axios.post("http://localhost:8080/invoice/buy-invoice", { index, custommer_id, custom_date, items }).then(data => data.data).then(() => {
+            update()
+            alert("added")
+            window.location.reload()
+        })
     }
     function addSellInvoice(index, custommer_id, custome_date, form) {
         let custom_date = new Date(Date(custome_date))
@@ -218,7 +223,8 @@ const ContextProvider = ({ children }) => {
         axios.post("http://localhost:8080/invoice/sell-invoice", { index, custommer_id, custom_date, items })
             .then(data => data.data).then(data => {
                 if (data.ok) {
-                    alert("added!")
+                    update()
+                    return alert("added!")
                 }
                 if (data.err) {
                     switch (data.err.code) {
@@ -226,7 +232,10 @@ const ContextProvider = ({ children }) => {
                             return alert("شماره فاکتور تکراری است!")
                     }
                 }
-            }).catch(err => {
+            }).then(() => {
+                window.location.reload()
+            })
+            .catch(err => {
                 alert(JSON.stringify(err))
 
             })
@@ -234,7 +243,7 @@ const ContextProvider = ({ children }) => {
     return (
         <Context.Provider
             value={{
-                update, cats, orgcats, products, units, prices, eccounts,
+                update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, setAllowSubmitForm,
                 changeParent, setUploadCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount, updateEccount,
                 addBuyInvoice, addSellInvoice
             }}>

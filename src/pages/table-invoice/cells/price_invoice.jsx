@@ -24,6 +24,7 @@ const PRICE_INVOICE_INPUT = props => {
     return (
         <td className="table-cell w-full">
             <input className={"border w-fit text-center h-7"}
+                required
                 ref={input}
                 placeholder={product ? `قیمت پیشنهادی: ${splitNumber(product.product_price)}` : ""}
                 disabled={enable ? false : true}

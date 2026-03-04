@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import Modal from "../../../components/modal"
 import SearchProducts from "../../../components/modals/search-products"
+import { Context } from "../../../context/Context"
 
 const Name_Invoice_Input = props => {
+    const { setAllowSubmitForm } = useContext(Context)
     const { r, update, initValue } = props
     const [item, setItem] = useState()
     const [name, setName] = useState()
@@ -17,15 +19,16 @@ const Name_Invoice_Input = props => {
         }
 
     }, [item])
-    window.addEventListener("click",()=>{
+    window.addEventListener("click", () => {
         setTimeout(() => {
             setContext(false)
         }, 100);
     })
+
     return (
         <td className="table-cell w-full relative">
             <input className={"border  text-center h-7 w-full cursor-pointer"}
-                onKeyDown={ (e)=>e.preventDefault()}
+                onKeyDown={(e) => e.preventDefault()}
                 placeholder={'نام کالا'} ref={input} type="text"
                 onClick={() => setShowModal(true)}
                 onContextMenu={(e) => {
@@ -33,6 +36,7 @@ const Name_Invoice_Input = props => {
                     if (item)
                         setContext(true)
                 }}
+
             />
             {
                 showModal &&
@@ -53,7 +57,7 @@ const Name_Invoice_Input = props => {
                         onClick={() => {
                             update(false)
                             setContext(false)
-                            input.current.value=""
+                            input.current.value = ""
                         }}
                     >حذف</p>
                 </div>

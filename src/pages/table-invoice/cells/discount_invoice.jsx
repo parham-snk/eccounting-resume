@@ -8,6 +8,7 @@ const DISCOUNT_INVOICE_INPUT = props => {
     return <td className="table-cell w-full">
         <input className={"border w-fit text-center h-7"}
             disabled={enable ? false : true}
+            required
             onKeyDown={e => {
                 if (e.key == "Backspace" || /\d/.test(e.key)) {
 

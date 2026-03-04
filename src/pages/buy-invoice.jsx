@@ -7,7 +7,7 @@ import { Context } from "../context/Context"
 const InvoiceBuy = props => {
     const eccountRef = useRef()
     const [index, setIndex] = useState()
-    const { addBuyInvoice } = useContext(Context)
+    const { addBuyInvoice, allowSubmitForm, setAllowSubmitForm } = useContext(Context)
     const [date, setDate] = useState("----/--/--")
     const [modal, showModal] = useState(false)
     const [eccount, setEccount] = useState()
@@ -96,7 +96,7 @@ const InvoiceBuy = props => {
                                 showModal(false)
                             }} >
                                 <SearchUserModal close={() => showModal(false)} setEccount={eccount => {
-                                    
+
                                     setEccount(eccount)
                                 }} />
                             </Modal>
@@ -110,7 +110,8 @@ const InvoiceBuy = props => {
                 setInvoice(val)
             }} />
             <div className="flex flex-row w-full">
-                <button onClick={() => {
+                <button className="bg-blue-400 p-2 px-3 rounded" onClick={() => {
+
                     if (eccount && eccount?.eccount_id && date && String(date).includes("-") == false)
                         addBuyInvoice(index, eccount.eccount_id, date, invoice,)
                 }}>ثبت</button>

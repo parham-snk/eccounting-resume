@@ -7,7 +7,7 @@ import DISCOUNT_INVOICE_INPUT from "./cells/discount_invoice"
 import splitNumber from "../../components/util/split-numbers"
 
 const TableRow = props => {
-    let { counter, update, remove,limit } = props
+    let { counter, update, remove, limit } = props
     const [values, setValues] = useState()
     const [price, setPrice] = useState()
     const [qty, setQTY] = useState()
@@ -16,7 +16,7 @@ const TableRow = props => {
 
     useEffect(() => {
         if (values) {
-            if (price && qty && price > 0 && qty > 0) {
+            if (price && qty && price >= 0 && qty >= 0) {
                 let total = price * qty
 
                 if (off) {
@@ -30,7 +30,7 @@ const TableRow = props => {
             setOff(false)
             setPrice(false)
             setQTY(false)
-            setTotalPrice("")
+            setTotalPrice(0)
         }
     }, [price, qty, off])
     useEffect(() => {
@@ -38,7 +38,7 @@ const TableRow = props => {
             setOff(false)
             setPrice(false)
             setQTY(false)
-            setTotalPrice("")
+            setTotalPrice(0)
         }
     }, [values])
 
@@ -61,6 +61,10 @@ const TableRow = props => {
                 setValues({ ...values, product: val })
             }} />
             <QTY_INVOICE_INPUT limit={limit} update={val => {
+                if (val == "") { 
+                    return setQTY(0)
+                }
+
                 setQTY(val)
             }} enable={values?.product ? true : false} product={values?.product ? values.product : null} />
             <PRICE_INVOICE_INPUT update={val => {
