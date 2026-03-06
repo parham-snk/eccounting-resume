@@ -24,7 +24,7 @@ const Qty_Unit = props => {
     useEffect(() => {
         let filter = [...units].filter(item => String(item.name).includes(name))
         let results = filter.map((item, index) =>
-            <p className="w-full p-2 hover:bg-gray-200" key={index}
+            <p className="w-full p-2 hover:bg-gray-200 dark:text-black" key={index}
                 onClick={() => {
                     setUnit(item.id)
                     setName(item.name)
@@ -73,7 +73,7 @@ const Qty_Unit = props => {
 
             {
                 show && suggestion &&
-                <div className="absolute w-full max-h-200 bg-white shadow rounded">
+                <div className="absolute w-full max-h-200 bg-white dark:text-black shadow rounded">
                     {suggestion}
                 </div>
             }

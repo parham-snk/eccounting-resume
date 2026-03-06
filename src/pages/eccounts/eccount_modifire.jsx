@@ -4,7 +4,7 @@ import splitNumber from "../../components/util/split-numbers"
 
 const Eccount_Modifier = props => {
     const { eccount } = props
-    const { eccounts, addEccount, updateEccount } = useContext(Context)
+    const { eccounts, addEccount, updateEccount,deleteEccount } = useContext(Context)
     const [name, setName] = useState()
     const [eccount_value, set_eccount_value] = useState(null)
     const [eccount_type, set_eccount_type] = useState(null)
@@ -35,7 +35,9 @@ const Eccount_Modifier = props => {
             setName(eccount.eccount_name)
         }
     }, [props])
-    return <div className="w-1/3 mx-4 h-full bg-white dark:text-white dark:bg-zinc-700 rounded shadow-xl p-2 flex flex-col justify-start align-middle z-10">
+    return <div
+        className="w-1/3 mx-4 h-full bg-white dark:text-white dark:bg-zinc-700 rounded shadow-xl p-2 flex flex-col
+     justify-start align-middle z-10">
         <div className="flex flex-col my-3">
             <label htmlFor="">نام حساب :</label>
             <input type="text"
@@ -115,13 +117,21 @@ const Eccount_Modifier = props => {
             eccount &&
             <div className="flex flex-col justify-start align-middle w-full ">
                 <p>وضعیت حساب : <p>{eccount.eccount_total ? eccount.eccount_total : "بدون تراکنش"}</p></p>
-                <input type="button" className={`${eccount.eccount_name != name ? "bg-blue-400 text-white cursor-pointer" : "border border-blue-400 text-blue-400 cursor-default"}  rounded w-full p-2  my-10`} disabled={eccount.eccount_name == name ? true : false}
+                <input type="button" className={`${eccount.eccount_name != name ? "bg-blue-400 text-white cursor-pointer " : "border border-blue-400 text-blue-400 cursor-default "}  rounded w-full p-2  my-10 `} disabled={eccount.eccount_name == name ? true : false}
                     onClick={() => {
 
-                        updateEccount({...eccount,eccount_name:name})
+                        updateEccount({ ...eccount, eccount_name: name })
                     }} value={"به روز رسانی "} />
+
+                <input type="button" value={"حذف حساب"}
+                    className="dark:border-red-600 dark:text-red-500 bg-transparent border p-2 rounded cursor-pointer hover:bg-red-600 hover:text-white"
+                    onClick={()=>{
+                        deleteEccount(eccount.eccount_id)
+                    }}
+                />
             </div>
         }
+
     </div>
 }
 

@@ -4,7 +4,7 @@ export default function P404(){
     const loc = useNavigate()
     
     return(
-        <div className="bg-white w-full h-full shadow rounded flex flex-col justify-center align-middle items-center">
+        <div className="bg-white dark:bg-zinc-700 dark:text-white w-full h-full shadow rounded flex flex-col justify-center align-middle items-center">
             <p className="text-2xl">صفحه پیدا نشد!</p>
             <button onClick={()=>{
                 loc(-1)
