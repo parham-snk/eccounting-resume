@@ -239,22 +239,26 @@ const ContextProvider = ({ children }) => {
     async function addEccount(eccount_name, eccount_total, eccount_last_status_total) {
         axios.post("http://localhost:8080/eccounts", { eccount_name, eccount_total, eccount_last_status_total }).then(data => data.data).then(data => {
             if (data.ok) {
+                NOTIFICATION("حساب اضاف شد !", true)
                 return update()
             }
-            alert("err")
-        }).catch(err => alert(err))
+            NOTIFICATION("حساب اضاف نشد!", false)
+
+        }).catch(err => NOTIFICATION("خطای سرور حین افزودن حساب !", false))
     }
     function deleteEccount(eccount_id) {
         if (eccount_id)
             axios.delete(`http://localhost:8080/eccounts/${eccount_id}`).then(data => data.data).then(data => {
                 if (data.ok) {
                     update()
-                    alert("حساب حذف شد!")
+                    NOTIFICATION("حساب حذف شد !", true)
                 } else {
-                    alert("err")
+                    NOTIFICATION("حساب حذف نشد !", false)
+
                 }
             }).catch(err => {
-                alert(err)
+                NOTIFICATION("خطای سرور حین حذف حساب!", false)
+
             })
     }
     function updateEccount(eccount) {
@@ -280,13 +284,14 @@ const ContextProvider = ({ children }) => {
         index = Number(index)
         axios.post("http://localhost:8080/invoice/buy-invoice", { index, custommer_id, custom_date, items }).then(data => data.data).then((data) => {
             if (data.ok) {
-                update()
                 NOTIFICATION("فاکتور با موفقیت ثبت شد !", true)
                 return window.location.reload()
             }
             NOTIFICATION("خطا در ثبت فاکتور!", false)
 
-        }).catch(NOTIFICATION("خطار در ارتباط با سرور در حین ثبت فاکتور!", false))
+        }).catch(() => {
+            NOTIFICATION("خطار در ارتباط با سرور در حین ثبت فاکتور!", false)
+        })
     }
     function addSellInvoice(index, custommer_id, custome_date, form) {
         let custom_date = new Date(Date(custome_date))
