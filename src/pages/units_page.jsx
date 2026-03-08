@@ -7,8 +7,10 @@ const UnitsPage = props => {
     useEffect(() => {
         document.title = "اصلاح واحد ها "
     }, [])
-    return <div className="text-white">
-        <UnitModifier />
+    return <div className="text-white ">
+        <div className="dark:text-black">
+            <UnitModifier />
+        </div>
         <UnitList />
     </div>
 }

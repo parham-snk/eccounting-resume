@@ -5,15 +5,15 @@ import CatNameInput from "./add-cat/cat_name"
 import CatParentInput from "./add-cat/cat_parent"
 
 const AddCat = props => {
-    let { orgcats, setUploadCat } = useContext(Context)
+    let { orgcats, addCat } = useContext(Context)
     const [name, setName] = useState()
     const [catParent, setCatParent] = useState()
-    const addcat = () => {
+    const uploadCat = () => {
         if (!catParent) {
-            setUploadCat({ cat_name: name, parent_id: 100 })
+            addCat({ cat_name: name, parent_id: 100 })
         }
         if (name && catParent) {
-            setUploadCat({ cat_name: name, parent_id: catParent })
+            addCat({ cat_name: name, parent_id: catParent })
         }
     }
     useEffect(() => {
@@ -46,7 +46,7 @@ const AddCat = props => {
                 return setCatParent(val ? val : 100)
 
             }} />
-            <button className="bg-blue-400 rounded w-fit text-nowrap my-4 mx-2 p-2 text-white cursor-pointer" onClick={addcat}>اضافه کردن</button>
+            <button className="bg-blue-400 rounded w-fit text-nowrap my-4 mx-2 p-2 text-white cursor-pointer" onClick={uploadCat}>اضافه کردن</button>
         </div>
     )
 }

@@ -58,8 +58,8 @@ const ContextProvider = ({ children }) => {
             else {
                 setCats(data)
             }
+            NOTIFICATION("لیست دریافت شد!",true)
         }).catch(err => {
-            console.log(err)
             setNotifictionType(false)
             setNotificationText("ارتباط با سرور بر قرار نشد!")
             setNotification(true)
@@ -101,6 +101,7 @@ const ContextProvider = ({ children }) => {
         fetchUnits()
         fetchPrices()
         fetchEccounts()
+
     }
 
 
@@ -109,34 +110,33 @@ const ContextProvider = ({ children }) => {
         const { cat_id, childstoo } = cat
         axios.delete(`http://localhost:8080/cat/${cat_id}`).then(data => data.data).then(data => {
             if (data.ok) {
-                Notification("دسته بندی حذف شد !", true)
+                NOTIFICATION("دسته بندی حذف شد !", true)
                 update()
             } else {
-                Notification("خطا در حذف دسته بندی!", false)
+                NOTIFICATION("خطا در حذف دسته بندی!", false)
             }
-        }).catch(Notification("خطا در  سرور حین حذف دسته بندی!", false))
+        }).catch(NOTIFICATION("خطا در  سرور حین حذف دسته بندی!", false))
     }
     //add cat
-    useEffect(() => {
-        if (uploadCat) {
-            const { cat_name, parent_id } = uploadCat
-            if ((cat_name && parent_id) || (cat_name && parent_id == null)) {
-                axios.post("http://localhost:8080/cat", { cat_name, parent_id })
-                    .then(data => data.data)
-                    .then(data => {
-                        if (data.ok) {
-                            Notification("دسته بندی افزوده شد!", true)
-                            update()
-                        } else {
-                            Notification("خطا در افزودن دسته بندی", false)
+    function addCat(uploadCat) {
+        const { cat_name, parent_id } = uploadCat
+        if ((cat_name && parent_id) || (cat_name && parent_id == null)) {
+            axios.post("http://localhost:8080/cat", { cat_name, parent_id })
+                .then(data => data.data)
+                .then(data => {
+                    console.log(data)
+                    if (data.ok) {
+                        NOTIFICATION("دسته بندی افزوده شد!", true)
+                        update()
+                    } else {
+                        NOTIFICATION("خطا در افزودن دسته بندی", false)
 
-                        }
-                    })
-                    .catch(Notification("خطای سرور در افزودن دسته بندی", false))
-            }
-
+                    }
+                })
+                .catch(() => NOTIFICATION("خطای سرور در افزودن دسته بندی", false))
         }
-    }, [uploadCat])
+    }
+
 
     //change cat parent
     function changeParent({ cat_id, parent_id }) {
@@ -285,9 +285,14 @@ const ContextProvider = ({ children }) => {
         axios.post("http://localhost:8080/invoice/buy-invoice", { index, custommer_id, custom_date, items }).then(data => data.data).then((data) => {
             if (data.ok) {
                 NOTIFICATION("فاکتور با موفقیت ثبت شد !", true)
-                return window.location.reload()
+                setTimeout(() => {
+                    return window.location.reload()
+
+                }, 1000);
+            } else {
+
+                NOTIFICATION("خطا در ثبت فاکتور!", false)
             }
-            NOTIFICATION("خطا در ثبت فاکتور!", false)
 
         }).catch(() => {
             NOTIFICATION("خطار در ارتباط با سرور در حین ثبت فاکتور!", false)
@@ -302,12 +307,13 @@ const ContextProvider = ({ children }) => {
         axios.post("http://localhost:8080/invoice/sell-invoice", { index, custommer_id, custom_date, items })
             .then(data => data.data).then(data => {
                 if (data.ok) {
-                    update()
                     NOTIFICATION("فاکتور قبت شد!", true)
 
-                    return window.location.reload()
-                }
-                if (data.err) {
+                    setTimeout(() => {
+                        return window.location.reload()
+
+                    }, 1000);
+                } else {
                     switch (data.err.code) {
                         case "ER_DUP_ENTRY":
                             return NOTIFICATION("شماره فاکتور تکراری است!", false)
@@ -328,7 +334,7 @@ const ContextProvider = ({ children }) => {
         <Context.Provider
             value={{
                 update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, setAllowSubmitForm,
-                changeParent, setUploadCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount, updateEccount,
+                changeParent, addCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount, updateEccount,
                 addBuyInvoice, addSellInvoice
             }}>
             {children}
