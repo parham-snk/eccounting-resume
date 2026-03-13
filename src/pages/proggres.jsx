@@ -28,7 +28,7 @@ export default function Proggress() {
                             <p className="my-5">فاکتور فروش</p>
                         </div>
                     </Link>
-                    <Link className="m-3">
+                    <Link className="m-3" to={"/proggres/docs"}>
                         <div className="my-1 md:my-0 w-40 md:w-50 h-40 md:h-50 shadow rounded flex flex-col justify-center items-center dark:text-gray-400 hover:bg-zinc-900 hover:text-white dark:bg-zinc-800 bg-white">
                             <TbInvoice size={60} />
                             <p className="my-5">سند</p>

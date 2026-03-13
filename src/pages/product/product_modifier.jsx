@@ -76,28 +76,28 @@ const ProductModifier = props => {
         className="flex flex-col w-1/3 h-full pb-5   productModifier rounded shadow overflow-hidden overflow-y-scroll z-10
         bg-white dark:bg-zinc-700 
         "
-        onDragOver={e => {
-            e.preventDefault()
-            document.getElementById("modifier").style.background = "rgba(81, 150, 255,.5)"
-        }}
+        // onDragOver={e => {
+        //     e.preventDefault()
+        //     document.getElementById("modifier").style.background = "rgba(81, 150, 255,.5)"
+        // }}
 
-        onDragLeave={e => {
-            e.preventDefault()
-            document.getElementById("modifier").style.background = "white"
+        // onDragLeave={e => {
+        //     e.preventDefault()
+        //     document.getElementById("modifier").style.background = "white"
 
-        }}
-        onDrop={ev => {
-            document.getElementById("modifier").style.background = "white";
-            let data = ev.dataTransfer.getData("product")
-            let { category_id, last_used_price, product_id, product_name, product_price, qty, qty_unit } = JSON.parse(data)
-            setCat(category_id)
-            setId(product_id)
-            setName(product_name)
-            setPrice(splitNumber(product_price))
-            setQTY(qty)
-            setUnit(qty_unit)
-            document.getElementById("cat").value = ""
-        }}
+        // }}
+        // onDrop={ev => {
+        //     document.getElementById("modifier").classList.toggle("bg-white dark:bg-zin-700");
+        //     let data = ev.dataTransfer.getData("product")
+        //     let { category_id, last_used_price, product_id, product_name, product_price, qty, qty_unit } = JSON.parse(data)
+        //     setCat(category_id)
+        //     setId(product_id)
+        //     setName(product_name)
+        //     setPrice(splitNumber(product_price))
+        //     setQTY(qty)
+        //     setUnit(qty_unit)
+        //     document.getElementById("cat").value = ""
+        // }}
 
     >
         <div className="w-full flex flex-row justify-between items-center align-middle sticky top-0 mt-2

@@ -20,7 +20,7 @@ const Notification = (props) => {
 
     return (
         <div
-            className={` absolute w-80 h-13 rounded p-2 border -right-100 bottom-10 z-10 ${show ? "mr-110" : "-mr-100"}
+            className={` absolute w-80 h-13 rounded p-2 border -right-100 bottom-10 z-50 ${show ? "mr-110" : "-mr-100"}
         dark:bg-zinc-800 ${type ? "dark:border-green-600" : "dark:border-white border-green-400"}  dark:text-white bg-white shadow
         flex flex-row justify-start align-middle items-center
         `}

@@ -58,7 +58,7 @@ const ContextProvider = ({ children }) => {
             else {
                 setCats(data)
             }
-            NOTIFICATION("لیست دریافت شد!",true)
+            // NOTIFICATION("لیست به روز  شد!",true)
         }).catch(err => {
             setNotifictionType(false)
             setNotificationText("ارتباط با سرور بر قرار نشد!")
@@ -195,12 +195,13 @@ const ContextProvider = ({ children }) => {
                 fetchList()
                 fetchPrices()
                 fetchProducts()
-                return true
+
+                return NOTIFICATION("کالا حذف شد !", true)
             } else {
-                return false
+                return NOTIFICATION("کالا حذف نشد !", false)
             }
         }).catch(err => {
-            return err
+            return NOTIFICATION("قطع ارتباط با سرور حین حدف کالا!", false)
         })
     }
     //unit
@@ -275,6 +276,23 @@ const ContextProvider = ({ children }) => {
                 NOTIFICATION("خطا در برقراری ارتباط با سرور! ", false)
             })
     }
+    async function getEccount(eccount_id) {
+        let res;
+        await fetch(`http://localhost:8080/invoice/${eccount_id}`)
+            .then(data => data.json()).then(data => {
+                if (data.ok) {
+                    NOTIFICATION("اطلاعات دریافت شد!", true)
+                    res = data.data
+                } else {
+                    NOTIFICATION("اطلاعات دریافت نشد", false)
+                }
+
+            }).catch(err => {
+                NOTIFICATION("خطای سرور در دریافت صورتحساب!", false)
+            })
+        return res
+
+    }
 
     //invoice
     function addBuyInvoice(index, custommer_id, custome_date, form) {
@@ -327,6 +345,33 @@ const ContextProvider = ({ children }) => {
     }
 
 
+    //doc
+    function getDocs() { }
+    function addDoc(data) {
+        console.log(data)
+        if (Number(data.total) == 0) {
+            const { date, form } = data
+            const custome_date = new Date(Date(date))
+            const rows = Object.values(form)
+            let err = rows.filter(item => item.bed == "" && item.bes == "")
+            if (err.length > 0) {
+                return NOTIFICATION("بعضی از فیلد ها خالی هستند!", false)
+            }
+            axios.post("http://localhost:8080/docs", { form, custome_date })
+                .then(data => data.data).then(data => {
+                    if (data.ok) {
+                        NOTIFICATION("سند افزوده شد!", true)
+                    } else {
+                        Notification("خطا در افزودن سند!", false)
+                    }
+                }).catch(err => {
+                    NOTIFICATION("خطای سرور در حین فزودن سند!", false)
+                })
+        } else {
+            NOTIFICATION("سند تراز نمیباشد!", false)
+        }
+    }
+
     //fetch lists
     useEffect(update, [])
 
@@ -335,7 +380,7 @@ const ContextProvider = ({ children }) => {
             value={{
                 update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, setAllowSubmitForm,
                 changeParent, addCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount, updateEccount,
-                addBuyInvoice, addSellInvoice
+                addBuyInvoice, addSellInvoice, addDoc,getEccount
             }}>
             {children}
             {

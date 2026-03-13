@@ -16,6 +16,7 @@ import { useContext, useEffect } from "react";
 import { MdOutlineRefresh } from "react-icons/md";
 import RefreshBTN from "./components/toolbar/refreshBTN.jsx";
 import Eccounts_page from "./pages/eccounts_page.jsx";
+import DOCS_PAGE from "./pages/docs_page.jsx";
 //test
 function App() {
   const { update } = useContext(Context)
@@ -44,6 +45,7 @@ function App() {
                 <Route path="cats" element={<CAT_PAGE />} />
                 <Route path="units" element={<UnitsPage />} />
                 <Route path="eccounts" element={<Eccounts_page />} />
+                <Route path="docs" element={<DOCS_PAGE />} />
               </Route>
 
 

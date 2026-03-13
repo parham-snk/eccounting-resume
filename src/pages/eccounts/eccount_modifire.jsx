@@ -4,7 +4,7 @@ import splitNumber from "../../components/util/split-numbers"
 
 const Eccount_Modifier = props => {
     const { eccount } = props
-    const { eccounts, addEccount, updateEccount,deleteEccount } = useContext(Context)
+    const { eccounts, addEccount, updateEccount, deleteEccount } = useContext(Context)
     const [name, setName] = useState()
     const [eccount_value, set_eccount_value] = useState(null)
     const [eccount_type, set_eccount_type] = useState(null)
@@ -116,7 +116,31 @@ const Eccount_Modifier = props => {
         {
             eccount &&
             <div className="flex flex-col justify-start align-middle w-full ">
-                <p>وضعیت حساب : <p>{eccount.eccount_total ? eccount.eccount_total : "بدون تراکنش"}</p></p>
+                <p>وضعیت حساب :
+                    <p>
+                        {
+                            eccount.eccount_total == null &&
+                            "بدون حساب"
+                        }
+                        {
+                            String(eccount.eccount_total).includes("-") &&
+                            <span className="text-3xl">{splitNumber(String(eccount.eccount_total).slice(1, eccount.eccount_total.length))}</span>
+                        }
+                        {
+                            String(eccount.eccount_total).includes("-") &&
+                            <span className="text-red-400 mx-2 text-2xl">بدهکار</span>
+                        }
+
+                        { 
+                            String(eccount.eccount_total).includes("-") == false && eccount.eccount_total>0 &&
+                            <span className="text-3xl">{splitNumber(String(eccount.eccount_total))}</span>
+                        }
+                        {
+                            String(eccount.eccount_total).includes("-")==false && eccount.eccount_total>0 &&
+                            <span className="text-blue-400 mx-2 text-2xl">طلبکار</span>
+                        }
+                    </p>
+                </p>
                 <input type="button" className={`${eccount.eccount_name != name ? "bg-blue-400 text-white cursor-pointer " : "border border-blue-400 text-blue-400 cursor-default "}  rounded w-full p-2  my-10 `} disabled={eccount.eccount_name == name ? true : false}
                     onClick={() => {
 
@@ -125,7 +149,7 @@ const Eccount_Modifier = props => {
 
                 <input type="button" value={"حذف حساب"}
                     className="dark:border-red-600 dark:text-red-500 bg-transparent border p-2 rounded cursor-pointer hover:bg-red-600 hover:text-white"
-                    onClick={()=>{
+                    onClick={() => {
                         deleteEccount(eccount.eccount_id)
                     }}
                 />
