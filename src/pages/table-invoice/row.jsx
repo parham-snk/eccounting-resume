@@ -67,7 +67,7 @@ const TableRow = props => {
 
                 setQTY(val)
             }} enable={values?.product ? true : false} product={values?.product ? values.product : null} />
-            <PRICE_INVOICE_INPUT update={val => {
+            <PRICE_INVOICE_INPUT limit={limit} update={val => {
                 setPrice(val)
             }} enable={values?.product ? true : false} product={values?.product} />
 

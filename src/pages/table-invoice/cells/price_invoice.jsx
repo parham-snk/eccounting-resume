@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react"
 import splitNumber from "../../../components/util/split-numbers"
 
 const PRICE_INVOICE_INPUT = props => {
-    const { enable, product, update } = props
+    const { enable, product, update ,limit} = props
     const [price, setPrice] = useState()
     const input = useRef()
     useEffect(() => {
-        if (props.product) {
+        if (props.product && limit) {
             setPrice(product.product_price)
             input.current.value = splitNumber(product.product_price)
         } else {
@@ -26,7 +26,7 @@ const PRICE_INVOICE_INPUT = props => {
             <input className={"border w-fit text-center h-7"}
                 required
                 ref={input}
-                placeholder={product ? `قیمت پیشنهادی: ${splitNumber(product.product_price)}` : ""}
+                placeholder={product&&limit ? `قیمت پیشنهادی: ${splitNumber(product.product_price)}` : ""}
                 disabled={enable ? false : true}
                 onKeyDown={e => {
                     if (e.key == "Backspace" || /\d/.test(e.key)) {

@@ -31,7 +31,7 @@ const InvoiceBuy = props => {
                 <thead className="flex flex-col items-center mx-2">
                     <th className="my-1 p-1 text-xs bg-gray-500 w-full rounded text-white text-nowrap">شماره فاکتور</th>
                     <th className="my-1 p-1 text-xs bg-gray-500 w-full rounded text-white">تاریخ</th>
-                    <th className="my-1 p-1 text-xs bg-gray-500 w-full rounded text-white">خریدار</th>
+                    <th className="my-1 p-1 text-xs bg-gray-500 w-full rounded text-white">فروشنده</th>
                 </thead>
                 <tbody className="flex flex-col">
                     {
@@ -82,7 +82,7 @@ const InvoiceBuy = props => {
                         }}>📅</button> */}
                     </td>
                     {
-                        //خریدار
+                        //فروشنده
                     }
                     <td className="relative">
                         <input ref={eccountRef} autoComplete="off" type="text" className="border cursor-pointer border-gray-400 rounded p-1 my-1 text text-center select-none" onFocus={() => {
