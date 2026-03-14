@@ -10,15 +10,18 @@ function hash(str) {
 const CAT_PAGE = (props) => {
     // const { updateList } = props
     let { cats, changeParent } = useContext(Context)
-    const [catList, setCatList] = useState(cats)
-    const [key, setkey] = useState(1)
+    const [catList, setCatList] = useState(null)
+
     const [elements, setElements] = useState([])
     const [hover, setHover] = useState(false)
     useEffect(() => {
-        const randomNumber = Math.floor(Math.random().toFixed(2))
-        setkey(randomNumber)
+        if (cats && cats instanceof Array) {
+            if ([...cats].length > 0) {
+                setCatList(cats)
 
-        setCatList(cats)
+            }
+        }
+
 
     }, [cats])
 
@@ -56,7 +59,7 @@ const CAT_PAGE = (props) => {
                         }
                     </div>
                     {
-                        catList && catList.map((item, index) => {
+                        catList && [...catList].map((item, index) => {
                             return < CatField key={hash(item)} cat={item} />
                         })
                     }

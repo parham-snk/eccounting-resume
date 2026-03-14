@@ -27,7 +27,7 @@ const Sidebar = props => {
                 <h4 className="hidden md:flex">داشبورد</h4>
             </NavLink>
 
-            <NavLink to={"/eccounts"} className="
+            <NavLink to={"/billing"} className="
             active:bg-gray-600 active:text-white dark:active:text-black
             flex flex-row justify-center md:justify-start align-middle items-center w-9/10
             md:rounded-sm

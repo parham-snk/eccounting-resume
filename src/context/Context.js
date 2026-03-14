@@ -124,7 +124,6 @@ const ContextProvider = ({ children }) => {
             axios.post("http://localhost:8080/cat", { cat_name, parent_id })
                 .then(data => data.data)
                 .then(data => {
-                    console.log(data)
                     if (data.ok) {
                         NOTIFICATION("دسته بندی افزوده شد!", true)
                         update()
@@ -159,7 +158,7 @@ const ContextProvider = ({ children }) => {
     function addProduct(product) {
         let { name, qty, price, cat, unit } = product
         price = String(price).split(",").join("")
-        if (name && qty && price && cat && unit) {
+        if (name  && price && cat && unit) {
             axios.post("http://localhost:8080/products", { name, qty: Number(qty), price: Number(price), cat: Number(cat), unit: Number(unit) })
                 .then(data => data.data).then(data => {
                     if (data.ok) {
@@ -236,6 +235,7 @@ const ContextProvider = ({ children }) => {
             })
 
     }
+    
     //eccounts
     async function addEccount(eccount_name, eccount_total, eccount_last_status_total) {
         axios.post("http://localhost:8080/eccounts", { eccount_name, eccount_total, eccount_last_status_total }).then(data => data.data).then(data => {
