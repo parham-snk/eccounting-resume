@@ -58,6 +58,7 @@ const Billing_Result = props => {
             <table className="w-full my-5 border">
                 <tr className="bg-white text-black">
                     <th className="text-center">r</th>
+                    <th className="text-center">شماره سند</th>
                     <th className="text-center">تاریخ</th>
                     <th className="w-1/3 text-center">توضیحات</th>
                     <th className="text-center">بد</th>
@@ -75,8 +76,9 @@ const Billing_Result = props => {
                         <td className="p-2 bg-white text-center"></td>
                         <td className="p-2 bg-white text-center"></td>
                         <td className="p-2 bg-white text-center"></td>
-                        <td className="p-2 border text-center">{splitNumber(sumbed)}</td>
-                        <td className="p-2 border text-center">{splitNumber(sumbes)}</td>
+                        <td className="p-2 bg-white text-center"></td>
+                        <td className="p-2 border text-center">{splitNumber(sumbed?sumbed:"")}</td>
+                        <td className="p-2 border text-center">{splitNumber(sumbes?sumbes:"")}</td>
                         <td className="p-2 border text-center">{splitNumber(res[[...res].length - 1].total_type) == "bed" ? "بد" : "بس"}</td>
                         <td className="p-2 border text-center">{splitNumber(res[[...res].length - 1].total_value)}</td>
                     </tr>

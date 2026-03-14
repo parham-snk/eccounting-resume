@@ -8,6 +8,7 @@ const Bill_table_row = props => {
     return (
         <tr>
             <td className="p-2  border text-center">{Number(props.r) + 1}</td>
+            <td className="p-2  border text-center">{Number(props.data.parrent_id) + 1}</td>
             <td className="p-2  border text-center">{get_Date(props.data.customeDate)}</td>
             <td className="p-2 w-1/5 border text-start text-wrap">{props.data.text}</td>
             <td className="p-2 w-1/6 border text-center">{props.data.price_type == "bed" && splitNumber(props.data.price_value)}</td>

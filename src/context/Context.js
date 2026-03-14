@@ -296,7 +296,7 @@ const ContextProvider = ({ children }) => {
 
     //invoice
     function addBuyInvoice(index, custommer_id, custome_date, form) {
-        let custom_date = new Date(Date(custome_date))
+        let custom_date = new Date(custome_date)
 
         let items = Object.values(form)
         index = Number(index)
@@ -317,7 +317,7 @@ const ContextProvider = ({ children }) => {
         })
     }
     function addSellInvoice(index, custommer_id, custome_date, form) {
-        let custom_date = new Date(Date(custome_date))
+        let custom_date = new Date(custome_date)
 
         let items = Object.values(form)
         index = Number(index)
@@ -348,10 +348,9 @@ const ContextProvider = ({ children }) => {
     //doc
     function getDocs() { }
     function addDoc(data) {
-        console.log(data)
         if (Number(data.total) == 0) {
             const { date, form } = data
-            const custome_date = new Date(Date(date))
+            const custome_date = new Date(date)
             const rows = Object.values(form)
             let err = rows.filter(item => item.bed == "" && item.bes == "")
             if (err.length > 0) {
