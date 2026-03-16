@@ -21,8 +21,8 @@ const Billing_Result = props => {
         if (res) {
             let items = [...res].map((item, index) => <Bill_table_row data={item} r={index} key={index} />)
             setRows(items)
-            if(items.length==0){
-                return setRows()
+            if (items.length == 0) {
+                return setRows([])
             }
             if (items.length > 1) {
                 let Sum_bed = [...res].filter(item => item.price_type == "bed").map(item => item.price_value)
@@ -55,36 +55,44 @@ const Billing_Result = props => {
     }, [rows])
     return (
         <div>
-            <table className="w-full my-5 border">
-                <tr className="bg-white text-black">
-                    <th className="text-center">r</th>
-                    <th className="text-center">شماره سند</th>
-                    <th className="text-center">تاریخ</th>
-                    <th className="w-1/3 text-center">توضیحات</th>
-                    <th className="text-center">بد</th>
-                    <th className="text-center">بس</th>
-                    <th className="text-center">نوع</th>
-                    <th className="text-center">باقی مانده</th>
-                </tr>
-                {
-                    rows &&
-                    rows
-                }
-                {
-                    rows &&
+
+            {
+                rows && rows.length > 0 &&
+                <table className="w-full my-5 border">
+                    <tr className="bg-white text-black">
+                        <th className="text-center">r</th>
+                        <th className="text-center">شماره سند</th>
+                        <th className="text-center">تاریخ</th>
+                        <th className="w-1/3 text-center">توضیحات</th>
+                        <th className="text-center">بد</th>
+                        <th className="text-center">بس</th>
+                        <th className="text-center">نوع</th>
+                        <th className="text-center">باقی مانده</th>
+                    </tr>
+                    {
+                        rows
+                    }
                     <tr>
                         <td className="p-2 bg-white text-center"></td>
                         <td className="p-2 bg-white text-center"></td>
                         <td className="p-2 bg-white text-center"></td>
                         <td className="p-2 bg-white text-center"></td>
-                        <td className="p-2 border text-center">{splitNumber(sumbed?sumbed:"")}</td>
-                        <td className="p-2 border text-center">{splitNumber(sumbes?sumbes:"")}</td>
+                        <td className="p-2 border text-center">{splitNumber(sumbed ? sumbed : "")}</td>
+                        <td className="p-2 border text-center">{splitNumber(sumbes ? sumbes : "")}</td>
                         <td className="p-2 border text-center">{splitNumber(res[[...res].length - 1].total_type) == "bed" ? "بد" : "بس"}</td>
                         <td className="p-2 border text-center">{splitNumber(res[[...res].length - 1].total_value)}</td>
                     </tr>
-                }
+                </table>
+            }
 
-            </table>
+            {
+                rows && rows.length == 0 &&
+                <div className="border-0 p-10 text-center flex justify-center align-middle items-center w-full h-full">
+                    <p>ردیفی وجود ندارد!</p>
+                </div>
+            }
+
+
         </div>
     )
 }
