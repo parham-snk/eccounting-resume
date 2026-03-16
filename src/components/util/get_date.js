@@ -1,6 +1,7 @@
 function get_Date(date) {
-    let [m,d,y] = new Date(date).toLocaleString().split(",")[0].split("/")
-    return String(`${y}/${m}/${d}`)
+    let d= String(date).split("T")[0].split("-").join("/")
+
+    return d
 }
 
 export default get_Date

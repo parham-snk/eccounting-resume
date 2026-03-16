@@ -16,7 +16,7 @@ const ContextProvider = ({ children }) => {
     const [prices, setPrices] = useState()
     const [eccounts, setEccounts] = useState()
     const [allowSubmitForm, setAllowSubmitForm] = useState(false)
-
+    const [invoices, setInvoices] = useState()
 
     const [notification, setNotification] = useState(false)
     const [notificationText, setNotificationText] = useState()
@@ -101,9 +101,19 @@ const ContextProvider = ({ children }) => {
         fetchUnits()
         fetchPrices()
         fetchEccounts()
-
+        getInvoices()
     }
-
+    function getInvoices() {
+        fetch("http://localhost:8080/invoice").then(data => data.json())
+            .then(data => {
+                if (data.ok) {
+                    data = data.data
+                    setInvoices(data)
+                } else {
+                    NOTIFICATION("خطا در دریافت صورتحساب ها ", false)
+                }
+            })
+    }
 
     //cats
     function removeCat(cat) {
@@ -158,7 +168,7 @@ const ContextProvider = ({ children }) => {
     function addProduct(product) {
         let { name, qty, price, cat, unit } = product
         price = String(price).split(",").join("")
-        if (name  && price && cat && unit) {
+        if (name && price && cat && unit) {
             axios.post("http://localhost:8080/products", { name, qty: Number(qty), price: Number(price), cat: Number(cat), unit: Number(unit) })
                 .then(data => data.data).then(data => {
                     if (data.ok) {
@@ -235,7 +245,7 @@ const ContextProvider = ({ children }) => {
             })
 
     }
-    
+
     //eccounts
     async function addEccount(eccount_name, eccount_total, eccount_last_status_total) {
         axios.post("http://localhost:8080/eccounts", { eccount_name, eccount_total, eccount_last_status_total }).then(data => data.data).then(data => {
@@ -295,8 +305,8 @@ const ContextProvider = ({ children }) => {
     }
 
     //invoice
-    function addBuyInvoice(index, custommer_id, custome_date, form) {
-        let custom_date = new Date(custome_date)
+    function addBuyInvoice(index, custommer_id, custom_date, form) {
+        // let custom_date = new Date(custome_date)
 
         let items = Object.values(form)
         index = Number(index)
@@ -317,7 +327,7 @@ const ContextProvider = ({ children }) => {
         })
     }
     function addSellInvoice(index, custommer_id, custome_date, form) {
-        let custom_date = new Date(custome_date)
+        let custom_date = custome_date
 
         let items = Object.values(form)
         index = Number(index)
@@ -346,11 +356,13 @@ const ContextProvider = ({ children }) => {
 
 
     //doc
-    function getDocs() { }
+    function getDocs() {
+
+    }
     function addDoc(data) {
         if (Number(data.total) == 0) {
             const { date, form } = data
-            const custome_date = new Date(date)
+            const custome_date = date
             const rows = Object.values(form)
             let err = rows.filter(item => item.bed == "" && item.bes == "")
             if (err.length > 0) {
@@ -377,9 +389,9 @@ const ContextProvider = ({ children }) => {
     return (
         <Context.Provider
             value={{
-                update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, setAllowSubmitForm,
+                update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, invoices, setAllowSubmitForm,
                 changeParent, addCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount, updateEccount,
-                addBuyInvoice, addSellInvoice, addDoc,getEccount
+                addBuyInvoice, addSellInvoice, addDoc, getEccount, getInvoices
             }}>
             {children}
             {

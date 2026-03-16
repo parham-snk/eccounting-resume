@@ -4,18 +4,54 @@ import { Chart as chartjs, LineElement, PointElement, SubTitle, CategoryScale, L
 import { Chart, Line } from "react-chartjs-2"
 import { Link } from "react-router";
 import Select from "../components/dashboard/select";
-import { Activity, useEffect, useState } from "react";
+import { Activity, useContext, useEffect, useState } from "react";
 import Table from "../components/dashboard/table";
+import { Context } from "../context/Context";
 
 
 
 chartjs.register(LineElement, PointElement, SubTitle, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, scales);
 
 const Dashboard = props => {
+    let { invoices } = useContext(Context)
 
-    const fakeData = [, { id: 11, date: "2025/11/20", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }, { id: 11, date: "2025/11/20", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }, { id: 11, date: "2025/11/20", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }, { id: 11, date: "2025/11/20", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }, , , { id: 12, date: "2022/10/23", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }, { id: 13, date: "2022/10/23", desc: "فاکتور فروش 427", price: "2,445,540,000", type: 0 }]
-    const [data, setData] = useState(fakeData)
 
+    const [invoiceList, setInvoiceList] = useState()
+    const [searchBar, setSearchBar] = useState()
+
+
+    useEffect(() => {
+        setInvoiceList(invoices)
+    }, [invoices])
+
+    useEffect(() => {
+        if (searchBar == " ") {
+            setInvoiceList(invoices)
+        } else {
+            if (invoices) {
+                let suggestion;
+                //search by eccount
+                suggestion = [...invoices].filter(item => String(item.eccount_name).includes(searchBar))
+                if (suggestion.length > 0) {
+                    console.log(suggestion)
+                    return setInvoiceList(suggestion)
+                }
+                //search by description
+                else if (String(searchBar).includes("فروش")) {
+                    suggestion = [...invoiceList].filter(item => item.invoice_type == "bes")
+                    return setInvoiceList(suggestion)
+                }
+                else if (String(searchBar).includes("خرید")) {
+                    suggestion = [...invoiceList].filter(item => item.invoice_type == "bed")
+                    return setInvoiceList(suggestion)
+                }else{
+                    setInvoiceList([])
+                }
+            }
+
+
+        }
+    }, [searchBar])
     const [load, setLoad] = useState(false)
     useEffect(() => {
         document.title = "داشبورد"
@@ -107,36 +143,37 @@ const Dashboard = props => {
                 <div className="flex flex-col justify-start md:flex-row md:justify-between align-middle md:items-center w-full text-sm border-b pb-5 md:border-b-0 md:pb-0">
 
                     <p className="w-fit start-0 text-start text-nowrap order-1">فعالیت های اخیر</p>
-                    <input type="text" className="bg-gray-200 my-4 md:my-0 mx-10 py-2 ps-5 md:w-100 text-right outline-0 rounded order-4 dark:text-black" placeholder="جستجو" />
+                    <input
+                        onChange={e => setSearchBar(e.target.value)}
+                        type="text" className="bg-gray-200 my-4 md:my-0 mx-10 py-2 ps-5 md:w-100 text-right outline-0 rounded order-4 dark:text-black" placeholder="جستجو" />
 
                     <div className=" flex flex-row align-middle items-center mx-10 order-4">
-                        <p className="text-xs text-nowrap">هفته اخیر</p>
-                        <Select changeData={(sign) => {
-                            setLoad(true)
-                            if (sign) {
-                                setLoad(false)
-                                return setData(fakeData)
-                            }
-                            console.log(false)
-                            let date = Date.now()
-                            let now = new Date(date)
-                            let [ny, nm, nd] = [now.getFullYear(), now.getMonth(), now.getDate()]
-                            nm++
-                            let rows = data.filter(row => {
-                                let target = new Date(row.date).getTime()
-                                let dayValue = (60 * 60 * 60 * 24) * 7
-                                let avr = (now - dayValue)
-                                if (avr < Number(target)) {
-                                    return row
-                                }
-                            })
-                            setData(rows)
-                            setLoad(false)
+                        {/* <p className="text-xs text-nowrap">هفته اخیر</p> */}
+                        {/* <Select changeData={(sign) => {
+                            // setLoad(true)
+                            // if (sign) {
+                            //     setLoad(false)
+                            //     return setData(invoices)
+                            // }
+                            // let date = Date.now()
+                            // let now = new Date(date)
+                            // let [ny, nm, nd] = [now.getFullYear(), now.getMonth(), now.getDate()]
+                            // nm++
+                            // let rows = data.filter(row => {
+                            //     let target = new Date(row.date).getTime()
+                            //     let dayValue = (60 * 60 * 60 * 24) * 7
+                            //     let avr = (now - dayValue)
+                            //     if (avr < Number(target)) {
+                            //         return row
+                            //     }
+                            // })
+                            // setData(rows)
+                            // setLoad(false)
 
 
 
-                        }} />
-                        <p className="text-xs text-gray-500 dark:text-gray-300">({data.length} مورد)</p>
+                        }} /> */}
+                        {/* <p className="text-xs text-gray-500 dark:text-gray-300">({invoices ? invoices?.length : 0} مورد)</p> */}
                     </div>
                     <Link to={"/lasts"} className="decoration-1 text-nowrap text-xs md:text-sm  md:mx-10 py-1 md:bg-none order-2 md:order-4
                     absolute md:relative top-3 md:top-0 end-5 md:end-0
@@ -150,11 +187,11 @@ const Dashboard = props => {
                         </div>
                     </Activity>
                     {
-                        data.length > 1 &&
-                        <Table data={data} />
+                        invoiceList?.length >= 1 &&
+                        <Table data={[...invoiceList].reverse()} />
                     }
                     {
-                        data.length < 1 &&
+                        invoiceList?.length < 1 &&
                         <div className="w-full h-100 flex justify-center align-middle">
                             <h1>ردیفی موجود نیست</h1>
                         </div>
