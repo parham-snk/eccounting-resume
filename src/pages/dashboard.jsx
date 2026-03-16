@@ -44,8 +44,9 @@ const Dashboard = props => {
                 else if (String(searchBar).includes("خرید")) {
                     suggestion = [...invoiceList].filter(item => item.invoice_type == "bed")
                     return setInvoiceList(suggestion)
-                }else{
-                    setInvoiceList([])
+                } else {
+                    if (searchBar)
+                        setInvoiceList([])
                 }
             }
 
