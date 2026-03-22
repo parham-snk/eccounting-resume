@@ -2,6 +2,7 @@ import { Chart as chartjs, LineElement, PointElement, SubTitle, CategoryScale, L
 import { useContext, useEffect, useState } from "react"
 import { Line } from "react-chartjs-2"
 import { Context } from "../../../../context/Context";
+import get_Date from "../../../../components/util/get_date";
 
 chartjs.register(LineElement, PointElement, SubTitle, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, scales);
 const Chart_product_prices = props => {
@@ -10,9 +11,8 @@ const Chart_product_prices = props => {
     const [dates, setdates] = useState()
     const [prices, setPrices] = useState()
     useEffect(() => {
-        console.log(window)
         if (data) {
-            setdates([...data].map(item => item.createAt))
+            setdates([...data].map(item => item.custome_date ? get_Date(item.custome_date) : get_Date(item.createAt)))
             setPrices([...data].map(item => item.price))
         }
 

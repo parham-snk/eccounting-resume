@@ -18,6 +18,7 @@ import RefreshBTN from "./components/toolbar/refreshBTN.jsx";
 import Eccounts_page from "./pages/eccounts_page.jsx";
 import DOCS_PAGE from "./pages/docs_page.jsx";
 import Billing_Page from "./pages/billing_page.jsx";
+import Invoices_page from "./pages/invoices._page.jsx";
 //test
 function App() {
   const { update } = useContext(Context)
@@ -49,6 +50,7 @@ function App() {
                 <Route path="docs" element={<DOCS_PAGE />} />
               </Route>
               <Route path="/billing" element={<Billing_Page />}/>
+              <Route path="/invoices" element={<Invoices_page />}/>
 
               <Route path="*" element={<P404 />} />
             </Routes>

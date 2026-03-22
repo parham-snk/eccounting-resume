@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import DOC_ROW from "./components/doc_row"
+import splitNumber from "../../components/util/split-numbers";
 
 const DOC_TABLE = props => {
     const [orgForm, setOrgForm] = useState(props.form)
@@ -68,15 +69,15 @@ const DOC_TABLE = props => {
                     <td></td>
                     <td></td>
                     <td className=" bg-white min-h-20 border-black border p-2 text-black text-center">
-                        {totalbed}
+                        {splitNumber(totalbed)}
                     </td>
 
                     <td className=" bg-white min-h-20 border-black border p-2 text-black text-center">
-                        {totalbes}
+                        {splitNumber(totalbes)}
                     </td>
 
                     <td className=" bg-white min-h-20 border-black border p-2 text-black text-center">
-                        {total}
+                        {splitNumber(total)}
                     </td>
                 </tr>
                 <div 

@@ -1,6 +1,8 @@
+import { useParams, useSearchParams } from "react-router"
 import splitNumber from "../../components/util/split-numbers"
 import Bill_table_row from "./components/bill_table_row"
 import BILL_TABLE from "./components/bill_table_row"
+
 
 const { useState, useEffect } = require("react")
 
@@ -10,15 +12,18 @@ const Billing_Result = props => {
     const [sumbed, setsumbed] = useState()
     const [sumbes, setsumbes] = useState()
     const [sumTotal, setSumTotal] = useState()
+
+
+
     useEffect(() => {
-        if (props.data) {
+        if (props.data && [...props.data].length > 0) {
             setRes(props.data)
         }
     }, [props])
 
 
     useEffect(() => {
-        if (res) {
+        if (res && [...res].length > 0) {
             let items = [...res].map((item, index) => <Bill_table_row data={item} r={index} key={index} />)
             setRows(items)
             if (items.length == 0) {
@@ -47,6 +52,8 @@ const Billing_Result = props => {
             }
 
 
+        } else {
+            setRows([])
         }
 
     }, [res])
@@ -55,7 +62,10 @@ const Billing_Result = props => {
     }, [rows])
     return (
         <div>
-
+            {
+                props.data == false &&
+                <p></p>
+            }
             {
                 rows && rows.length > 0 &&
                 <table className="w-full my-5 border">

@@ -33,16 +33,16 @@ const Dashboard = props => {
                 //search by eccount
                 suggestion = [...invoices].filter(item => String(item.eccount_name).includes(searchBar))
                 if (suggestion.length > 0) {
-                    console.log(suggestion)
                     return setInvoiceList(suggestion)
                 }
                 //search by description
                 else if (String(searchBar).includes("فروش")) {
-                    suggestion = [...invoiceList].filter(item => item.invoice_type == "bes")
-                    return setInvoiceList(suggestion)
+                    console.log(invoiceList)
+                    suggestion = [...invoices].filter(item => item.invoice_type == "bes")
+                    setInvoiceList(suggestion)
                 }
-                else if (String(searchBar).includes("خرید")) {
-                    suggestion = [...invoiceList].filter(item => item.invoice_type == "bed")
+                else if (String(searchBar).trim().includes("خرید")) {
+                    suggestion = [...invoices].filter(item => item.invoice_type == "bed")
                     return setInvoiceList(suggestion)
                 } else {
                     if (searchBar)
@@ -132,9 +132,10 @@ const Dashboard = props => {
                         </div>
 
                     </div>
+
                     <Link className="my-5 mx-5 border border-gray-400 text-gray-400 shadow rounded w-4/5 p-2 start-0 scale-90 text-sm text-center
                 hover:bg-gray-400 hover:text-white 
-                " to={"/bill"}>مشاهده حساب</Link>
+                " to={"/billing?id=22"}>مشاهده حساب</Link>
                 </div>
             </div>
             {
@@ -176,31 +177,32 @@ const Dashboard = props => {
                         }} /> */}
                         {/* <p className="text-xs text-gray-500 dark:text-gray-300">({invoices ? invoices?.length : 0} مورد)</p> */}
                     </div>
+
                     <Link to={"/lasts"} className="decoration-1 text-nowrap text-xs md:text-sm  md:mx-10 py-1 md:bg-none order-2 md:order-4
                     absolute md:relative top-3 md:top-0 end-5 md:end-0
                     ">مشاهده همه</Link>
 
-                </div>
-                <div className="h-full w-full mt-7 relative overflow-y-scroll pb-10">
-                    <Activity mode={load ? "visible" : "hidden"} >
-                        <div id="loading" className="w-full h-full backdrop-blur-2xl absolute top-0 left-0 flex justify-center items-center">
-                            <h1>در حال جست و جو ...</h1>
-                        </div>
-                    </Activity>
-                    {
-                        invoiceList?.length >= 1 &&
-                        <Table data={[...invoiceList].reverse()} />
-                    }
-                    {
-                        invoiceList?.length < 1 &&
-                        <div className="w-full h-100 flex justify-center align-middle">
-                            <h1>ردیفی موجود نیست</h1>
-                        </div>
-                    }
 
                 </div>
+                {
+                    invoiceList?.length >= 1 &&
+                    <div className="h-full w-full mt-7 relative overflow-y-scroll pb-10">
+                        <Table data={[...invoiceList].reverse()} />
+                    </div>
+                }
+
+
+
+                {
+                    invoiceList?.length < 1 &&
+                    <div className="w-full h-full flex justify-center align-middle items-center">
+                        <h1>ردیفی موجود نیست</h1>
+                    </div>
+                }
+
+
             </div>
-        </div>
+        </div >
     )
 }
 

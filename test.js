@@ -1,6 +1,6 @@
-let date="1404/12/12"
+let date="qweqwe 1404 qwe"
 // console.log(Date(date))
-let date2=Number(new Date(date))
-// console.log(new Date().getDate())
 
-console.log()
+// console.log(new Date().getDate())
+let [number]=/\d+/.exec("فاکتور فروش 742")
+console.log(number)
