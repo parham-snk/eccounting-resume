@@ -38,6 +38,17 @@ const Sidebar = props => {
                 <LuWalletMinimal size={30} className="md:me-5" />
                 <h4 className="hidden md:flex">حسابها</h4>
             </NavLink>
+            <NavLink to={"/invoices"} className="
+            active:bg-gray-600 active:text-white dark:active:text-black
+            flex flex-row justify-center md:justify-start align-middle items-center w-9/10
+            md:rounded-sm
+            p-3
+            hover:bg-gray-600 h-full md:h-auto 
+            ">
+
+                <LuWalletMinimal size={30} className="md:me-5" />
+                <h4 className="hidden md:flex">فاکتورها</h4>
+            </NavLink>
             <NavLink to={"/proggres"} className="
             active:bg-gray-600 active:text-white dark:active:text-black
             flex flex-row justify-center md:justify-start align-middle items-center w-9/10

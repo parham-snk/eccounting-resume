@@ -1,28 +1,40 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import get_Date from "../../components/util/get_date"
+import { Context } from "../../context/Context"
+import splitNumber from "../../components/util/split-numbers"
 
 const Invoice_list_page = props => {
     let { data } = props
+    const { eccounts } = useContext(Context)
     const [rows, setRows] = useState()
 
     useEffect(() => {
         if (props.data) {
-            let { data } = props;
-            let R = [...data].map((item, index) => {
-                return <tr
-                onDoubleClick={()=>{
-                    alert(index+1)
-                }}
 
-                className="cursor-pointer"
+            let { data } = props;
+
+
+            let R = [...data].map((item, index) => {
+
+                return <tr
+                    key={index}
+                    onDoubleClick={() => {
+                        if (props.eccount) {
+                            props.setModal(item)
+                        } else {
+                            props.setModal(item)
+                        }
+                    }}
+
+                    className="cursor-pointer"
                 >
-                    <td className="border dark:border-white p-1">{index+1}</td>
-                    <td className="border dark:border-white p-1">{item.doc_id}</td>
-                    <td className="border dark:border-white p-1">{get_Date(item.custom_date)}</td>
-                    <td className="border dark:border-white p-1">{item.invoice_id}</td>
-                    <td className="border dark:border-white p-1">{props.eccount.eccount_name}</td>
-                    <td className="border dark:border-white p-1">{item.invoice_type == "bed" ? "بد" : "بس"}</td>
-                    <td className="border dark:border-white p-1">{item.total_price}</td>
+                    <td className="border dark:border-white p-2">{index + 1}</td>
+                    <td className="border dark:border-white p-2">{item.doc_id}</td>
+                    <td className="border dark:border-white p-2">{get_Date(item.custom_date)}</td>
+                    <td className="border dark:border-white p-2">{item.invoice_id}</td>
+                    <td className="border dark:border-white p-2">{item.eccount_name}</td>
+                    <td className="border dark:border-white p-2">{item.invoice_type == "bed" ? "بد" : "بس"}</td>
+                    <td className="border dark:border-white p-2">{splitNumber(item.total_price)}</td>
                 </tr>
             });
             setRows(R)

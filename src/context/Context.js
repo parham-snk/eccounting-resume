@@ -288,7 +288,7 @@ const ContextProvider = ({ children }) => {
     }
     async function getEccount(eccount_id) {
         let res;
-        await fetch(`http://localhost:8080/invoice/${eccount_id}`)
+        await fetch(`http://localhost:8080/docs/${eccount_id}`)
             .then(data => data.json()).then(data => {
                 if (data.ok) {
                     NOTIFICATION("اطلاعات دریافت شد!", true)
@@ -353,7 +353,19 @@ const ContextProvider = ({ children }) => {
 
             })
     }
+    async function getInvoice(invoice_id) {
+        return fetch(`http://localhost:8080/invoice/${invoice_id}`).then(data => data.json())
+            .then(data => {
+                if (data.err) {
+                    NOTIFICATION("خطا در دریافت فاکتور", false)
+                }
 
+                return data.data
+
+            }).catch(err => {
+                NOTIFICATION("خطای سرور در دریافت فاکتور", false)
+            })
+    }
 
     //doc
     function getDocs() {
@@ -391,7 +403,7 @@ const ContextProvider = ({ children }) => {
             value={{
                 update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, invoices, setAllowSubmitForm,
                 changeParent, addCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount, updateEccount,
-                addBuyInvoice, addSellInvoice, addDoc, getEccount, getInvoices
+                addBuyInvoice, addSellInvoice, addDoc, getEccount, getInvoices, getInvoice
             }}>
             {children}
             {
