@@ -88,7 +88,10 @@ const Invoices_page = props => {
     return (
         <div className="bg-white dark:bg-zinc-700 dark:text-white flex flex-col w-full h-full rounded shadow p-2">
             <Invoice_search updateName={val => setName(val)} updateEccountFilter={val => setEccountFilter(val)} />
-            <Invoice_list_page data={result} setModal={val => set_modal_invoice(val)} />
+            <Invoice_list_page data={result} setModal={val => {
+                set_modal_invoice(val)
+                setShowModal(true) 
+            }}/>
             {
                 showModal &&
                 <Modal close={() => setShowModal(false)}>

@@ -7,6 +7,8 @@ import Select from "../components/dashboard/select";
 import { Activity, useContext, useEffect, useState } from "react";
 import Table from "../components/dashboard/table";
 import { Context } from "../context/Context";
+import Modal from "../components/modal";
+import Invoice_item_modal from "./invoices/invoice_item_modal";
 
 
 
@@ -19,6 +21,8 @@ const Dashboard = props => {
     const [invoiceList, setInvoiceList] = useState()
     const [searchBar, setSearchBar] = useState()
 
+    const [showModal, setShowModal] = useState()
+    const [invoiceItem, setInvoiceItem] = useState()
 
     useEffect(() => {
         setInvoiceList(invoices)
@@ -187,7 +191,10 @@ const Dashboard = props => {
                 {
                     invoiceList?.length >= 1 &&
                     <div className="h-full w-full mt-7 relative overflow-y-scroll pb-10">
-                        <Table data={[...invoiceList].reverse()} />
+                        <Table setInvoiceItem={val=>{
+                            setInvoiceItem(val)
+                            setShowModal(true)
+                        }} data={[...invoiceList].reverse()} />
                     </div>
                 }
 
@@ -202,6 +209,13 @@ const Dashboard = props => {
 
 
             </div>
+            {
+                showModal &&
+                <Modal close={() => setShowModal(false)}>
+                    <Invoice_item_modal data={invoiceItem} />
+                </Modal>
+            }
+
         </div >
     )
 }

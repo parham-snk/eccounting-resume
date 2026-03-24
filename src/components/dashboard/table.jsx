@@ -4,7 +4,7 @@ import Tr from "./tr"
 const Table = (props) => {
     const [rows, setRows] = useState()
     useEffect(() => {
-        let arr =props.data.map((row, index) => <Tr key={index} data={row} />)
+        let arr =props.data.map((row, index) => <Tr setInvoiceItem={val=>props.setInvoiceItem(val)} key={index} data={row} />)
         setRows(arr)
     }, [props])
 
