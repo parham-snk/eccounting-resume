@@ -62,7 +62,7 @@ const Eccount_Field = props => {
                 type="text" onChange={e => setField(e.target.value)} />
             {
                 showSuggestion &&
-                <div className="absolute w-60 min-h-60 left-0 rounded bg-white dark:bg-zinc-900 shadow dark:text-white flex flex-col">
+                <div className="absolute w-60 min-h-60 left-0 rounded bg-white dark:bg-zinc-900 shadow dark:text-white flex flex-col z-10">
                     {
                         suggestions && suggestions
                     }

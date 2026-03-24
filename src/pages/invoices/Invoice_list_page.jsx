@@ -26,7 +26,7 @@ const Invoice_list_page = props => {
                         }
                     }}
 
-                    className="cursor-pointer"
+                    className="cursor-pointer sticky"
                 >
                     <td className="border dark:border-white p-2">{index + 1}</td>
                     <td className="border dark:border-white p-2">{item.doc_id}</td>
