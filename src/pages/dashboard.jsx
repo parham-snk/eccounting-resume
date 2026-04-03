@@ -16,7 +16,7 @@ import splitNumber from "../components/util/split-numbers";
 chartjs.register(LineElement, PointElement, SubTitle, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, scales);
 
 const Dashboard = props => {
-    let { invoices, cashTotal } = useContext(Context)
+    let { invoices, cashTotal, yearInvoice } = useContext(Context)
     const [cash, setCash] = useState()
 
     const [invoiceList, setInvoiceList] = useState()
@@ -26,16 +26,18 @@ const Dashboard = props => {
     const [invoiceItem, setInvoiceItem] = useState()
 
 
+    const [year, setYear] = useState(1405)
+    const [chartInvoices, setChartInvoices] = useState()
     const [bed, setBed] = useState([])
     const [bes, setBes] = useState([])
     //set bed & bes
     useEffect(() => {
-        if (invoices) {
+        if (chartInvoices && [...chartInvoices].length > 0) {
             function getSplitedDate(date) {
                 let [y, m, d] = String(date).split("T")[0].split("-")
                 return { y, m, d }
             }
-            let list = invoices
+            let list = chartInvoices
 
             let year = getSplitedDate(list[[...list].length - 1].custom_date).y
             list = list.filter(item => getSplitedDate(item.custom_date).y == year)
@@ -63,10 +65,10 @@ const Dashboard = props => {
 
 
                     if (bedList.length > 0) {
-                        bedd.push(bed_sum)
+                    bedd.push(bed_sum)
                     }
                     if (besList.length > 0) {
-                        bess.push(bes_sum)
+                    bess.push(bes_sum)
                     }
 
 
@@ -81,8 +83,15 @@ const Dashboard = props => {
 
 
         }
-    }, [invoices])
+    }, [chartInvoices])
 
+    useEffect(() => {
+        if (yearInvoice) {
+
+            setChartInvoices(yearInvoice)
+
+        }
+    }, [yearInvoice])
     useEffect(() => {
         setInvoiceList(invoices)
         if (cashTotal)
@@ -143,7 +152,10 @@ const Dashboard = props => {
                 ">
                     <p className="ps-4 text-gray-500 w-full  py-3 text-center">آمارخرید و فروش</p>
                     {
-                        bed && bes &&
+                        //#chart
+                    }
+                    {
+                        bed && bes && chartInvoices && [...chartInvoices].length > 0 &&
                         <Line
                             height={"100%"}
                             data={{
@@ -162,7 +174,7 @@ const Dashboard = props => {
                                     pointHoverBorderWidth: 2,
                                     pointHoverBackgroundColor: "gold",
                                     pointBorderColor: "red",
-                                    tooltip:true
+                                    tooltip: true
                                 },
                                 {
                                     data: bes,
@@ -181,6 +193,10 @@ const Dashboard = props => {
                                 ]
                             }}
                         />
+                    }
+                    {
+                        chartInvoices && [...chartInvoices].length == 0 &&
+                        <h1 className="w-full h-full text-center items-center text-2xl">بدون اطلاعات</h1>
                     }
 
                 </div>

@@ -17,6 +17,7 @@ const ContextProvider = ({ children }) => {
     const [eccounts, setEccounts] = useState()
     const [allowSubmitForm, setAllowSubmitForm] = useState(false)
     const [invoices, setInvoices] = useState()
+    const [yearInvoice, setYearInvioce] = useState()
     const [cashTotal, setCashTotal] = useState()
 
     const [notification, setNotification] = useState(false)
@@ -104,6 +105,17 @@ const ContextProvider = ({ children }) => {
         fetchEccounts()
         getInvoices()
         getCashTotal()
+        get_year_invoices(1405)
+    }
+    function get_year_invoices(year) {
+        fetch(`http://localhost:8080/invoice/year/${year}`)
+            .then(data => data.json()).then(data => {
+                if (data.err) {
+                    NOTIFICATION("خطا در گرفتن اطلاعات نمودار", false)
+                } else {
+                    setYearInvioce(data.data)
+                }
+            })
     }
     function getInvoices() {
         fetch("http://localhost:8080/invoice").then(data => data.json())
@@ -127,8 +139,8 @@ const ContextProvider = ({ children }) => {
                         setCashTotal(data.total)
                     }
                 }
-            }).catch(err=>{
-                NOTIFICATION("خطای سرور در گرفتن مبلغ صندوق",false)
+            }).catch(err => {
+                NOTIFICATION("خطای سرور در گرفتن مبلغ صندوق", false)
             })
     }
     //cats
@@ -418,7 +430,7 @@ const ContextProvider = ({ children }) => {
     return (
         <Context.Provider
             value={{
-                update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, invoices,cashTotal, setAllowSubmitForm,
+                update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, invoices, cashTotal, yearInvoice, setAllowSubmitForm,
                 changeParent, addCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount, updateEccount,
                 addBuyInvoice, addSellInvoice, addDoc, getEccount, getInvoices, getInvoice
             }}>

@@ -26,7 +26,7 @@ const PRICE_INVOICE_INPUT = props => {
             <input className={"border w-fit text-center h-7"}
                 required
                 ref={input}
-                placeholder={product&&limit ? `قیمت پیشنهادی: ${splitNumber(product.product_price)}` : ""}
+                placeholder={product&&limit ? `قیمت خرید: ${splitNumber(product.product_price)}` : ""}
                 disabled={enable ? false : true}
                 onKeyDown={e => {
                     if (e.key == "Backspace" || /\d/.test(e.key)) {
