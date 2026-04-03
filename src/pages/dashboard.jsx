@@ -30,6 +30,7 @@ const Dashboard = props => {
     const [chartInvoices, setChartInvoices] = useState()
     const [bed, setBed] = useState([])
     const [bes, setBes] = useState([])
+    const [profit,setProfit]=useState([])
     //set bed & bes
     useEffect(() => {
         if (chartInvoices && [...chartInvoices].length > 0) {
@@ -41,7 +42,7 @@ const Dashboard = props => {
 
             let year = getSplitedDate(list[[...list].length - 1].custom_date).y
             list = list.filter(item => getSplitedDate(item.custom_date).y == year)
-            let bedd = [], bess = []
+            let bedd = [], bess = [], total = []
             async function getTotal() {
                 for (let i = 1; i <= 12; i++) {
                     i = i < 10 ? Number(`0${i}`) : i
@@ -65,10 +66,10 @@ const Dashboard = props => {
 
 
                     if (bedList.length > 0) {
-                    bedd.push(bed_sum)
+                        bedd.push(bed_sum)
                     }
                     if (besList.length > 0) {
-                    bess.push(bes_sum)
+                        bess.push(bes_sum)
                     }
 
 
@@ -79,6 +80,15 @@ const Dashboard = props => {
             getTotal().then(() => {
                 setBed(bedd)
                 setBes(bess)
+
+                // محاسبه سود
+                for (let i = 0; i < 12; i++) {
+                    let calc = bess[i] - bedd[i]
+
+                    total.push(calc)
+
+                }
+                setProfit(total)
             })
 
 
@@ -161,35 +171,51 @@ const Dashboard = props => {
                             data={{
                                 labels: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آباد", "آذر", "دی", "بهمن", "اسفند"],
 
-                                datasets: [{
-                                    data: bed,
-                                    pointBackgroundColor: "red",
-                                    borderColor: "black",
-                                    label: "خرید (تومان) :",
-                                    borderWidth: 1.5,
-                                    fill: true,
-                                    backgroundColor: "black",
-                                    tension: 0.3,
-                                    pointHoverBorderColor: "gold",
-                                    pointHoverBorderWidth: 2,
-                                    pointHoverBackgroundColor: "gold",
-                                    pointBorderColor: "red",
-                                    tooltip: true
-                                },
-                                {
-                                    data: bes,
-                                    pointBackgroundColor: "blue",
-                                    borderColor: "black",
-                                    label: "فروش (تومان) :",
-                                    borderWidth: 1.5,
-                                    fill: true,
-                                    backgroundColor: "black",
-                                    tension: 0.3,
-                                    pointHoverBorderColor: "gold",
-                                    pointHoverBorderWidth: 2,
-                                    pointHoverBackgroundColor: "gold",
-                                    pointBorderColor: "blue"
-                                }
+                                datasets: [
+                                    {
+                                        data: profit,
+                                        pointBackgroundColor: "gold",
+                                        borderColor: "black",
+                                        label: "سود (تومان) :",
+                                        borderWidth: 1.5,
+                                        fill: true,
+                                        backgroundColor: "gold",
+                                        tension: 0.3,
+                                        pointHoverBorderColor: "gold",
+                                        pointHoverBorderWidth: 2,
+                                        pointHoverBackgroundColor: "gold",
+                                        pointBorderColor: "gold",
+                                        tooltip: true
+                                    },
+                                    {
+                                        data: bed,
+                                        pointBackgroundColor: "red",
+                                        borderColor: "black",
+                                        label: "خرید (تومان) :",
+                                        borderWidth: 1.5,
+                                        fill: true,
+                                        backgroundColor: "black",
+                                        tension: 0.3,
+                                        pointHoverBorderColor: "gold",
+                                        pointHoverBorderWidth: 2,
+                                        pointHoverBackgroundColor: "gold",
+                                        pointBorderColor: "red",
+                                        tooltip: true
+                                    },
+                                    {
+                                        data: bes,
+                                        pointBackgroundColor: "blue",
+                                        borderColor: "black",
+                                        label: "فروش (تومان) :",
+                                        borderWidth: 1.5,
+                                        fill: true,
+                                        backgroundColor: "black",
+                                        tension: 0.3,
+                                        pointHoverBorderColor: "gold",
+                                        pointHoverBorderWidth: 2,
+                                        pointHoverBackgroundColor: "gold",
+                                        pointBorderColor: "blue"
+                                    }
                                 ]
                             }}
                         />
