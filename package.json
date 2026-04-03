@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jquery": "^3.5.33",
     "axios": "^1.13.4",
+    "browserslist": "^4.28.1",
     "chart.js": "^4.5.1",
     "crypto": "^1.0.1",
     "hash-sum": "^2.0.0",

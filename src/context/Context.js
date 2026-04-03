@@ -17,6 +17,7 @@ const ContextProvider = ({ children }) => {
     const [eccounts, setEccounts] = useState()
     const [allowSubmitForm, setAllowSubmitForm] = useState(false)
     const [invoices, setInvoices] = useState()
+    const [cashTotal, setCashTotal] = useState()
 
     const [notification, setNotification] = useState(false)
     const [notificationText, setNotificationText] = useState()
@@ -102,6 +103,7 @@ const ContextProvider = ({ children }) => {
         fetchPrices()
         fetchEccounts()
         getInvoices()
+        getCashTotal()
     }
     function getInvoices() {
         fetch("http://localhost:8080/invoice").then(data => data.json())
@@ -114,7 +116,21 @@ const ContextProvider = ({ children }) => {
                 }
             })
     }
-
+    function getCashTotal() {
+        fetch("http://localhost:8080/docs/box").then(data => data.json())
+            .then(data => {
+                if (data.err) {
+                    return NOTIFICATION("خطا در گرفتن مبلغ صندوق", false)
+                }
+                if (data.ok) {
+                    if (data.total) {
+                        setCashTotal(data.total)
+                    }
+                }
+            }).catch(err=>{
+                NOTIFICATION("خطای سرور در گرفتن مبلغ صندوق",false)
+            })
+    }
     //cats
     function removeCat(cat) {
         const { cat_id, childstoo } = cat
@@ -168,7 +184,7 @@ const ContextProvider = ({ children }) => {
     function addProduct(product) {
         let { name, qty, price, cat, unit } = product
         price = String(price).split(",").join("")
-        if (name && price && cat && unit) {
+        if (name && cat && unit) {
             axios.post("http://localhost:8080/products", { name, qty: Number(qty), price: Number(price), cat: Number(cat), unit: Number(unit) })
                 .then(data => data.data).then(data => {
                     if (data.ok) {
@@ -384,6 +400,7 @@ const ContextProvider = ({ children }) => {
                 .then(data => data.data).then(data => {
                     if (data.ok) {
                         NOTIFICATION("سند افزوده شد!", true)
+                        update()
                     } else {
                         Notification("خطا در افزودن سند!", false)
                     }
@@ -401,7 +418,7 @@ const ContextProvider = ({ children }) => {
     return (
         <Context.Provider
             value={{
-                update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, invoices, setAllowSubmitForm,
+                update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, invoices,cashTotal, setAllowSubmitForm,
                 changeParent, addCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount, updateEccount,
                 addBuyInvoice, addSellInvoice, addDoc, getEccount, getInvoices, getInvoice
             }}>

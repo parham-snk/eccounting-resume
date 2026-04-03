@@ -1,6 +1,6 @@
 import { IoTrendingDown, IoTrendingDownSharp, IoTrendingUpSharp } from "react-icons/io5";
 
-import { Chart as chartjs, LineElement, PointElement, SubTitle, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, scales } from "chart.js"
+import { Chart as chartjs, LineElement, PointElement, SubTitle, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, scales, } from "chart.js"
 import { Chart, Line } from "react-chartjs-2"
 import { Link } from "react-router";
 import Select from "../components/dashboard/select";
@@ -9,14 +9,15 @@ import Table from "../components/dashboard/table";
 import { Context } from "../context/Context";
 import Modal from "../components/modal";
 import Invoice_item_modal from "./invoices/invoice_item_modal";
+import splitNumber from "../components/util/split-numbers";
 
 
 
 chartjs.register(LineElement, PointElement, SubTitle, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, scales);
 
 const Dashboard = props => {
-    let { invoices } = useContext(Context)
-
+    let { invoices, cashTotal } = useContext(Context)
+    const [cash, setCash] = useState()
 
     const [invoiceList, setInvoiceList] = useState()
     const [searchBar, setSearchBar] = useState()
@@ -24,9 +25,69 @@ const Dashboard = props => {
     const [showModal, setShowModal] = useState()
     const [invoiceItem, setInvoiceItem] = useState()
 
+
+    const [bed, setBed] = useState([])
+    const [bes, setBes] = useState([])
+    //set bed & bes
+    useEffect(() => {
+        if (invoices) {
+            function getSplitedDate(date) {
+                let [y, m, d] = String(date).split("T")[0].split("-")
+                return { y, m, d }
+            }
+            let list = invoices
+
+            let year = getSplitedDate(list[[...list].length - 1].custom_date).y
+            list = list.filter(item => getSplitedDate(item.custom_date).y == year)
+            let bedd = [], bess = []
+            async function getTotal() {
+                for (let i = 1; i <= 12; i++) {
+                    i = i < 10 ? Number(`0${i}`) : i
+                    let list2 = list.filter(item => getSplitedDate(item.custom_date).m == i)
+                    let bedList = list2.filter(item => item.invoice_type == "bed").map(item => item.total_price)
+                    let besList = list2.filter(item => item.invoice_type == "bes").map(item => item.total_price)
+
+
+                    let bed_sum = 0, bes_sum = 0
+
+                    if (bedList.length > 0) {
+                        bed_sum = [...bedList].reduce((t, c) => {
+                            return t + c
+                        })
+                    }
+                    if (besList.length > 0) {
+                        bes_sum = [...besList].reduce((t, c) => {
+                            return t + c
+                        })
+                    }
+
+
+                    if (bedList.length > 0) {
+                        bedd.push(bed_sum)
+                    }
+                    if (besList.length > 0) {
+                        bess.push(bes_sum)
+                    }
+
+
+
+                }
+            }
+
+            getTotal().then(() => {
+                setBed(bedd)
+                setBes(bess)
+            })
+
+
+        }
+    }, [invoices])
+
     useEffect(() => {
         setInvoiceList(invoices)
-    }, [invoices])
+        if (cashTotal)
+            setCash(cashTotal)
+    }, [invoices, cashTotal])
 
     useEffect(() => {
         if (searchBar == " ") {
@@ -80,28 +141,48 @@ const Dashboard = props => {
                 p-2
                 order-2 md:order1
                 ">
-                    <p className="ps-4 text-gray-500 w-full  py-3 text-center">آمار فروش</p>
-                    <Line
-                        height={"100%"}
-                        data={{
-                            labels: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آباد", "آذر", "دی", "بهمن", "اسفند"]
+                    <p className="ps-4 text-gray-500 w-full  py-3 text-center">آمارخرید و فروش</p>
+                    {
+                        bed && bes &&
+                        <Line
+                            height={"100%"}
+                            data={{
+                                labels: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آباد", "آذر", "دی", "بهمن", "اسفند"],
 
-                            , datasets: [{
-                                data: [255, 365, 450, 520, 670, 750, 890, 978, 1100, 1200, 1330],
-                                pointBackgroundColor: "rgb(16, 167, 255)",
-                                borderColor: "black",
-                                label: "موجودی ب میلیون تومان",
-                                borderWidth: 1.5,
-                                fill: true,
-                                backgroundColor: "black",
-                                tension: 0.3,
-                                pointHoverBorderColor: "gold",
-                                pointHoverBorderWidth: 2,
-                                pointHoverBackgroundColor: "gold",
-                                pointBorderColor: "rgb(16, 167, 255)"
-                            }]
-                        }}
-                    />
+                                datasets: [{
+                                    data: bed,
+                                    pointBackgroundColor: "red",
+                                    borderColor: "black",
+                                    label: "خرید (تومان) :",
+                                    borderWidth: 1.5,
+                                    fill: true,
+                                    backgroundColor: "black",
+                                    tension: 0.3,
+                                    pointHoverBorderColor: "gold",
+                                    pointHoverBorderWidth: 2,
+                                    pointHoverBackgroundColor: "gold",
+                                    pointBorderColor: "red",
+                                    tooltip:true
+                                },
+                                {
+                                    data: bes,
+                                    pointBackgroundColor: "blue",
+                                    borderColor: "black",
+                                    label: "فروش (تومان) :",
+                                    borderWidth: 1.5,
+                                    fill: true,
+                                    backgroundColor: "black",
+                                    tension: 0.3,
+                                    pointHoverBorderColor: "gold",
+                                    pointHoverBorderWidth: 2,
+                                    pointHoverBackgroundColor: "gold",
+                                    pointBorderColor: "blue"
+                                }
+                                ]
+                            }}
+                        />
+                    }
+
                 </div>
 
                 {
@@ -119,7 +200,7 @@ const Dashboard = props => {
                     <div className="w-full h-1/3 flex flex-row justify-center align-middle items-center
                     
                     ">
-                        <p className="text-2xl font-bold">1,365,560,000 </p><sub className="mb-10 ms-5 text-lg">ریال</sub>
+                        <p className="text-2xl font-bold">{cashTotal ? splitNumber(cash) : 0}</p><sub className="mb-10 ms-5 text-lg">تومان</sub>
 
                     </div>
 
@@ -182,7 +263,7 @@ const Dashboard = props => {
                         {/* <p className="text-xs text-gray-500 dark:text-gray-300">({invoices ? invoices?.length : 0} مورد)</p> */}
                     </div>
 
-                    <Link to={"/lasts"} className="decoration-1 text-nowrap text-xs md:text-sm  md:mx-10 py-1 md:bg-none order-2 md:order-4
+                    <Link to={"/invoices"} className="decoration-1 text-nowrap text-xs md:text-sm  md:mx-10 py-1 md:bg-none order-2 md:order-4
                     absolute md:relative top-3 md:top-0 end-5 md:end-0
                     ">مشاهده همه</Link>
 
@@ -191,7 +272,7 @@ const Dashboard = props => {
                 {
                     invoiceList?.length >= 1 &&
                     <div className="h-full w-full mt-7 relative overflow-y-scroll pb-10">
-                        <Table setInvoiceItem={val=>{
+                        <Table setInvoiceItem={val => {
                             setInvoiceItem(val)
                             setShowModal(true)
                         }} data={[...invoiceList].reverse()} />

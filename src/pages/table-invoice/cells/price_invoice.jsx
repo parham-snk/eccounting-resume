@@ -8,7 +8,7 @@ const PRICE_INVOICE_INPUT = props => {
     useEffect(() => {
         if (props.product && limit) {
             setPrice(product.product_price)
-            input.current.value = splitNumber(product.product_price)
+            // input.current.value = splitNumber(product.product_price)
         } else {
             input.current.value = ""
             setPrice(0)
