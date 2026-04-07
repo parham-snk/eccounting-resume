@@ -8,8 +8,10 @@ const Invoice_table_modal = props => {
     const Tr = props => {
         let data = props.data
         let total = Number(data.price * data.p_qty)
+
         if (data.discount) {
-            total -= total % Number(data.discount)
+            total -= total * data.discount / 100
+
         }
         return <tr>
             <td className="text-center border p-2">{data?.r}</td>
