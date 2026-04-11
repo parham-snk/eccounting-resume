@@ -452,15 +452,17 @@ const ContextProvider = ({ children }) => {
                 NOTIFICATION("خطا در وارد شدن", false)
                 return false
             }
-            if (data.user && data.user == null) {
+            if (!data.user) {
                 NOTIFICATION("کاربری پیدا نشد!", false)
                 return false
+            } else {
+                setUser(data.user)
+                sessionStorage.setItem("user", JSON.stringify(data.user))
+                NOTIFICATION("خوش آمدید!", true)
+                update()
+                return true
             }
-            setUser(data.user)
-            sessionStorage.setItem("user", JSON.stringify(data.user))
-            NOTIFICATION("خوش آمدید!", true)
-            update()
-            return true
+
         })
 
 
