@@ -1,0 +1,27 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="s"></h1>
+    <input type="text">
+</body>
+<script>
+    if (sessionStorage.getItem("name")) {
+        alert(sessionStorage.getItem("name"))
+    }
+    document.querySelector("input").onchange = function (e) {
+        alert(e.target.value)
+        sessionStorage.setItem('name', e.target.value)
+        setTimeout(() => {
+            console.log(sessionStorage.getItem(`name`))
+        }, 1000);
+
+    }
+</script>
+
+</html>

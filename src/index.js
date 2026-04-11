@@ -5,10 +5,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "./App.css"
+import { ContextProvider } from './context/Context';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-
-  <App />
+  <ContextProvider>
+    <App />
+  </ContextProvider>
 
 );
 

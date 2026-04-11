@@ -24,6 +24,10 @@ const ContextProvider = ({ children }) => {
     const [notificationText, setNotificationText] = useState()
     const [notificationType, setNotifictionType] = useState()
 
+
+    //auth 
+    const [user, setUser] = useState(false)
+
     //a function for Notification component
     function NOTIFICATION(text, type) {
         setNotificationText(text)
@@ -425,14 +429,49 @@ const ContextProvider = ({ children }) => {
     }
 
     //fetch lists
-    useEffect(update, [])
+    useEffect(() => {
+        user &&
+            update()
+    }, [])
+
+
+    //auth
+
+    useEffect(() => {
+        let session = sessionStorage.getItem("user")
+        if (session) {
+            setUser(JSON.parse(session))
+            update()
+        }
+    }, [sessionStorage])
+
+
+    async function Login(username, password) {
+        return await axios.post("http://localhost:8080/auth/login", { username, password }).then(data => data.data).then((data) => {
+            if (data.err) {
+                NOTIFICATION("خطا در وارد شدن", false)
+                return false
+            }
+            if (data.user && data.user == null) {
+                NOTIFICATION("کاربری پیدا نشد!", false)
+                return false
+            }
+            setUser(data.user)
+            sessionStorage.setItem("user", JSON.stringify(data.user))
+            NOTIFICATION("خوش آمدید!", true)
+            update()
+            return true
+        })
+
+
+    }
 
     return (
         <Context.Provider
             value={{
-                update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, invoices, cashTotal, yearInvoice, setAllowSubmitForm,
+                update, cats, orgcats, products, units, prices, eccounts, allowSubmitForm, invoices, cashTotal, yearInvoice, user, setAllowSubmitForm,
                 changeParent, addCat, removeCat, addProduct, updateProduct, removeProduct, addUnit, removeUnit, addEccount, deleteEccount, updateEccount,
-                addBuyInvoice, addSellInvoice, addDoc, getEccount, getInvoices, getInvoice
+                addBuyInvoice, addSellInvoice, addDoc, getEccount, getInvoices, getInvoice, Login
             }}>
             {children}
             {
