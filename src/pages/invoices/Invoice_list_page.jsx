@@ -43,7 +43,7 @@ const Invoice_list_page = props => {
     return (
         <div className="w-full overflow-y-scroll p-2">
             <table className="w-full text-center h-2/3 overflow-y-scroll ">
-                <tr className="bg-black text-white dark:text-black dark:bg-white p-2">
+                <tr className="bg-black text-white dark:text-black dark:bg-white p-2 sticky -top-2">
                     <th className="p-1">r</th>
                     <th className="p-1">شماره سند</th>
                     <th className="p-1">تاریخ</th>

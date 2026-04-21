@@ -99,7 +99,7 @@ const Billing_search = props => {
 
             {
                 suggestion && showSuggestion &&
-                <div className="absolute w-50 h-100 bg-white dark:bg-zinc-800 dark:text-white top-15 rounded shadow p-2">
+                <div className="absolute z-20 w-50 h-100 bg-white dark:bg-zinc-800 dark:text-white top-15 rounded shadow p-2">
                     {
                         suggestion
                     }

@@ -9,9 +9,9 @@ const Billing_Page = props => {
     const [eccount, setEccount] = useState()
     const [result, setResult] = useState()
 
-    useEffect(()=>{
-        document.title="صورتحساب ها"
-    },[])
+    useEffect(() => {
+        document.title = "صورتحساب ها"
+    }, [])
     useEffect(() => {
         if (eccount) {
             getEccount(eccount.eccount_id).then(data => {
@@ -22,9 +22,12 @@ const Billing_Page = props => {
     return (
         <div className="w-full h-full bg-white dark:bg-zinc-700 dark:text-white">
             <Billing_search update={ecc => setEccount(ecc)} />
+
             {
                 eccount &&
-                <Billing_Result data={result} />
+                <div className="w-full h-8/9 overflow-y-scroll">
+                    <Billing_Result data={result} />
+                </div>
             }
 
         </div>

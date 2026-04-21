@@ -38,7 +38,7 @@ const LOGINPAGE = (props) => {
                     <label htmlFor="name">
                         گذرواژه :
                     </label>
-                    <input type="text" className="
+                    <input type="password" className="
                     border border-black dark:border-white rounded p-2 my-2
                     w-full
                     "

@@ -4,7 +4,6 @@ import Notification from "../components/util/notification";
 
 
 
-
 const Context = createContext({ cats: [] })
 
 const ContextProvider = ({ children }) => {

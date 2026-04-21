@@ -20,6 +20,7 @@ import DOCS_PAGE from "./pages/docs_page.jsx";
 import Billing_Page from "./pages/billing_page.jsx";
 import Invoices_page from "./pages/invoices._page.jsx";
 import LOGINPAGE from "./pages/auth/login.jsx";
+import Print_Page from "./pages/print_page.jsx";
 //test
 function App() {
   let { update, user } = useContext(Context)
@@ -65,6 +66,7 @@ function App() {
                 </Route>
                 <Route path="/billing" element={<Billing_Page />} />
                 <Route path="/invoices" element={<Invoices_page />} />
+                <Route path="/print" element={<Print_Page />} />
                 <Route path="*" element={<P404 />} />
               </>
             }

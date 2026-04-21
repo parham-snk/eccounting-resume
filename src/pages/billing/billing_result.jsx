@@ -68,8 +68,8 @@ const Billing_Result = props => {
             }
             {
                 rows && rows.length > 0 &&
-                <table className="w-full my-5 border">
-                    <tr className="bg-white text-black">
+                <table className="w-full my-5 border h-1/2 overflow-y-scroll z-0">
+                    <tr className="bg-white text-black sticky top-0 z-0">
                         <th className="text-center">r</th>
                         <th className="text-center">شماره سند</th>
                         <th className="text-center">تاریخ</th>
@@ -97,7 +97,7 @@ const Billing_Result = props => {
 
             {
                 rows && rows.length == 0 &&
-                <div className="border-0 p-10 text-center flex justify-center align-middle items-center w-full h-full">
+                <div className="border-0 p-10 text-center flex justify-center align-middle items-center w-full h-full overflow-y-scroll" >
                     <p>ردیفی وجود ندارد!</p>
                 </div>
             }
